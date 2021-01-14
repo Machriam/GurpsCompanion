@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using GurpsCompanion.Server.Core;
 
 namespace GurpsCompanion.Server
 {
@@ -22,6 +23,8 @@ namespace GurpsCompanion.Server
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddEntityFrameworkSqlite();
+            var options = Configuration.GetSection(ConfigurationOptions.Configuration).Get<ConfigurationOptions>();
+            services.AddSingleton(options);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
