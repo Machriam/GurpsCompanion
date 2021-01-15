@@ -1,4 +1,9 @@
-﻿namespace GurpsCompanion.Shared.DataModel.DataContext
+﻿using System;
+using System.Collections.Generic;
+
+#nullable disable
+
+namespace GurpsCompanion.Shared.DataModel.DataContext
 {
     public partial class Character
     {

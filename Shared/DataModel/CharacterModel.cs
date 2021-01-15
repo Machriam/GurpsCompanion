@@ -58,5 +58,8 @@ namespace GurpsCompanion.Shared.DataModel
 
         [JsonIgnore]
         public string FightingName { get; set; }
+
+        [JsonIgnore]
+        public int FightActionCounter { get; set; }
     }
 }

@@ -5,13 +5,11 @@ using System.Collections.Generic;
 
 namespace GurpsCompanion.Shared.DataModel.DataContext
 {
-    public partial class Skill
+    public partial class Advantage
     {
         public long Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public long Value { get; set; }
-        public string Difficulty { get; set; }
-        public string Defaults { get; set; }
+        public long Cost { get; set; }
     }
 }

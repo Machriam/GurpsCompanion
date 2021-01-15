@@ -28,4 +28,8 @@
       <LastGenOutput>ApiAddressResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ExtensionMethods\" />
+  </ItemGroup>
 </Project>

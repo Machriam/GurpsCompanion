@@ -35,17 +35,16 @@ namespace GurpsCompanion.Client.Pages
         public void StartFight()
         {
             ElapsedFightingTime = 0d;
-            Fighters.ForEach(f => f.NextFightingTime = f.BasicSpeed);
-            Fighters = Fighters.OrderBy(f => f.NextFightingTime).ToList();
             NextStep();
         }
 
         public void NextStep()
         {
             if (CurrentlyFightingFighter != null) CurrentlyFightingFighter.NextFightingTime += CurrentlyFightingFighter.BasicSpeed;
-            Fighters = Fighters.OrderBy(f => f.NextFightingTime).ToList();
+            Fighters = Fighters.OrderBy(f => f.NextFightingTime).ThenBy(f => f == CurrentlyFightingFighter).ToList();
             CurrentlyFightingFighter = Fighters[0];
             ElapsedFightingTime = CurrentlyFightingFighter.NextFightingTime;
+            CurrentlyFightingFighter.FightActionCounter++;
         }
 
         public void ResetFight()
@@ -59,6 +58,7 @@ namespace GurpsCompanion.Client.Pages
             var newFighter = SelectedCharacterForFight.Clone();
             var fightersOfSameType = Fighters.Where(n => n.Id == newFighter.Id);
             newFighter.FightingName = newFighter.Name;
+            newFighter.NextFightingTime = newFighter.BasicSpeed + ElapsedFightingTime;
             if (fightersOfSameType.Any())
             {
                 if (fightersOfSameType.Count() == 1) fightersOfSameType.First().FightingName += " 1";
@@ -66,6 +66,7 @@ namespace GurpsCompanion.Client.Pages
                     $" {fightersOfSameType.Max(f => int.Parse(f.FightingName.Remove(0, f.Name.Length + 1))) + 1}";
             }
             Fighters.Add(newFighter);
+            Fighters = Fighters.OrderBy(f => f.NextFightingTime).ToList();
         }
 
         public void RemoveFighter(CharacterModel fighter)

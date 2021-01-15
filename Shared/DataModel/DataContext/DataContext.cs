@@ -1,12 +1,14 @@
-﻿#nullable disable
+﻿using Microsoft.EntityFrameworkCore;
 
-using Microsoft.EntityFrameworkCore;
+#nullable disable
 
 namespace GurpsCompanion.Shared.DataModel.DataContext
 {
     public partial class DataContext : DbContext
     {
+        public virtual DbSet<Advantage> Advantages { get; set; }
         public virtual DbSet<Character> Characters { get; set; }
+        public virtual DbSet<CharacterAdvantageAssociation> CharacterAdvantageAssociations { get; set; }
         public virtual DbSet<CharacterItemAssociation> CharacterItemAssociations { get; set; }
         public virtual DbSet<CharacterSkillAssociation> CharacterSkillAssociations { get; set; }
         public virtual DbSet<Item> Items { get; set; }
@@ -14,6 +16,26 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Advantage>(entity =>
+            {
+                entity.ToTable("advantage");
+
+                entity.HasIndex(e => e.Name, "IX_advantage_name")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Cost).HasColumnName("cost");
+
+                entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasColumnName("description");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasColumnName("name");
+            });
+
             modelBuilder.Entity<Character>(entity =>
             {
                 entity.ToTable("character");
@@ -51,6 +73,21 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
                 entity.Property(e => e.VagrexFavor).HasColumnName("vagrex_favor");
 
                 entity.Property(e => e.WillMod).HasColumnName("will_mod");
+            });
+
+            modelBuilder.Entity<CharacterAdvantageAssociation>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("character_advantage_association");
+
+                entity.Property(e => e.AdvantageVk).HasColumnName("advantage_vk");
+
+                entity.Property(e => e.CharacterFk).HasColumnName("character_fk");
+
+                entity.HasOne(d => d.CharacterFkNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.CharacterFk);
             });
 
             modelBuilder.Entity<CharacterItemAssociation>(entity =>
@@ -117,9 +154,13 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.Defaults).HasColumnName("defaults");
+
                 entity.Property(e => e.Description)
                     .IsRequired()
                     .HasColumnName("description");
+
+                entity.Property(e => e.Difficulty).HasColumnName("difficulty");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
