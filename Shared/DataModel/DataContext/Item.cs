@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#nullable disable
 
-#nullable disable
-
-namespace GurpsCompanion.Server.DataContext
+namespace GurpsCompanion.Shared.DataModel.DataContext
 {
     public partial class Item
     {

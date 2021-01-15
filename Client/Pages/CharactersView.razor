@@ -1,0 +1,25 @@
+﻿@page "/charactersview"
+@using GurpsCompanion.Shared
+@inject HttpClient Http
+@if (Characters != null && Characters.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                @foreach (var property in Characters[0].GetProperties())
+                {
+                    <th scope="col">@property</th>
+                }
+            </tr>
+        </thead>
+        @foreach (var character in Characters)
+        {
+            <tr>
+                @foreach (var value in character.GetValues())
+                {
+                    <td>@value.ToString()</td>
+                }
+            </tr>
+        }
+    </table>
+}

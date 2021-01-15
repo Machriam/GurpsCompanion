@@ -1,36 +1,16 @@
-﻿using System;
+﻿#nullable disable
+
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
-#nullable disable
-
-namespace GurpsCompanion.Server.DataContext
+namespace GurpsCompanion.Shared.DataModel.DataContext
 {
     public partial class DataContext : DbContext
     {
-        public DataContext()
-        {
-        }
-
-        public DataContext(DbContextOptions<DataContext> options)
-            : base(options)
-        {
-        }
-
         public virtual DbSet<Character> Characters { get; set; }
         public virtual DbSet<CharacterItemAssociation> CharacterItemAssociations { get; set; }
         public virtual DbSet<CharacterSkillAssociation> CharacterSkillAssociations { get; set; }
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlite("DataSource=C:\\Users\\Leckmich\\Desktop\\Repos\\GurpsCompanion\\data.sqlite3");
-            }
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

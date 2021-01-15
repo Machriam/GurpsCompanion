@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace GurpsCompanion.Server.DataContext
+namespace GurpsCompanion.Shared.DataModel.DataContext
 {
     public partial class CharacterSkillAssociation
     {
