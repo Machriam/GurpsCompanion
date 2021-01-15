@@ -1,9 +1,15 @@
-﻿using GurpsCompanion.Shared.DataModel.DataContext;
+﻿using System.Text.Json.Serialization;
+using GurpsCompanion.Shared.DataModel.DataContext;
 
 namespace GurpsCompanion.Shared.DataModel
 {
     public class CharacterModel : ModelBase
     {
+        public CharacterModel Clone()
+        {
+            return (CharacterModel)MemberwiseClone();
+        }
+
         public CharacterModel()
         {
         }
@@ -40,5 +46,17 @@ namespace GurpsCompanion.Shared.DataModel
         public long BasicMoveMod { get; set; }
         public long RadexFavor { get; set; }
         public long VagrexFavor { get; set; }
+
+        [JsonIgnore]
+        public double BasicSpeed => 1d / ((Dexterity + BasicSpeedMod + Health) / 4d);
+
+        [JsonIgnore]
+        public double NextFightingTime { get; set; }
+
+        [JsonIgnore]
+        public string FightingComment { get; set; }
+
+        [JsonIgnore]
+        public string FightingName { get; set; }
     }
 }
