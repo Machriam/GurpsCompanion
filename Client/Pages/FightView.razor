@@ -16,7 +16,7 @@
                     </thead>
                     @foreach (var fighter in Fighters)
                     {
-                        <tr>
+                        <tr style="@(fighter==Fighters[0]? "background-color:beige":"" )">
                             <td>@fighter.FightActionCounter</td>
                             <td>@fighter.FightingName</td>
                             <td>
