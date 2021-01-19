@@ -6,7 +6,7 @@
     <table class="table">
         <thead>
             <tr>
-                @foreach (var property in Characters[0].GetProperties())
+                @foreach (var property in Characters[0].GetDisplayPropertyNames())
                 {
                     <th scope="col">@property</th>
                 }
@@ -15,7 +15,7 @@
         @foreach (var character in Characters)
         {
             <tr>
-                @foreach (var value in character.GetValues())
+                @foreach (var value in character.GetDisplayValues())
                 {
                     <td>@value.ToString()</td>
                 }

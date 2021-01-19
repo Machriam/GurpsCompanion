@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
 using GurpsCompanion.Shared;
 using GurpsCompanion.Shared.DataModel;
+using Microsoft.AspNetCore.Components;
 
 namespace GurpsCompanion.Client.Pages
 {

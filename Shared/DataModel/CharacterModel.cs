@@ -33,21 +33,48 @@ namespace GurpsCompanion.Shared.DataModel
         }
 
         public long Id { get; set; }
+
+        [DisplayAttribute]
         public long IsPlayer { get; set; }
+
+        [DisplayAttribute]
         public string Name { get; set; }
+
+        [DisplayAttribute]
         public long Strength { get; set; }
+
+        [DisplayAttribute]
         public long Dexterity { get; set; }
+
+        [DisplayAttribute]
         public long Intelligence { get; set; }
+
+        [DisplayAttribute]
         public long Health { get; set; }
+
+        [DisplayAttribute]
         public long WillMod { get; set; }
+
+        [DisplayAttribute]
         public long PerceptionMod { get; set; }
+
+        [DisplayAttribute]
         public long HitPointsMod { get; set; }
+
+        [DisplayAttribute]
         public long BasicSpeedMod { get; set; }
+
+        [DisplayAttribute]
         public long BasicMoveMod { get; set; }
+
+        [DisplayAttribute]
         public long RadexFavor { get; set; }
+
+        [DisplayAttribute]
         public long VagrexFavor { get; set; }
 
         [JsonIgnore]
+        [DisplayAttribute]
         public double BasicSpeed => 1d / ((Dexterity + BasicSpeedMod + Health) / 4d);
 
         [JsonIgnore]
