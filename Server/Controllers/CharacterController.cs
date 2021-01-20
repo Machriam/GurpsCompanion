@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using GurpsCompanion.Shared.DataModel;
 using GurpsCompanion.Shared.DataModel.DataContext;
+using GurpsCompanion.Shared.FeatureModels;
 
 namespace GurpsCompanion.Server.Controllers
 {
@@ -24,6 +25,21 @@ namespace GurpsCompanion.Server.Controllers
         public IEnumerable<CharacterModel> Get()
         {
             return _dataContext.Characters.Select(c => new CharacterModel(c));
+        }
+
+        [HttpGet("characterinformation")]
+        public CharacterInformationModel GetCharacterInformationModel(long id)
+        {
+            return new CharacterInformationModel()
+            {
+                Advantages = _dataContext.CharacterAdvantageAssociations
+                    .Where(caa => caa.CharacterFk == id).Select(caa => new AdvantageModel(caa.AdvantageFkNavigation)),
+                Items = _dataContext.CharacterItemAssociations
+                    .Where(caa => caa.CharacterFk == id).Select(caa => new ItemModel(caa.ItemFkNavigation)),
+                Skills = _dataContext.CharacterSkillAssociations
+                    .Where(caa => caa.CharacterFk == id).Select(caa => new SkillModel(caa.SkillFkNavigation)),
+                CharacterModel = new CharacterModel(_dataContext.Characters.First(c => c.Id == id))
+            };
         }
     }
 }

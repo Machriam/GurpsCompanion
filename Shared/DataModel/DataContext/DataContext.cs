@@ -81,7 +81,7 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
 
                 entity.ToTable("character_advantage_association");
 
-                entity.Property(e => e.AdvantageVk).HasColumnName("advantage_vk");
+                entity.Property(e => e.AdvantageFk).HasColumnName("advantage_fk");
 
                 entity.Property(e => e.CharacterFk).HasColumnName("character_fk");
 
