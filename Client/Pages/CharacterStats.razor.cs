@@ -7,7 +7,7 @@ using GurpsCompanion.Shared.DataModel;
 
 namespace GurpsCompanion.Client.Pages
 {
-    public partial class CharactersView : ComponentBase
+    public partial class CharacterStats : ComponentBase
     {
         public List<CharacterModel> Characters { get; set; }
 

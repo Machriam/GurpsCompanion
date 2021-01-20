@@ -20,7 +20,15 @@ namespace GurpsCompanion.Shared.DataModel
         public IEnumerable<object> GetDisplayValues()
         {
             return GetType().GetProperties().Where(DisplayAttributeIsSet)
-                .Select(p => p.GetValue(this));
+                .Select(p => FormatObject(p.GetValue(this)));
         }
+
+        private static string FormatObject(object value) => value switch
+        {
+            double v => v.ToString("N2"),
+            decimal v => v.ToString("N2"),
+            float v => v.ToString("N2"),
+            _ => value.ToString(),
+        };
     }
 }

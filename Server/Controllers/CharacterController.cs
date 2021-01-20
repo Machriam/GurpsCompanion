@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using GurpsCompanion.Shared.DataModel;
-using GurpsCompanion.Shared.DataModel.DataContext;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using GurpsCompanion.Shared.DataModel;
+using GurpsCompanion.Shared.DataModel.DataContext;
 
 namespace GurpsCompanion.Server.Controllers
 {
