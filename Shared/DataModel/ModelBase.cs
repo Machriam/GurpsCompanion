@@ -1,25 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
 namespace GurpsCompanion.Shared.DataModel
 {
-    public class ModelBase
+    public abstract class ModelBase
     {
-        public IEnumerable<string> GetDisplayPropertyNames()
+        public IEnumerable<string> GetPropertyNames(Type type)
         {
-            return GetType().GetProperties().Where(DisplayAttributeIsSet)
+            return GetType().GetProperties().Where(p => TypeAttributeIsSet(p, type))
                 .Select(p => Humanizer.StringHumanizeExtensions.Humanize(p.Name));
         }
 
-        private static bool DisplayAttributeIsSet(PropertyInfo propertyInfo)
+        private static bool TypeAttributeIsSet(PropertyInfo propertyInfo, Type type)
         {
-            return propertyInfo.CustomAttributes.Any(ca => ca.AttributeType == typeof(DisplayAttribute));
+            return propertyInfo.CustomAttributes.Any(ca => ca.AttributeType == type);
         }
 
-        public IEnumerable<object> GetDisplayValues()
+        public IEnumerable<object> GetPropertyValues(Type type)
         {
-            return GetType().GetProperties().Where(DisplayAttributeIsSet)
+            return GetType().GetProperties().Where(p => TypeAttributeIsSet(p, type))
                 .Select(p => FormatObject(p.GetValue(this)));
         }
 

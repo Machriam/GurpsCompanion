@@ -30,9 +30,12 @@ namespace GurpsCompanion.Client.Pages
             {
                 if (value == _selectedCharacterModel) return;
                 _selectedCharacterModel = value;
+                CharacterEditModel = value?.Clone();
                 RetrieveCharacterInformation();
             }
         }
+
+        public CharacterModel CharacterEditModel { get; set; }
 
         protected override async Task OnInitializedAsync()
         {

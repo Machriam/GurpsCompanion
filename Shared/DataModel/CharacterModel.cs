@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using GurpsCompanion.Shared.DataModel.DataContext;
 
 namespace GurpsCompanion.Shared.DataModel
@@ -34,47 +35,65 @@ namespace GurpsCompanion.Shared.DataModel
 
         public long Id { get; set; }
 
-        [DisplayAttribute]
+        [Display]
         public long IsPlayer { get; set; }
 
-        [DisplayAttribute]
+        [Display]
         public string Name { get; set; }
 
-        [DisplayAttribute]
+        [Display]
+        [Editable]
+        [Range(6, 99)]
         public long Strength { get; set; }
 
-        [DisplayAttribute]
+        [Display]
+        [Editable]
+        [Range(6, 99)]
         public long Dexterity { get; set; }
 
-        [DisplayAttribute]
+        [Display]
+        [Editable]
+        [Range(6, 99)]
         public long Intelligence { get; set; }
 
-        [DisplayAttribute]
+        [Display]
+        [Editable]
+        [Range(6, 99)]
         public long Health { get; set; }
 
-        [DisplayAttribute]
+        [Display]
+        [Editable]
+        [Range(-10, 99)]
         public long WillMod { get; set; }
 
-        [DisplayAttribute]
+        [Display]
+        [Editable]
+        [Range(-10, 99)]
         public long PerceptionMod { get; set; }
 
-        [DisplayAttribute]
+        [Display]
+        [Editable]
+        [Range(-10, 99)]
         public long HitPointsMod { get; set; }
 
-        [DisplayAttribute]
+        [Display]
+        [Editable]
+        [Range(-10, 99)]
         public long BasicSpeedMod { get; set; }
 
-        [DisplayAttribute]
+        [Display]
+        [Editable]
+        [Range(-10, 99)]
         public long BasicMoveMod { get; set; }
 
-        [DisplayAttribute]
+        [Display]
         public long RadexFavor { get; set; }
 
-        [DisplayAttribute]
+        [Display]
         public long VagrexFavor { get; set; }
 
         [JsonIgnore]
-        [DisplayAttribute]
+        [Display]
         public double BasicSpeed => 1d / ((Dexterity + BasicSpeedMod + Health) / 4d);
 
         [JsonIgnore]

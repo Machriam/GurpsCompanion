@@ -6,4 +6,9 @@ namespace GurpsCompanion.Shared.DataModel
     public class DisplayAttribute : Attribute
     {
     }
+
+    [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
+    public class EditableAttribute : Attribute
+    {
+    }
 }

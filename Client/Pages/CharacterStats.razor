@@ -1,12 +1,12 @@
 ﻿@page "/characterstats"
-@using GurpsCompanion.Shared
+@using GurpsCompanion.Shared.DataModel
 @inject HttpClient Http
 @if (Characters != null && Characters.Count > 0)
 {
     <table class="table">
         <thead>
             <tr>
-                @foreach (var property in Characters[0].GetDisplayPropertyNames())
+                @foreach (var property in Characters[0].GetPropertyNames(typeof(DisplayAttribute)))
                 {
                     <th scope="col">@property</th>
                 }
@@ -15,7 +15,7 @@
         @foreach (var character in Characters)
         {
             <tr>
-                @foreach (var value in character.GetDisplayValues())
+                @foreach (var value in character.GetPropertyValues(typeof(DisplayAttribute)))
                 {
                     <td>@value.ToString()</td>
                 }

@@ -1,0 +1,48 @@
+﻿@using GurpsCompanion.Shared.DataModel
+@inject HttpClient Http
+
+<EditForm Model="SelectedCharacterModel">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+    @if (SelectedCharacterModel != null)
+    {
+        <div class="col-md-12 d-flex ">
+            <div class="p-0">
+                <label class="col-form-label">ST</label>
+                <InputNumber class="form-control" @bind-Value="SelectedCharacterModel.Strength"></InputNumber>
+            </div>
+            <div class="p-0">
+                <label class="col-form-label">DX</label>
+                <InputNumber class="form-control" @bind-Value="SelectedCharacterModel.Dexterity"></InputNumber>
+            </div>
+            <div class="p-0">
+                <label class="col-form-label">IQ</label>
+                <InputNumber class="form-control" @bind-Value="SelectedCharacterModel.Intelligence"></InputNumber>
+            </div>
+            <div class="p-0">
+                <label class="col-form-label">HT</label>
+                <InputNumber class="form-control" @bind-Value="SelectedCharacterModel.Health"></InputNumber>
+            </div>
+            <div class="p-0">
+                <label class="col-form-label">Will Mod</label>
+                <InputNumber class="form-control" @bind-Value="SelectedCharacterModel.WillMod"></InputNumber>
+            </div>
+            <div class="p-0">
+                <label class="col-form-label">Perception Mod</label>
+                <InputNumber class="form-control" @bind-Value="SelectedCharacterModel.PerceptionMod"></InputNumber>
+            </div>
+            <div class="p-0">
+                <label class="col-form-label">BS Mod (BS: @(SelectedCharacterModel.BasicSpeed.ToString("N2")))</label>
+                <InputNumber class="form-control" @bind-Value="SelectedCharacterModel.BasicSpeedMod"></InputNumber>
+            </div>
+            <div class="p-0">
+                <label class="col-form-label">BM Mod</label>
+                <InputNumber class="form-control" @bind-Value="SelectedCharacterModel.BasicMoveMod"></InputNumber>
+            </div>
+            <div class="p-0">
+                <label class="col-form-label">Dexterity</label>
+                <InputNumber class="form-control" @bind-Value="SelectedCharacterModel.Intelligence"></InputNumber>
+            </div>
+        </div>
+    }
+</EditForm>

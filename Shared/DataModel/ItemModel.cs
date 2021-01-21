@@ -4,6 +4,11 @@ namespace GurpsCompanion.Shared.DataModel
 {
     public class ItemModel : ModelBase
     {
+        public ItemModel Clone()
+        {
+            return (ItemModel)MemberwiseClone();
+        }
+
         public ItemModel()
         {
         }

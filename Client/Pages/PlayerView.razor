@@ -1,5 +1,5 @@
 ﻿@page "/playerview"
-@using GurpsCompanion.Shared
+@using GurpsCompanion.Shared.DataModel
 @inject HttpClient Http
 
 <div class="row">
@@ -18,5 +18,27 @@
                 }
             </datalist>
         </div>
+        @if (SelectedCharacterModel != null)
+        {
+            <div class="col-md-10">
+                <PlayerStats SelectedCharacterModel="CharacterEditModel"></PlayerStats>
+            </div>
+        }
+        @if (SelectedCharacterModel != null)
+        {
+            <div class="row col-md-12">
+                <div class="col-md-4">
+                    <label class="col-form-label">Items</label>
+                    <table class="table">
+                    </table>
+                </div>
+                <div class="col-md-4">
+                    <label class="col-form-label">Skills</label>
+                </div>
+                <div class="col-md-4">
+                    <label class="col-form-label">Advantages</label>
+                </div>
+            </div>
+        }
     }
 </div>
