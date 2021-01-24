@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Client\GurpsCompanion.Client.csproj" />
     <ProjectReference Include="..\Shared\GurpsCompanion.Shared.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DataContext\" />
+  </ItemGroup>
 </Project>

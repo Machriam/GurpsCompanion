@@ -4,11 +4,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using GurpsCompanion.Shared;
 using GurpsCompanion.Shared.DataModel;
+using GurpsCompanion.Shared.FeatureModels;
 
 namespace GurpsCompanion.Client.Pages
 {
     public partial class PlayerView : ComponentBase
     {
+        public CharacterInformationModel CharacterInformation { get; set; }
         public List<CharacterModel> Characters { get; set; }
         private string _selectedCharacterModelName;
 
@@ -42,8 +44,12 @@ namespace GurpsCompanion.Client.Pages
             Characters = await Http.GetFromJsonAsync<List<CharacterModel>>(ApiAddressResources.Character_Base).ConfigureAwait(false);
         }
 
-        public void RetrieveCharacterInformation()
+        public async void RetrieveCharacterInformation()
         {
+            CharacterInformation = null;
+            CharacterInformation = await Http.GetFromJsonAsync<CharacterInformationModel>
+                (ApiAddressResources.GetCharacterInformation + "?id=" + SelectedCharacterModel.Id).ConfigureAwait(false);
+            StateHasChanged();
         }
     }
 }

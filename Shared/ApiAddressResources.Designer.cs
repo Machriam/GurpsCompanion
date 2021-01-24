@@ -68,5 +68,32 @@ namespace GurpsCompanion.Shared {
                 return ResourceManager.GetString("Character_Base", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /api/character/characterinformation.
+        /// </summary>
+        public static string GetCharacterInformation {
+            get {
+                return ResourceManager.GetString("GetCharacterInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /api/item/item.
+        /// </summary>
+        public static string GetItem {
+            get {
+                return ResourceManager.GetString("GetItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /api/item/itemnames.
+        /// </summary>
+        public static string GetItemNames {
+            get {
+                return ResourceManager.GetString("GetItemNames", resourceCulture);
+            }
+        }
     }
 }

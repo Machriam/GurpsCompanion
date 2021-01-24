@@ -24,19 +24,18 @@
                 <PlayerStats SelectedCharacterModel="CharacterEditModel"></PlayerStats>
             </div>
         }
-        @if (SelectedCharacterModel != null)
+        @if (SelectedCharacterModel != null && CharacterInformation != null)
         {
-            <div class="row col-md-12">
-                <div class="col-md-4">
-                    <label class="col-form-label">Items</label>
-                    <table class="table">
-                    </table>
+            <div class="row col-md-12 d-flex text-center">
+                <div class="col-md-4 border">
+                    <label class="col-form-label-lg">Items</label>
+                    <PlayerItems Items="CharacterInformation.Items" SelectedCharacterModel="CharacterInformation.CharacterModel"></PlayerItems>
                 </div>
-                <div class="col-md-4">
-                    <label class="col-form-label">Skills</label>
+                <div class="col-md-4 border">
+                    <label class="col-form-label-lg">Skills</label>
                 </div>
-                <div class="col-md-4">
-                    <label class="col-form-label">Advantages</label>
+                <div class="col-md-4 border">
+                    <label class="col-form-label-lg">Advantages</label>
                 </div>
             </div>
         }

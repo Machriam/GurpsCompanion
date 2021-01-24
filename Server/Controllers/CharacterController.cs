@@ -4,42 +4,32 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using GurpsCompanion.Shared.DataModel;
 using GurpsCompanion.Shared.DataModel.DataContext;
-using GurpsCompanion.Shared.FeatureModels;
 
 namespace GurpsCompanion.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CharacterController : ControllerBase
+    public class ItemController : ControllerBase
     {
         private readonly ILogger<CharacterController> _logger;
         private readonly DataContext _dataContext;
 
-        public CharacterController(ILogger<CharacterController> logger, DataContext dataContext)
+        public ItemController(ILogger<CharacterController> logger, DataContext dataContext)
         {
             _logger = logger;
             _dataContext = dataContext;
         }
 
-        [HttpGet]
-        public IEnumerable<CharacterModel> Get()
+        [HttpGet("itemnames")]
+        public IEnumerable<string> Get()
         {
-            return _dataContext.Characters.Select(c => new CharacterModel(c));
+            return _dataContext.Items.Select(c => c.Name);
         }
 
-        [HttpGet("characterinformation")]
-        public CharacterInformationModel GetCharacterInformationModel(long id)
+        [HttpGet("item")]
+        public ItemModel GetItem(string name)
         {
-            return new CharacterInformationModel()
-            {
-                Advantages = _dataContext.CharacterAdvantageAssociations
-                    .Where(caa => caa.CharacterFk == id).Select(caa => new AdvantageModel(caa.AdvantageFkNavigation)),
-                Items = _dataContext.CharacterItemAssociations
-                    .Where(caa => caa.CharacterFk == id).Select(caa => new ItemModel(caa.ItemFkNavigation)),
-                Skills = _dataContext.CharacterSkillAssociations
-                    .Where(caa => caa.CharacterFk == id).Select(caa => new SkillModel(caa.SkillFkNavigation)),
-                CharacterModel = new CharacterModel(_dataContext.Characters.First(c => c.Id == id))
-            };
+            return new ItemModel(_dataContext.Items.First(i => i.Name == name));
         }
     }
 }

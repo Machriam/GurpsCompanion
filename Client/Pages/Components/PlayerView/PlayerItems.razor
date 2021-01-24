@@ -1,0 +1,40 @@
+﻿@using GurpsCompanion.Shared.DataModel
+@inject HttpClient Http
+
+<EditForm Model="ItemEditModel" OnSubmit="UpdateItem">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+    @if (SelectedCharacterModel != null)
+    {
+        <table class="table" style="height:500px; overflow-y:scroll">
+            @foreach (var item in Items)
+            {
+                <tr>
+                    <td>@item.Name (@item.Price.ToString("C2"))<br />@item.Description</td>
+                </tr>
+            }
+        </table>
+        var itemDivClass = "ml-1 flex-fill";
+        <div class="d-flex col-md-12 flex-wrap">
+            <label class="col-form-label col-md-12">Select Character</label>
+
+            <div class="@itemDivClass">
+                <label class="col-form-label">Name</label>
+                <InputText @bind-Value="@ItemEditModel.Name" class="form-control"></InputText>
+            </div>
+            <div class="@itemDivClass">
+                <label class="col-form-label">Price</label>
+                <InputNumber @bind-Value="@ItemEditModel.Price" class="form-control"></InputNumber>
+            </div>
+            <div class="@itemDivClass">
+                <label class="col-form-label">Description</label>
+                <InputTextArea @bind-Value="@ItemEditModel.Description" class="form-control"></InputTextArea>
+            </div>
+            <div class="d-flex justify-content-between col-md-12">
+                <button class="btn btn-primary m-2" type="submit">Add new Item</button>
+                <button class="btn btn-primary m-2" type="submit">Update Item</button>
+                <button class="btn btn-primary m-2" type="submit">Delete Item</button>
+            </div>
+        </div>
+    }
+</EditForm>

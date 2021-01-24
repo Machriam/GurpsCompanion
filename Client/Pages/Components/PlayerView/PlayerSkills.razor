@@ -1,0 +1,10 @@
+﻿@using GurpsCompanion.Shared.DataModel
+@inject HttpClient Http
+
+<EditForm Model="SelectedCharacterModel" OnSubmit="UpdateStats">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+    @if (SelectedCharacterModel != null)
+    {
+    }
+</EditForm>

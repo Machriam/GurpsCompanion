@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GurpsCompanion.Client", "Cl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GurpsCompanion.Shared", "Shared\GurpsCompanion.Shared.csproj", "{EE2AEDFC-D708-43CC-B247-8DED139D6E7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unittests.Shared", "Unittests.Shared\Unittests.Shared.csproj", "{D86C7212-8BEB-40C1-835E-2C1C8876A27C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unittests.Shared", "Unittests.Shared\Unittests.Shared.csproj", "{D86C7212-8BEB-40C1-835E-2C1C8876A27C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -120,4 +120,15 @@
   <data name="Character_Base" xml:space="preserve">
     <value>/api/character</value>
   </data>
+  <data name="GetCharacterInformation" xml:space="preserve">
+    <value>/api/character/characterinformation</value>
+    <comment>long id</comment>
+  </data>
+  <data name="GetItem" xml:space="preserve">
+    <value>/api/item/item</value>
+    <comment>string name</comment>
+  </data>
+  <data name="GetItemNames" xml:space="preserve">
+    <value>/api/item/itemnames</value>
+  </data>
 </root>

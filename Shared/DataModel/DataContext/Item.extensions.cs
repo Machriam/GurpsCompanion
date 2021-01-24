@@ -14,6 +14,7 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
             Price = model.Price;
             Image = model.Image;
             Weight = model.Weight;
+            Name = model.Name;
         }
     }
 }

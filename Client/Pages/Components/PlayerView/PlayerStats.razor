@@ -45,14 +45,13 @@
                 <label class="col-form-label">BM Mod</label>
                 <InputNumber class="form-control" @bind-Value="SelectedCharacterModel.BasicMoveMod"></InputNumber>
             </div>
-            <div class="@editableDivClass">
-                <label class="col-form-label">Dexterity</label>
-                <InputNumber class="form-control" @bind-Value="SelectedCharacterModel.Intelligence"></InputNumber>
-            </div>
         </div>
         <div class="col-md-12 d-flex flex-row">
             <div class="@nonEditableDivClass">
                 <label class="col-form-label">BM: @(SelectedCharacterModel.BasicMove)</label>
+            </div>
+            <div class="@nonEditableDivClass">
+                <label class="col-form-label">BL: @(SelectedCharacterModel.BasicLift)</label>
             </div>
             <div class="@nonEditableDivClass">
                 <label class="col-form-label">BS: @(SelectedCharacterModel.BasicSpeed.ToString("N2")) (RPS: @((1/(SelectedCharacterModel.BasicSpeed*5)).ToString("N2")))</label>

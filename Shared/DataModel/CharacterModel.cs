@@ -144,6 +144,10 @@ namespace GurpsCompanion.Shared.DataModel
 
         [JsonIgnore]
         [Display]
+        public decimal BasicLift => Strength > 7 ? Math.Round(Strength * Strength / 5m, 0) : Strength * Strength / 5;
+
+        [JsonIgnore]
+        [Display]
         public long NeededCP => GetNormalizedPropertyValues<CPAttribute>().Sum(v => (long)v);
 
         [JsonIgnore]

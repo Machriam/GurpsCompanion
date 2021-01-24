@@ -85,6 +85,10 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
 
                 entity.Property(e => e.CharacterFk).HasColumnName("character_fk");
 
+                entity.HasOne(d => d.AdvantageFkNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.AdvantageFk);
+
                 entity.HasOne(d => d.CharacterFkNavigation)
                     .WithMany()
                     .HasForeignKey(d => d.CharacterFk);
@@ -139,6 +143,10 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
                     .HasColumnName("description");
 
                 entity.Property(e => e.Image).HasColumnName("image");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasColumnName("name");
 
                 entity.Property(e => e.Price).HasColumnName("price");
 
