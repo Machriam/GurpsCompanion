@@ -24,6 +24,14 @@ namespace GurpsCompanion.Shared.DataModel
                 .Select(p => FormatObject(p.GetValue(this)));
         }
 
+        public IEnumerable<decimal> GetNormalizedPropertyValues<T>() where T : Attribute, INormalizeAttribute
+        {
+            var properties = GetType().GetProperties().Where(p => TypeAttributeIsSet(p, typeof(T)));
+            var result = properties.Select(p =>
+                (Convert.ToDecimal(p.GetValue(this))) * ((INormalizeAttribute)p.GetCustomAttribute(typeof(T))).GetValue());
+            return result;
+        }
+
         private static string FormatObject(object value) => value switch
         {
             double v => v.ToString("N2"),

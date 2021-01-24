@@ -5,7 +5,23 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
 {
     public partial class PlayerStats : ComponentBase
     {
+        private CharacterModel _selectedCharacterModel;
+
         [Parameter]
-        public CharacterModel SelectedCharacterModel { get; set; }
+        public CharacterModel SelectedCharacterModel
+        {
+            get => _selectedCharacterModel; set
+            {
+                if (_selectedCharacterModel == value) return;
+                _selectedCharacterModel = value;
+                OriginalCharacterModel = value?.Clone();
+            }
+        }
+
+        public CharacterModel OriginalCharacterModel { get; set; }
+
+        public void UpdateStats()
+        {
+        }
     }
 }

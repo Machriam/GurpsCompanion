@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text.Json.Serialization;
 using GurpsCompanion.Shared.DataModel.DataContext;
 
@@ -43,46 +45,55 @@ namespace GurpsCompanion.Shared.DataModel
 
         [Display]
         [Editable]
+        [CP(10)]
         [Range(6, 99)]
         public long Strength { get; set; }
 
         [Display]
         [Editable]
+        [CP(20)]
         [Range(6, 99)]
         public long Dexterity { get; set; }
 
         [Display]
         [Editable]
+        [CP(20)]
         [Range(6, 99)]
         public long Intelligence { get; set; }
 
         [Display]
         [Editable]
+        [CP(8)]
         [Range(6, 99)]
         public long Health { get; set; }
 
         [Display]
         [Editable]
+        [CP(5)]
         [Range(-10, 99)]
         public long WillMod { get; set; }
 
         [Display]
         [Editable]
+        [CP(5)]
         [Range(-10, 99)]
         public long PerceptionMod { get; set; }
 
         [Display]
         [Editable]
+        [CP(2)]
         [Range(-10, 99)]
         public long HitPointsMod { get; set; }
 
         [Display]
         [Editable]
+        [CP(5)]
         [Range(-10, 99)]
         public long BasicSpeedMod { get; set; }
 
         [Display]
         [Editable]
+        [CP(5)]
         [Range(-10, 99)]
         public long BasicMoveMod { get; set; }
 
@@ -98,6 +109,42 @@ namespace GurpsCompanion.Shared.DataModel
 
         [JsonIgnore]
         public double NextFightingTime { get; set; }
+
+        [JsonIgnore]
+        [Display]
+        public long Will => Intelligence + WillMod;
+
+        [JsonIgnore]
+        [Display]
+        public long Perception => Intelligence + PerceptionMod;
+
+        [JsonIgnore]
+        [Display]
+        public long HitPoints => Strength + HitPointsMod;
+
+        [JsonIgnore]
+        [Display]
+        public double BasicMove => Math.Floor((1 / BasicSpeed) + (BasicMoveMod / 4));
+
+        [JsonIgnore]
+        [Display]
+        public decimal StrenghtRegeneration => Math.Floor(Strength / 10m);
+
+        [JsonIgnore]
+        [Display]
+        public decimal HitPointsRegeneration => Math.Floor(HitPoints / 10m);
+
+        [JsonIgnore]
+        [Display]
+        public decimal VagrexPointRegeneration => VagrexFavor;
+
+        [JsonIgnore]
+        [Display]
+        public long VagrexPoints => (long)(Math.Round((Health * 0.5) + (Strength * 0.2), 0) + VagrexFavor);
+
+        [JsonIgnore]
+        [Display]
+        public long NeededCP => GetNormalizedPropertyValues<CPAttribute>().Sum(v => (long)v);
 
         [JsonIgnore]
         public string FightingComment { get; set; }

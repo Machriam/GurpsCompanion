@@ -1,47 +1,91 @@
 ﻿@using GurpsCompanion.Shared.DataModel
 @inject HttpClient Http
 
-<EditForm Model="SelectedCharacterModel">
+<EditForm Model="SelectedCharacterModel" OnSubmit="UpdateStats">
     <DataAnnotationsValidator></DataAnnotationsValidator>
     <ValidationSummary></ValidationSummary>
     @if (SelectedCharacterModel != null)
     {
-        <div class="col-md-12 d-flex ">
-            <div class="p-0">
+        var editableDivClass = "ml-1";
+        var nonEditableDivClass = "ml-1 mt-1 flex-fill bold";
+        <div class="col-md-12 d-flex">
+            <div class="@editableDivClass">
                 <label class="col-form-label">ST</label>
                 <InputNumber class="form-control" @bind-Value="SelectedCharacterModel.Strength"></InputNumber>
             </div>
-            <div class="p-0">
+            <div class="@editableDivClass">
                 <label class="col-form-label">DX</label>
                 <InputNumber class="form-control" @bind-Value="SelectedCharacterModel.Dexterity"></InputNumber>
             </div>
-            <div class="p-0">
+            <div class="@editableDivClass">
                 <label class="col-form-label">IQ</label>
                 <InputNumber class="form-control" @bind-Value="SelectedCharacterModel.Intelligence"></InputNumber>
             </div>
-            <div class="p-0">
+            <div class="@editableDivClass">
                 <label class="col-form-label">HT</label>
                 <InputNumber class="form-control" @bind-Value="SelectedCharacterModel.Health"></InputNumber>
             </div>
-            <div class="p-0">
+            <div class="@editableDivClass">
+                <label class="col-form-label">HP Mod</label>
+                <InputNumber class="form-control" @bind-Value="SelectedCharacterModel.HitPointsMod"></InputNumber>
+            </div>
+            <div class="@editableDivClass">
                 <label class="col-form-label">Will Mod</label>
                 <InputNumber class="form-control" @bind-Value="SelectedCharacterModel.WillMod"></InputNumber>
             </div>
-            <div class="p-0">
-                <label class="col-form-label">Perception Mod</label>
+            <div class="@editableDivClass">
+                <label class="col-form-label">Per Mod</label>
                 <InputNumber class="form-control" @bind-Value="SelectedCharacterModel.PerceptionMod"></InputNumber>
             </div>
-            <div class="p-0">
-                <label class="col-form-label">BS Mod (BS: @(SelectedCharacterModel.BasicSpeed.ToString("N2")))</label>
+            <div class="@editableDivClass">
+                <label class="col-form-label">BS Mod</label>
                 <InputNumber class="form-control" @bind-Value="SelectedCharacterModel.BasicSpeedMod"></InputNumber>
             </div>
-            <div class="p-0">
+            <div class="@editableDivClass">
                 <label class="col-form-label">BM Mod</label>
                 <InputNumber class="form-control" @bind-Value="SelectedCharacterModel.BasicMoveMod"></InputNumber>
             </div>
-            <div class="p-0">
+            <div class="@editableDivClass">
                 <label class="col-form-label">Dexterity</label>
                 <InputNumber class="form-control" @bind-Value="SelectedCharacterModel.Intelligence"></InputNumber>
+            </div>
+        </div>
+        <div class="col-md-12 d-flex flex-row">
+            <div class="@nonEditableDivClass">
+                <label class="col-form-label">BM: @(SelectedCharacterModel.BasicMove)</label>
+            </div>
+            <div class="@nonEditableDivClass">
+                <label class="col-form-label">BS: @(SelectedCharacterModel.BasicSpeed.ToString("N2")) (RPS: @((1/(SelectedCharacterModel.BasicSpeed*5)).ToString("N2")))</label>
+            </div>
+            <div class="@nonEditableDivClass">
+                <label class="col-form-label">Per: @(SelectedCharacterModel.Perception)</label>
+            </div>
+            <div class="@nonEditableDivClass">
+                <label class="col-form-label">Will: @(SelectedCharacterModel.Will)</label>
+            </div>
+            <div class="@nonEditableDivClass">
+                <label class="col-form-label">ST-Reg: @(SelectedCharacterModel.StrenghtRegeneration)</label>
+            </div>
+            <div class="@nonEditableDivClass">
+                <label class="col-form-label">HP: @(SelectedCharacterModel.HitPoints)</label>
+            </div>
+            <div class="@nonEditableDivClass">
+                <label class="col-form-label">HP-Reg: @(SelectedCharacterModel.HitPointsRegeneration)</label>
+            </div>
+            <div class="@nonEditableDivClass">
+                <label class="col-form-label">VP: @(SelectedCharacterModel.VagrexPoints)</label>
+            </div>
+            <div class="@nonEditableDivClass">
+                <label class="col-form-label">VP-Reg: @(SelectedCharacterModel.VagrexPointRegeneration)</label>
+            </div>
+            <div class="@nonEditableDivClass">
+                <label class="col-form-label">CP Total: @(SelectedCharacterModel.NeededCP)</label>
+            </div>
+            <div class="@nonEditableDivClass">
+                <label class="col-form-label">CP Diff: @(SelectedCharacterModel.NeededCP-OriginalCharacterModel.NeededCP)</label>
+            </div>
+            <div class="flex-grow-0 @nonEditableDivClass">
+                <button class="btn btn-primary" type="submit">Update Stats</button>
             </div>
         </div>
     }
