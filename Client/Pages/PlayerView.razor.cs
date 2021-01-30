@@ -1,28 +1,25 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
 using GurpsCompanion.Shared;
+using GurpsCompanion.Shared.Core;
 using GurpsCompanion.Shared.DataModel;
 using GurpsCompanion.Shared.FeatureModels;
+using Microsoft.AspNetCore.Components;
 
 namespace GurpsCompanion.Client.Pages
 {
     public partial class PlayerView : ComponentBase
     {
+        public void SelectedDataListItemChanged(IDataListItem item)
+        {
+            SelectedCharacterModel = item == null ? null : (CharacterModel)item;
+        }
+
+        public IEnumerable<IDataListItem> DataListItems => Characters.Cast<IDataListItem>();
         public CharacterInformationModel CharacterInformation { get; set; }
         public List<CharacterModel> Characters { get; set; }
-        private string _selectedCharacterModelName;
-
-        public string SelectedCharacterModelName
-        {
-            get => _selectedCharacterModelName; set
-            {
-                if (value == _selectedCharacterModelName) return;
-                _selectedCharacterModelName = value;
-                SelectedCharacterModel = Characters.Find(c => c.Name == value);
-            }
-        }
 
         private CharacterModel _selectedCharacterModel;
 
@@ -47,6 +44,7 @@ namespace GurpsCompanion.Client.Pages
         public async void RetrieveCharacterInformation()
         {
             CharacterInformation = null;
+            if (SelectedCharacterModel == null) return;
             CharacterInformation = await Http.GetFromJsonAsync<CharacterInformationModel>
                 (ApiAddressResources.GetCharacterInformation + "?id=" + SelectedCharacterModel.Id).ConfigureAwait(false);
             StateHasChanged();

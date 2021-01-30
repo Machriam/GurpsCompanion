@@ -2,26 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Components;
+using GurpsCompanion.Shared.Core;
 
 namespace GurpsCompanion.Client.Pages.Components
 {
-    public interface DataListItem
-    {
-        string GetText();
-    }
-
     public partial class DataList : ComponentBase
     {
         private readonly string _guid = Guid.NewGuid().ToString("N");
 
         [Parameter]
-        public IEnumerable<DataListItem> Items { get; set; }
+        public string LabelText { get; set; }
 
         [Parameter]
-        public DataListItem SelectedItem { get; set; }
+        public IEnumerable<IDataListItem> Items { get; set; }
 
         [Parameter]
-        public EventCallback<DataListItem> SelectedItemChanged { get; set; }
+        public EventCallback<IDataListItem> SelectedItemChanged { get; set; }
 
         private string _selectedText;
 
@@ -31,8 +27,8 @@ namespace GurpsCompanion.Client.Pages.Components
             {
                 if (value == _selectedText) return;
                 _selectedText = value;
-                SelectedItem = Items.First(i => i.GetText() == value);
-                SelectedItemChanged.InvokeAsync(SelectedItem);
+                var selectedItem = Items.FirstOrDefault(i => i.GetText() == value);
+                SelectedItemChanged.InvokeAsync(selectedItem);
             }
         }
     }

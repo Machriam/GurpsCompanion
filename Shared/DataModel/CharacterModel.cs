@@ -2,16 +2,19 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Json.Serialization;
+using GurpsCompanion.Shared.Core;
 using GurpsCompanion.Shared.DataModel.DataContext;
 
 namespace GurpsCompanion.Shared.DataModel
 {
-    public class CharacterModel : ModelBase
+    public class CharacterModel : ModelBase, IDataListItem
     {
         public CharacterModel Clone()
         {
             return (CharacterModel)MemberwiseClone();
         }
+
+        public string GetText() => Name;
 
         public CharacterModel()
         {

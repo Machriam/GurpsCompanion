@@ -1,13 +1,16 @@
-﻿using GurpsCompanion.Shared.DataModel.DataContext;
+﻿using GurpsCompanion.Shared.Core;
+using GurpsCompanion.Shared.DataModel.DataContext;
 
 namespace GurpsCompanion.Shared.DataModel
 {
-    public class ItemModel : ModelBase
+    public class ItemModel : ModelBase, IDataListItem
     {
         public ItemModel Clone()
         {
             return (ItemModel)MemberwiseClone();
         }
+
+        public string GetText() => Name;
 
         public ItemModel()
         {

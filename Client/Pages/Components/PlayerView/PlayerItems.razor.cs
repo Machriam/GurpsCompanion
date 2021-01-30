@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components;
 using GurpsCompanion.Shared;
+using GurpsCompanion.Shared.Core;
 using GurpsCompanion.Shared.DataModel;
 
 namespace GurpsCompanion.Client.Pages.Components.PlayerView
@@ -28,11 +30,18 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
         public ItemModel ItemEditModel { get; set; } = new ItemModel();
 
         public CharacterModel OriginalCharacterModel { get; set; }
-        public List<string> ItemNames { get; set; }
+        public IEnumerable<IDataListItem> ItemNames { get; set; }
 
         public async void GetAllItems()
         {
-            ItemNames = await Http.GetFromJsonAsync<List<string>>(ApiAddressResources.GetItemNames).ConfigureAwait(false);
+            var names = await Http.GetFromJsonAsync<List<string>>(ApiAddressResources.GetItemNames).ConfigureAwait(false);
+            ItemNames = names.Select(n => (IDataListItem)(new ItemModel() { Name = n }));
+        }
+
+        public async void SelectedItemChanged(IDataListItem item)
+        {
+            ItemEditModel = await Http.GetFromJsonAsync<ItemModel>
+                (ApiAddressResources.GetItem + "?name=" + item.GetText()).ConfigureAwait(false);
         }
 
         public void UpdateItem()

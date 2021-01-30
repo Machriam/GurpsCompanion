@@ -54,7 +54,7 @@
                 <label class="col-form-label">BL: @(SelectedCharacterModel.BasicLift)</label>
             </div>
             <div class="@nonEditableDivClass">
-                <label class="col-form-label">BS: @(SelectedCharacterModel.BasicSpeed.ToString("N2")) (RPS: @((1/(SelectedCharacterModel.BasicSpeed*5)).ToString("N2")))</label>
+                <label class="col-form-label">BS: @((1/SelectedCharacterModel.BasicSpeed).ToString("N2")) (RPS: @((1/(SelectedCharacterModel.BasicSpeed*5)).ToString("N2")))</label>
             </div>
             <div class="@nonEditableDivClass">
                 <label class="col-form-label">Per: @(SelectedCharacterModel.Perception)</label>
@@ -78,7 +78,7 @@
                 <label class="col-form-label">VP-Reg: @(SelectedCharacterModel.VagrexPointRegeneration)</label>
             </div>
             <div class="@nonEditableDivClass">
-                <label class="col-form-label">CP Total: @(SelectedCharacterModel.NeededCP)</label>
+                <label class="col-form-label">CP Total: @(SelectedCharacterModel.NeededCP-580)</label>
             </div>
             <div class="@nonEditableDivClass">
                 <label class="col-form-label">CP Diff: @(SelectedCharacterModel.NeededCP-OriginalCharacterModel.NeededCP)</label>
