@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GurpsCompanion.Server.Core
+﻿namespace GurpsCompanion.Server.Core
 {
     public interface IEnvironmentConfiguration
     {
@@ -16,6 +14,6 @@ namespace GurpsCompanion.Server.Core
             _options = options;
         }
 
-        public string DatabaseConnection() => "Data Source=" + Environment.GetEnvironmentVariable(_options.DatabaseConnection);
+        public string DatabaseConnection() => "Data Source=" + _options.DatabaseConnection;
     }
 }

@@ -1,11 +1,11 @@
-﻿using GurpsCompanion.Server.Core;
-using GurpsCompanion.Shared.DataModel.DataContext;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using GurpsCompanion.Server.Core;
+using GurpsCompanion.Shared.DataModel.DataContext;
 
 namespace GurpsCompanion.Server
 {
@@ -55,8 +55,10 @@ namespace GurpsCompanion.Server
             else
             {
                 app.UseExceptionHandler("/Error");
+                app.UseHsts();
             }
 
+            app.UseHttpsRedirection();
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
 
