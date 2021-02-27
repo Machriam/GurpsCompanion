@@ -10,7 +10,7 @@ namespace GurpsCompanion.Shared.DataModel
             return (ItemModel)MemberwiseClone();
         }
 
-        public string GetText() => Name;
+        public string GetText => Name;
 
         public ItemModel()
         {

@@ -41,7 +41,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
         public async void SelectedItemChanged(IDataListItem item)
         {
             ItemEditModel = await Http.GetFromJsonAsync<ItemModel>
-                (ApiAddressResources.GetItem + "?name=" + item.GetText()).ConfigureAwait(false);
+                (ApiAddressResources.GetItem + "?name=" + item.GetText).ConfigureAwait(false);
         }
 
         public void UpdateItem()

@@ -14,7 +14,7 @@ namespace GurpsCompanion.Shared.DataModel
             return (CharacterModel)MemberwiseClone();
         }
 
-        public string GetText() => Name;
+        public string GetText => Name;
 
         public CharacterModel()
         {

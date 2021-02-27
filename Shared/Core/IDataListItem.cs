@@ -2,6 +2,6 @@
 {
     public interface IDataListItem
     {
-        string GetText();
+        string GetText { get; }
     }
 }
