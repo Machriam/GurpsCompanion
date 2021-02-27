@@ -1,6 +1,7 @@
 ﻿@page "/characterstats"
 @using GurpsCompanion.Shared.DataModel
 @inject HttpClient Http
+@inject AppStateContainer StateContainer
 @if (Characters != null && Characters.Count > 0)
 {
     <table class="table">

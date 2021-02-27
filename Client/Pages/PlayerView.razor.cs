@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components;
 using GurpsCompanion.Shared;
 using GurpsCompanion.Shared.Core;
 using GurpsCompanion.Shared.DataModel;
 using GurpsCompanion.Shared.FeatureModels;
-using Microsoft.AspNetCore.Components;
 
 namespace GurpsCompanion.Client.Pages
 {
@@ -46,7 +46,7 @@ namespace GurpsCompanion.Client.Pages
             CharacterInformation = null;
             if (SelectedCharacterModel == null) return;
             CharacterInformation = await Http.GetFromJsonAsync<CharacterInformationModel>
-                (ApiAddressResources.GetCharacterInformation + "?id=" + SelectedCharacterModel.Id).ConfigureAwait(false);
+                (string.Format(ApiAddressResources.GetCharacterInformation, SelectedCharacterModel.Id)).ConfigureAwait(false);
             StateHasChanged();
         }
     }

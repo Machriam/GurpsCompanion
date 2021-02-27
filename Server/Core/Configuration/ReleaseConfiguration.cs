@@ -3,6 +3,7 @@
     public interface IEnvironmentConfiguration
     {
         string DatabaseConnection();
+        string GameMasterPasswordHash();
     }
 
     public class ReleaseConfiguration : IEnvironmentConfiguration
@@ -15,5 +16,6 @@
         }
 
         public string DatabaseConnection() => "Data Source=" + _options.DatabaseConnection;
+        public string GameMasterPasswordHash() => _options.GameMasterPasswordHash;
     }
 }

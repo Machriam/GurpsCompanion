@@ -4,5 +4,6 @@
     {
         public const string Configuration = "Configuration";
         public string DatabaseConnection { get; set; }
+        public string GameMasterPasswordHash { get; set; }
     }
 }

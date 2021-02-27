@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using GurpsCompanion.Client.JsInterop;
+using GurpsCompanion.Client.Shared;
 using GurpsCompanion.Shared.Core;
 using GurpsCompanion.Shared.Features.Authentication;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace GurpsCompanion.Client
 {
@@ -20,6 +21,7 @@ namespace GurpsCompanion.Client
             builder.Services.AddSingleton<IPasswordCryptologizer, PasswordCryptologizer>();
             builder.Services.AddSingleton<IObjectValidator, ObjectValidator>();
             builder.Services.AddScoped<IJsFunctionCallerServiceFactory, JsFunctionCallerServiceFactory>();
+            builder.Services.AddSingleton(new AppStateContainer());
 
             await builder.Build().RunAsync();
         }

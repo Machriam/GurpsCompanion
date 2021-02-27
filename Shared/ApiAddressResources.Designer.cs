@@ -70,7 +70,7 @@ namespace GurpsCompanion.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /api/character/characterinformation.
+        ///   Looks up a localized string similar to /api/character/characterinformation?id={0}.
         /// </summary>
         public static string GetCharacterInformation {
             get {
@@ -79,7 +79,7 @@ namespace GurpsCompanion.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /api/item/item.
+        ///   Looks up a localized string similar to /api/item/item?name={0}.
         /// </summary>
         public static string GetItem {
             get {
@@ -93,6 +93,15 @@ namespace GurpsCompanion.Shared {
         public static string GetItemNames {
             get {
                 return ResourceManager.GetString("GetItemNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /api/item.
+        /// </summary>
+        public static string Item_Base {
+            get {
+                return ResourceManager.GetString("Item_Base", resourceCulture);
             }
         }
     }
