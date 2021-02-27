@@ -4,6 +4,6 @@ namespace GurpsCompanion.Client.Shared
 {
     public class AppStateContainer
     {
-        public GlobalPasswordHashModel PasswordModel { get; set; }
+        public GlobalPasswordHashModel PasswordModel { get; set; } = new GlobalPasswordHashModel();
     }
 }

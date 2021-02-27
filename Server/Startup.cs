@@ -1,11 +1,12 @@
-﻿using GurpsCompanion.Server.Core;
-using GurpsCompanion.Shared.DataModel.DataContext;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using GurpsCompanion.Server.Core;
+using GurpsCompanion.Shared.DataModel.DataContext;
+using GurpsCompanion.Shared.Features.Authentication;
 
 namespace GurpsCompanion.Server
 {
@@ -29,19 +30,14 @@ namespace GurpsCompanion.Server
             services.AddRazorPages();
             services.AddEntityFrameworkSqlite();
             var options = Configuration.GetSection(ConfigurationOptions.Configuration).Get<ConfigurationOptions>();
-            IEnvironmentConfiguration configuration;
-            if (_environment.IsDevelopment())
-            {
-                services.AddSingleton<IEnvironmentConfiguration, DebugConfiguration>();
-                configuration = new DebugConfiguration(options);
-            }
-            else
-            {
-                services.AddSingleton<IEnvironmentConfiguration, ReleaseConfiguration>();
-                configuration = new ReleaseConfiguration(options);
-            }
+            var configuration = _environment.IsDevelopment()
+                ? new DebugConfiguration(options)
+                : (IEnvironmentConfiguration)new ReleaseConfiguration(options);
+            services.AddSingleton(configuration);
             services.AddSingleton(options);
-            services.AddDbContext<DataContext>(opt => opt.UseSqlite(configuration.DatabaseConnection()));
+            services.AddDbContext<DataContext>(opt => opt.UseSqlite(configuration.DatabaseConnection));
+            services.AddSingleton<IAuthenticationVerifier, AuthenticationVerifier>();
+            services.AddSingleton<IPasswordCryptologizer, PasswordCryptologizer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

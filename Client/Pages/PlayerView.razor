@@ -1,6 +1,7 @@
 ﻿@page "/playerview"
 @using GurpsCompanion.Shared.Core
 @inject HttpClient Http
+@inject AppStateContainer StateContainer
 
 <div class="row">
     @if (Characters?.Count > 0)

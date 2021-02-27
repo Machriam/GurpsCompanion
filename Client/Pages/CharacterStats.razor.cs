@@ -13,7 +13,8 @@ namespace GurpsCompanion.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            Characters = await Http.GetFromJsonAsync<List<CharacterModel>>(ApiAddressResources.Character_Base).ConfigureAwait(false);
+            Characters = await Http.GetFromJsonAsync<List<CharacterModel>>(string.Format(ApiAddressResources.Character_Base,
+                StateContainer.PasswordModel.Hash, StateContainer.PasswordModel.Salt)).ConfigureAwait(false);
         }
     }
 }

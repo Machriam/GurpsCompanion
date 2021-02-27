@@ -9,7 +9,7 @@
             _options = options;
         }
 
-        public string DatabaseConnection() => "Data Source=" + _options.DatabaseConnection;
-        public string GameMasterPasswordHash() => _options.GameMasterPasswordHash;
+        public string DatabaseConnection => "Data Source=" + _options.DatabaseConnection;
+        public string GameMasterPasswordHash => _options.GameMasterPasswordHash;
     }
 }

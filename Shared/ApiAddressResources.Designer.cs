@@ -61,7 +61,7 @@ namespace GurpsCompanion.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /api/character.
+        ///   Looks up a localized string similar to /api/character?hash={0}&amp;salt={1}.
         /// </summary>
         public static string Character_Base {
             get {
