@@ -136,6 +136,12 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
             {
                 entity.ToTable("item");
 
+                entity.HasIndex(e => e.Name, "IX_item_name")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.Name, "item_name_index")
+                    .IsUnique();
+
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Description)

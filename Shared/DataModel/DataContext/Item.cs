@@ -17,7 +17,7 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
         public double Price { get; set; }
         public long Id { get; set; }
         public byte[] Image { get; set; }
-        public long Weight { get; set; }
+        public double Weight { get; set; }
 
         public virtual ICollection<CharacterItemAssociation> CharacterItemAssociations { get; set; }
     }

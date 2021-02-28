@@ -77,7 +77,7 @@ namespace GurpsCompanion.Client.UiComponents
             {
                 if (value == _selectedText) return;
                 _selectedText = value;
-                var selectedItem = Items?.FirstOrDefault(i => i.GetText == value);
+                var selectedItem = Items?.FirstOrDefault(i => i.GetText.Replace(" ", "") == value.Replace(" ", ""));
                 InputHasChanged.InvokeAsync(new DataListEntry(selectedItem, value));
                 SelectedItemChanged.InvokeAsync(selectedItem);
                 StateHasChanged();

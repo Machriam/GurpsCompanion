@@ -1,16 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components;
 using GurpsCompanion.Shared;
 using GurpsCompanion.Shared.Core;
 using GurpsCompanion.Shared.DataModel;
 using GurpsCompanion.Shared.FeatureModels;
-using Microsoft.AspNetCore.Components;
 
 namespace GurpsCompanion.Client.Pages
 {
-    public partial class PlayerView : ComponentBase
+    public partial class PlayerView : ComponentBase, IDisposable
     {
         public void SelectedDataListItemChanged(IDataListItem item)
         {
@@ -40,6 +41,12 @@ namespace GurpsCompanion.Client.Pages
         {
             Characters = await Http.GetFromJsonAsync<List<CharacterModel>>(string.Format(ApiAddressResources.Character_Base,
                 StateContainer.PasswordModel.Hash, StateContainer.PasswordModel.Salt)).ConfigureAwait(false);
+            EventBus.OnItemChanged += EventBus_OnItemAdded;
+        }
+
+        private void EventBus_OnItemAdded()
+        {
+            RetrieveCharacterInformation();
         }
 
         public async void RetrieveCharacterInformation()
@@ -49,6 +56,11 @@ namespace GurpsCompanion.Client.Pages
             CharacterInformation = await Http.GetFromJsonAsync<CharacterInformationModel>
                 (string.Format(ApiAddressResources.GetCharacterInformation, SelectedCharacterModel.Id)).ConfigureAwait(false);
             StateHasChanged();
+        }
+
+        public void Dispose()
+        {
+            EventBus.OnItemChanged -= EventBus_OnItemAdded;
         }
     }
 }

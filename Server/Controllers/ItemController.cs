@@ -36,14 +36,25 @@ namespace GurpsCompanion.Server.Controllers
         public ItemModel PostItem([FromBody] ItemModel model, long characterId)
         {
             using var transaction = _dataContext.Database.BeginTransaction();
-            var item = new Item(model);
-            _dataContext.Items.Add(item);
-            _dataContext.SaveChanges();
-            var characterItemAssociation = new CharacterItemAssociation() { CharacterFk = characterId, ItemFk = item.Id };
+            var dbItem = GetOrCreateItem(model);
+            var characterItemAssociation = new CharacterItemAssociation() { CharacterFk = characterId, ItemFk = dbItem.Id };
             _dataContext.CharacterItemAssociations.Add(characterItemAssociation);
             _dataContext.SaveChanges();
             transaction.Commit();
-            return new ItemModel(item);
+            return new ItemModel(dbItem);
+        }
+
+        private Item GetOrCreateItem(ItemModel model)
+        {
+            var dbItem = _dataContext.Items.FirstOrDefault(i => i.Name == model.Name);
+            if (dbItem == null)
+            {
+                dbItem = new Item(model);
+                _dataContext.Items.Add(dbItem);
+                _dataContext.SaveChanges();
+            }
+
+            return dbItem;
         }
 
         [HttpPut]

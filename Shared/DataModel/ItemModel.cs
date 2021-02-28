@@ -1,5 +1,7 @@
-﻿using GurpsCompanion.Shared.Core;
+﻿using System.ComponentModel.DataAnnotations;
+using GurpsCompanion.Shared.Core;
 using GurpsCompanion.Shared.DataModel.DataContext;
+using GurpsCompanion.Shared.Validation;
 
 namespace GurpsCompanion.Shared.DataModel
 {
@@ -26,11 +28,22 @@ namespace GurpsCompanion.Shared.DataModel
             Name = model.Name;
         }
 
+        public int Count { get; set; }
+
+        [Required]
+        [StringExists]
         public string Name { get; set; }
+
+        [Required]
         public string Description { get; set; }
+
+        [Required]
         public double Price { get; set; }
+
         public long Id { get; set; }
         public byte[] Image { get; set; }
-        public long Weight { get; set; }
+
+        [Required]
+        public double Weight { get; set; }
     }
 }

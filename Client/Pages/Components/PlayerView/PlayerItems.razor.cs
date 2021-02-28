@@ -41,6 +41,8 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
         public ItemModel ItemEditModel { get; set; } = new ItemModel();
 
         public CharacterModel OriginalCharacterModel { get; set; }
+        public double TotalMoney => Items.Sum(i => i.Price * i.Count);
+        public double TotalWeight => Items.Sum(i => i.Weight * i.Count);
         public CrudActions SubmitAction { get; set; }
         public IEnumerable<IDataListItem> ItemNames { get; set; }
 
@@ -48,6 +50,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
         {
             var names = await Http.GetFromJsonAsync<List<string>>(ApiAddressResources.GetItemNames).ConfigureAwait(false);
             ItemNames = names.Select(n => (IDataListItem)(new ItemModel() { Name = n }));
+            StateHasChanged();
         }
 
         public async void InputHasChanged(DataListEntry item)
@@ -61,6 +64,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
             {
                 ItemEditModel = new ItemModel() { Name = item.SelectedText };
             }
+            StateHasChanged();
         }
 
         public async void UpdateItem()
@@ -83,17 +87,17 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
                     {
                         await _jsService.CheckHttpResponse(result).ConfigureAwait(false);
                         ItemEditModel = await result.Content.ReadFromJsonAsync<ItemModel>().ConfigureAwait(false);
-                        GetAllItems();
                     }
                     break;
 
                 case CrudActions.Update:
-                    using (var result = await Http.DeleteAsync(ApiAddressResources.Item_Put).ConfigureAwait(false))
+                    using (var result = await Http.PutAsJsonAsync(ApiAddressResources.Item_Put, ItemEditModel).ConfigureAwait(false))
                     {
                         await _jsService.CheckHttpResponse(result).ConfigureAwait(false);
                     }
                     break;
             }
+            EventBus.InvokeItemChanged();
         }
 
         public void Dispose()

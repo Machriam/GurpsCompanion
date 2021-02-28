@@ -1,5 +1,6 @@
 ﻿@using GurpsCompanion.Shared.DataModel
 @inject HttpClient Http
+@inject PlayerViewEventBus EventBus
 
 <EditForm Model="SelectedCharacterModel" OnSubmit="UpdateStats">
     <DataAnnotationsValidator></DataAnnotationsValidator>

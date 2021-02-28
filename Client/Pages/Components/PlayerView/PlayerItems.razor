@@ -1,36 +1,42 @@
 ﻿@using GurpsCompanion.Shared.DataModel
 @inject HttpClient Http
 @inject IJsFunctionCallerServiceFactory JsServiceFactory
+@inject PlayerViewEventBus EventBus
 
+<label class="col-form-label-lg">Items - @TotalMoney.ToString("C2") - Weight: @TotalWeight.ToString("N2")</label>
 <EditForm Model="ItemEditModel" OnSubmit="UpdateItem">
     <DataAnnotationsValidator></DataAnnotationsValidator>
     <ValidationSummary></ValidationSummary>
     @if (SelectedCharacterModel != null)
     {
-        <table class="table" style="height:500px; overflow-y:scroll">
+        <table class="table" style="height:500px; overflow-y:scroll;display:block">
             @foreach (var item in Items)
             {
-                <tr>
-                    <td>@item.Name (@item.Price.ToString("C2"))<br />@item.Description</td>
+                <tr style="padding:0">
+                    <td>
+                        <div class="row">
+                            <div class="col-md-3"><b>@item.Count x @item.Name</b><br />@item.Price.ToString("C2")<br /> @item.Weight.ToString() BL</div>
+                            <div class="col-md-9">@item.Description</div>
+                        </div>
+                    </td>
                 </tr>
             }
         </table>
-        var itemDivClass = "ml-1 flex-fill";
         <DataList Items="ItemNames" InputHasChanged="InputHasChanged" LabelText="Select Item"></DataList>
         <div class="d-flex col-md-12 flex-wrap">
-            <div class="@itemDivClass">
+            <div class="ml-1 flex-fill">
                 <label class="col-form-label">Name</label>
                 <InputText @bind-Value="@ItemEditModel.Name" class="form-control"></InputText>
             </div>
-            <div class="@itemDivClass">
+            <div class="ml-1 col-md-3">
                 <label class="col-form-label">Price</label>
                 <InputNumber @bind-Value="@ItemEditModel.Price" class="form-control"></InputNumber>
             </div>
-            <div class="@itemDivClass">
+            <div class="ml-1 col-md-3">
                 <label class="col-form-label">Weight</label>
                 <InputNumber @bind-Value="@ItemEditModel.Weight" class="form-control"></InputNumber>
             </div>
-            <div class="@itemDivClass">
+            <div class="ml-1 flex-fill">
                 <label class="col-form-label">Description</label>
                 <InputTextArea @bind-Value="@ItemEditModel.Description" class="form-control"></InputTextArea>
             </div>

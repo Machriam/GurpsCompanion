@@ -2,6 +2,7 @@
 @using GurpsCompanion.Shared.Core
 @inject HttpClient Http
 @inject AppStateContainer StateContainer
+@inject PlayerViewEventBus EventBus
 
 <div class="row">
     @if (Characters?.Count > 0)
@@ -19,7 +20,6 @@
         {
             <div class="row col-md-12 d-flex text-center">
                 <div class="col-md-4 border">
-                    <label class="col-form-label-lg">Items</label>
                     <PlayerItems Items="CharacterInformation.Items" SelectedCharacterModel="CharacterInformation.CharacterModel"></PlayerItems>
                 </div>
                 <div class="col-md-4 border">

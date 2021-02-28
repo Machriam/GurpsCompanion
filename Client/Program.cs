@@ -23,7 +23,7 @@ namespace GurpsCompanion.Client
             builder.Services.AddScoped<IJsFunctionCallerServiceFactory, JsFunctionCallerServiceFactory>();
             builder.Services.AddScoped<IJsClipboardService, JsClipboardService>();
             builder.Services.AddSingleton(new AppStateContainer());
-            builder.Services.AddSingleton(new EventBus());
+            builder.Services.AddSingleton(new PlayerViewEventBus());
 
             await builder.Build().RunAsync();
         }
