@@ -1,4 +1,5 @@
-﻿using GurpsCompanion.Shared.DataModel.DataContext;
+﻿using GurpsCompanion.Shared.Core;
+using GurpsCompanion.Shared.DataModel.DataContext;
 
 namespace GurpsCompanion.Shared.DataModel
 {
@@ -14,15 +15,17 @@ namespace GurpsCompanion.Shared.DataModel
             Name = model.Name;
             Description = model.Description;
             Value = model.Value;
-            Difficulty = model.Difficulty;
+            Difficulty = EnumConverter<SkillDifficulties>.ConvertTo(model.Difficulty);
             Defaults = model.Defaults;
+            BaseAttribute = EnumConverter<BaseAttributes>.ConvertTo(model.BaseAttribute);
         }
 
         public long Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public long Value { get; set; }
-        public string Difficulty { get; set; }
+        public SkillDifficulties Difficulty { get; set; }
         public string Defaults { get; set; }
+        public BaseAttributes BaseAttribute { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
         public long Value { get; set; }
         public string Difficulty { get; set; }
         public string Defaults { get; set; }
+        public string BaseAttribute { get; set; }
 
         public virtual ICollection<CharacterSkillAssociation> CharacterSkillAssociations { get; set; }
     }

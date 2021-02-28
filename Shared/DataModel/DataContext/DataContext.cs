@@ -168,6 +168,10 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.BaseAttribute)
+                    .IsRequired()
+                    .HasColumnName("base_attribute");
+
                 entity.Property(e => e.Defaults).HasColumnName("defaults");
 
                 entity.Property(e => e.Description)

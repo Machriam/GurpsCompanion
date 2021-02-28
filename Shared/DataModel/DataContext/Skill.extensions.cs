@@ -1,5 +1,7 @@
 ﻿#nullable disable
 
+using GurpsCompanion.Shared.Extensions;
+
 namespace GurpsCompanion.Shared.DataModel.DataContext
 {
     public partial class Skill
@@ -9,8 +11,9 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
             Name = model.Name;
             Description = model.Description;
             Value = model.Value;
-            Difficulty = model.Difficulty;
+            Difficulty = model.Difficulty.GetDescription();
             Defaults = model.Defaults;
+            BaseAttribute = model.BaseAttribute.GetDescription();
         }
     }
 }

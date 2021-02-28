@@ -140,4 +140,20 @@
   <data name="Item_Put" xml:space="preserve">
     <value>/api/item</value>
   </data>
+  <data name="Skill_Delete" xml:space="preserve">
+    <value>/api/skill?itemId={0}&amp;characterId={1}</value>
+  </data>
+  <data name="Skill_Get" xml:space="preserve">
+    <value>/api/skill/skill?name={0}</value>
+    <comment>string name</comment>
+  </data>
+  <data name="Skill_GetNames" xml:space="preserve">
+    <value>/api/skill/names</value>
+  </data>
+  <data name="Skill_Post" xml:space="preserve">
+    <value>/api/skill?characterId={0}</value>
+  </data>
+  <data name="Skill_Put" xml:space="preserve">
+    <value>/api/item</value>
+  </data>
 </root>

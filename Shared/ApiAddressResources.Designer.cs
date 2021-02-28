@@ -122,5 +122,50 @@ namespace GurpsCompanion.Shared {
                 return ResourceManager.GetString("Item_Put", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /api/skill?itemId={0}&amp;characterId={1}.
+        /// </summary>
+        public static string Skill_Delete {
+            get {
+                return ResourceManager.GetString("Skill_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /api/skill/skill?name={0}.
+        /// </summary>
+        public static string Skill_Get {
+            get {
+                return ResourceManager.GetString("Skill_Get", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /api/skill/names.
+        /// </summary>
+        public static string Skill_GetNames {
+            get {
+                return ResourceManager.GetString("Skill_GetNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /api/skill?characterId={0}.
+        /// </summary>
+        public static string Skill_Post {
+            get {
+                return ResourceManager.GetString("Skill_Post", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /api/item.
+        /// </summary>
+        public static string Skill_Put {
+            get {
+                return ResourceManager.GetString("Skill_Put", resourceCulture);
+            }
+        }
     }
 }

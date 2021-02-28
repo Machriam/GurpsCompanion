@@ -1,10 +1,21 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Components;
+using GurpsCompanion.Client.JsInterop;
 using GurpsCompanion.Shared.DataModel;
 
 namespace GurpsCompanion.Client.Pages.Components.PlayerView
 {
-    public partial class PlayerSkills : ComponentBase
+    public partial class PlayerSkills : ComponentBase, IDisposable
     {
+        private IJsFunctionCallerService _jsService;
+
+        protected override void OnInitialized()
+        {
+            _jsService = JsServiceFactory.Create(JavascriptGrids.NA, this);
+            base.OnInitialized();
+        }
+
         private CharacterModel _selectedCharacterModel;
 
         [Parameter]
@@ -18,10 +29,22 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
             }
         }
 
+        public void GetPlayerSkills()
+        {
+        }
+
+        [Parameter]
+        public IEnumerable<SkillModel> Skills { get; set; }
+
         public CharacterModel OriginalCharacterModel { get; set; }
 
         public void UpdateStats()
         {
+        }
+
+        public void Dispose()
+        {
+            _jsService?.Dispose();
         }
     }
 }

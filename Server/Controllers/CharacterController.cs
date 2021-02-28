@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using GurpsCompanion.Server.Core;
 using GurpsCompanion.Shared.DataModel;
 using GurpsCompanion.Shared.DataModel.DataContext;
@@ -14,13 +13,11 @@ namespace GurpsCompanion.Server.Controllers
     [Route("api/[controller]")]
     public class CharacterController : ControllerBase
     {
-        private readonly ILogger<CharacterController> _logger;
         private readonly DataContext _dataContext;
         private readonly IAuthenticationVerifier _authenticationVerifier;
 
-        public CharacterController(ILogger<CharacterController> logger, DataContext dataContext, IAuthenticationVerifier authenticationVerifier)
+        public CharacterController(DataContext dataContext, IAuthenticationVerifier authenticationVerifier)
         {
-            _logger = logger;
             _dataContext = dataContext;
             _authenticationVerifier = authenticationVerifier;
         }

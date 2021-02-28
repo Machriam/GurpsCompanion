@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using GurpsCompanion.Shared.DataModel;
 using GurpsCompanion.Shared.DataModel.DataContext;
 
@@ -11,12 +10,10 @@ namespace GurpsCompanion.Server.Controllers
     [Route("api/[controller]")]
     public class ItemController : ControllerBase
     {
-        private readonly ILogger<CharacterController> _logger;
         private readonly DataContext _dataContext;
 
-        public ItemController(ILogger<CharacterController> logger, DataContext dataContext)
+        public ItemController(DataContext dataContext)
         {
-            _logger = logger;
             _dataContext = dataContext;
         }
 

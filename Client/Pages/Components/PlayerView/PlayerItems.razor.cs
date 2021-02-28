@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Json;
-using Microsoft.AspNetCore.Components;
 using GurpsCompanion.Client.Core;
 using GurpsCompanion.Client.JsInterop;
 using GurpsCompanion.Client.UiComponents;
 using GurpsCompanion.Shared;
 using GurpsCompanion.Shared.Core;
 using GurpsCompanion.Shared.DataModel;
+using Microsoft.AspNetCore.Components;
 
 namespace GurpsCompanion.Client.Pages.Components.PlayerView
 {
@@ -33,7 +33,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
             {
                 if (_selectedCharacterModel == value) return;
                 _selectedCharacterModel = value;
-                GetAllItems();
+                GetPlayerItemNames();
                 OriginalCharacterModel = value?.Clone();
             }
         }
@@ -46,7 +46,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
         public CrudActions SubmitAction { get; set; }
         public IEnumerable<IDataListItem> ItemNames { get; set; }
 
-        public async void GetAllItems()
+        public async void GetPlayerItemNames()
         {
             var names = await Http.GetFromJsonAsync<List<string>>(ApiAddressResources.GetItemNames).ConfigureAwait(false);
             ItemNames = names.Select(n => (IDataListItem)(new ItemModel() { Name = n }));
