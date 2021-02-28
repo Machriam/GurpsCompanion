@@ -23,6 +23,9 @@ namespace GurpsCompanion.Client.UiComponents
         private readonly string _guid = Guid.NewGuid().ToString("N");
 
         [Parameter]
+        public bool IsNullable { get; set; } = true;
+
+        [Parameter]
         public Func<IDataListItem, bool> InputValidator { get; set; }
 
         [Parameter]
@@ -79,7 +82,7 @@ namespace GurpsCompanion.Client.UiComponents
                 _selectedText = value;
                 var selectedItem = Items?.FirstOrDefault(i => i.GetText.Replace(" ", "") == value.Replace(" ", ""));
                 InputHasChanged.InvokeAsync(new DataListEntry(selectedItem, value));
-                SelectedItemChanged.InvokeAsync(selectedItem);
+                if (IsNullable || selectedItem != null) SelectedItemChanged.InvokeAsync(selectedItem);
                 StateHasChanged();
             }
         }

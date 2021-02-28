@@ -2,7 +2,7 @@
 
 namespace GurpsCompanion.Shared.Core
 {
-    public enum BaseAttributes
+    public enum SkillBaseAttributes
     {
         [Description("HT")]
         HT,

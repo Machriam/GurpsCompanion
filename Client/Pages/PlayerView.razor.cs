@@ -41,13 +41,15 @@ namespace GurpsCompanion.Client.Pages
         {
             Characters = await Http.GetFromJsonAsync<List<CharacterModel>>(string.Format(ApiAddressResources.Character_Base,
                 StateContainer.PasswordModel.Hash, StateContainer.PasswordModel.Salt)).ConfigureAwait(false);
-            EventBus.OnItemChanged += EventBus_OnItemAdded;
+            EventBus.OnItemChanged += EventBus_OnItemChanged;
+            EventBus.OnSkillChanged += EventBus_OnSkillChanged;
         }
 
-        private void EventBus_OnItemAdded()
-        {
-            RetrieveCharacterInformation();
-        }
+        private void EventBus_OnItemChanged() => RetrieveCharacterInformation();
+
+        private void EventBus_OnSkillChanged() => RetrieveCharacterInformation();
+
+        private void EventBus_OnAdvantageChanged() => RetrieveCharacterInformation();
 
         public async void RetrieveCharacterInformation()
         {
@@ -60,7 +62,8 @@ namespace GurpsCompanion.Client.Pages
 
         public void Dispose()
         {
-            EventBus.OnItemChanged -= EventBus_OnItemAdded;
+            EventBus.OnItemChanged -= EventBus_OnItemChanged;
+            EventBus.OnSkillChanged -= EventBus_OnSkillChanged;
         }
     }
 }
