@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using GurpsCompanion.Shared.DataModel;
@@ -34,6 +35,10 @@ namespace GurpsCompanion.Server.Controllers
         {
             using var transaction = _dataContext.Database.BeginTransaction();
             var dbItem = GetOrCreateSkill(model);
+            if (_dataContext.CharacterSkillAssociations.Any(csa => csa.CharacterFk == characterId && csa.SkillFk == dbItem.Id))
+            {
+                throw new Exception("Only one Skill of a given type is allowed.");
+            }
             var characterSkillAssociation = new CharacterSkillAssociation() { CharacterFk = characterId, SkillFk = dbItem.Id };
             _dataContext.CharacterSkillAssociations.Add(characterSkillAssociation);
             _dataContext.SaveChanges();
@@ -58,7 +63,8 @@ namespace GurpsCompanion.Server.Controllers
         public SkillModel PutItem([FromBody] SkillModel model)
         {
             var item = _dataContext.Skills.First(item => item.Id == model.Id);
-            _dataContext.Entry(item).CurrentValues.SetValues(model);
+            var dbItem = new Skill(model) { Id = model.Id };
+            _dataContext.Entry(item).CurrentValues.SetValues(dbItem);
             _dataContext.SaveChanges();
             return new SkillModel(item);
         }

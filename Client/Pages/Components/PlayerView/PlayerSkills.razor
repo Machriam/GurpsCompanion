@@ -1,55 +1,58 @@
 ﻿@using GurpsCompanion.Shared.Extensions
+@using GurpsCompanion.Shared.Core
+@using GurpsCompanion.Shared.Features.PlayerView
 @inject HttpClient Http
 @inject IJsFunctionCallerServiceFactory JsServiceFactory
 @inject PlayerViewEventBus EventBus
+@inject ISkillCpCalculator SkillCpCalculator
 
-<label class="col-form-label-lg">Skills</label>
-<EditForm Model="SkillEditModel" OnSubmit="UpdateStats">
+<label class="col-form-label-lg">Skills (@CpSumOfSkills CP)</label>
+<EditForm Model="SkillEditModel" OnValidSubmit="UpdateStats">
     <DataAnnotationsValidator></DataAnnotationsValidator>
-    <ValidationSummary></ValidationSummary>
     @if (SelectedCharacterModel != null)
     {
-        <table class="table" style="height:500px; overflow-y:scroll;display:block">
+        <table class="table" style="height:400px; overflow-y:scroll;display:block">
             @foreach (var item in Skills)
             {
                 <tr style="padding:0">
                     <td>
                         <div class="row">
                             <div class="col-md-3">
-                                <b>@item.Name - @item.Difficulty.GetDescription()/@item.BaseAttribute.GetDescription()</b>
+                                <b>@item.Name (@item.Difficulty.GetDescription()/@item.BaseAttribute.GetDescription())</b>
                                 <br />@item.Value.ToString()
                             </div>
-                            <div class="col-md-9">@item.Description</div>
+                            <div class="col-md-9">@item.Defaults <br /> @item.Description</div>
                         </div>
                     </td>
                 </tr>
             }
         </table>
-        <DataList Items="SkillNames" InputHasChanged="SelectedSkillHasChanged" LabelText="Select Skill"></DataList>
-        <div class="d-flex col-md-12 flex-wrap">
-            <div class="ml-1 flex-fill">
+        <ValidationSummary></ValidationSummary>
+        <div class="row col-md-12">
+            <div class="col-md-6">
+                <DataList Items="SkillNames" InputHasChanged="SelectedSkillHasChanged" LabelText="Select Skill"></DataList>
+            </div>
+            <div class="flex-fill">
                 <label class="col-form-label">Name</label>
                 <InputText @bind-Value="@SkillEditModel.Name" class="form-control"></InputText>
+            </div>
+        </div>
+        <div class="d-flex col-md-12 flex-wrap">
+            <div class="col-md-3">
+                <EnumDropDown T="SkillDifficulties" @bind-SelectedItem="SkillEditModel.Difficulty"></EnumDropDown>
+                <EnumDropDown T="SkillBaseAttributes" @bind-SelectedItem="SkillEditModel.BaseAttribute"></EnumDropDown>
             </div>
             <div class="ml-1 col-md-5">
                 <label class="col-form-label">Defaults</label>
                 <InputTextArea @bind-Value="@SkillEditModel.Defaults" class="form-control"></InputTextArea>
             </div>
             <div class="ml-1 col-md-2">
-                <label class="col-form-label">Weight</label>
+                <label class="col-form-label">Value</label>
                 <InputNumber @bind-Value="@SkillEditModel.Value" class="form-control"></InputNumber>
             </div>
             <div class="ml-1 flex-fill">
                 <label class="col-form-label">Description</label>
                 <InputTextArea @bind-Value="@SkillEditModel.Description" class="form-control"></InputTextArea>
-            </div>
-            <div>
-                <DataList SelectedItemChanged="SelectedSkillDifficultyChanged" Items="SkillDifficulties" IsNullable="false"
-                          LabelText="Select Difficulty" InitialSelectedItem="SkillDifficulties.First()"></DataList>
-            </div>
-            <div>
-                <DataList SelectedItemChanged="SelectedBaseAttributeChanged" Items="SkillBaseAttributes" IsNullable="false"
-                          LabelText="Select Base Attribute" InitialSelectedItem="SkillBaseAttributes.First()"></DataList>
             </div>
             <div class="d-flex justify-content-between col-md-12">
                 <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Add" type="submit">Add new Skill</button>

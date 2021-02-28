@@ -1,0 +1,11 @@
+﻿@typeparam T
+@using GurpsCompanion.Shared.Extensions
+<div>
+    <label class="col-form-label">@Label</label>
+    <select @bind="SelectedItem">
+        @foreach (var item in Items)
+        {
+            <option value="@item">@item.GetDescription()</option>
+        }
+    </select>
+</div>

@@ -59,6 +59,7 @@ namespace GurpsCompanion.Client.UiComponents
         public EventCallback<IDataListItem> SelectedItemChanged { get; set; }
 
         private IDataListItem _initialSelectedItem;
+        private bool _initialized = false;
 
         [Parameter]
         public IDataListItem InitialSelectedItem
@@ -67,7 +68,9 @@ namespace GurpsCompanion.Client.UiComponents
             {
                 if (value == _initialSelectedItem) return;
                 _initialSelectedItem = value;
+                if (_initialized) return;
                 SelectedText = _initialSelectedItem?.GetText;
+                _initialized = true;
                 StateHasChanged();
             }
         }
@@ -80,7 +83,7 @@ namespace GurpsCompanion.Client.UiComponents
             {
                 if (value == _selectedText) return;
                 _selectedText = value;
-                var selectedItem = Items?.FirstOrDefault(i => i.GetText.Replace(" ", "") == value.Replace(" ", ""));
+                var selectedItem = Items?.FirstOrDefault(i => i.GetText?.Replace(" ", "") == value?.Replace(" ", ""));
                 InputHasChanged.InvokeAsync(new DataListEntry(selectedItem, value));
                 if (IsNullable || selectedItem != null) SelectedItemChanged.InvokeAsync(selectedItem);
                 StateHasChanged();

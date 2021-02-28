@@ -19,6 +19,8 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
         protected override void OnInitialized()
         {
             _jsService = JsServiceFactory.Create(JavascriptGrids.NA, this);
+            SkillBaseAttributes = EnumConverter<SkillBaseAttributes>.GetDescriptions().Select(d => new GenericDataListItem(d));
+            SkillDifficulties = EnumConverter<SkillDifficulties>.GetDescriptions().Select(d => new GenericDataListItem(d));
             base.OnInitialized();
         }
 
@@ -26,17 +28,10 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
         public CrudActions SubmitAction { get; set; }
         public IEnumerable<IDataListItem> SkillNames { get; set; }
 
-        public IEnumerable<IDataListItem> SkillDifficulties => EnumConverter<SkillDifficulties>.GetDescriptions()
-            .Select(d => new GenericDataListItem(d));
+        public IEnumerable<IDataListItem> SkillDifficulties { get; private set; }
 
-        public IEnumerable<IDataListItem> SkillBaseAttributes => EnumConverter<SkillBaseAttributes>.GetDescriptions()
-            .Select(d => new GenericDataListItem(d));
-
-        public void SelectedBaseAttributeChanged(IDataListItem item) =>
-            SkillEditModel.BaseAttribute = EnumConverter<SkillBaseAttributes>.ConvertTo(item.GetText);
-
-        public void SelectedSkillDifficultyChanged(IDataListItem item) =>
-            SkillEditModel.Difficulty = EnumConverter<SkillDifficulties>.ConvertTo(item.GetText);
+        public IEnumerable<IDataListItem> SkillBaseAttributes { get; private set; }
+        public long CpSumOfSkills => Skills.Sum(s => SkillCpCalculator.GetCpForSkill(s.Value, s.Difficulty));
 
         [Parameter]
         public CharacterModel SelectedCharacterModel
@@ -45,6 +40,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
             {
                 if (_selectedCharacterModel == value) return;
                 _selectedCharacterModel = value;
+                GetAvailableSkills();
                 OriginalCharacterModel = value?.Clone();
             }
         }
@@ -65,7 +61,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
             StateHasChanged();
         }
 
-        public async void GetPlayerSkills()
+        public async void GetAvailableSkills()
         {
             var skills = await Http.GetFromJsonAsync<List<string>>(ApiAddressResources.Skill_GetNames).ConfigureAwait(false);
             SkillNames = skills.Select(n => new GenericDataListItem(n));

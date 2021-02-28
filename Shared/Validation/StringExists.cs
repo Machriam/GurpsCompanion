@@ -6,7 +6,7 @@ namespace GurpsCompanion.Shared.Validation
     {
         public override bool IsValid(object value)
         {
-            return !string.IsNullOrWhiteSpace(value.ToString());
+            return !string.IsNullOrWhiteSpace(value?.ToString());
         }
     }
 }

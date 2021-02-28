@@ -7,6 +7,7 @@ using GurpsCompanion.Client.JsInterop;
 using GurpsCompanion.Client.Shared;
 using GurpsCompanion.Shared.Core;
 using GurpsCompanion.Shared.Features.Authentication;
+using GurpsCompanion.Shared.Features.PlayerView;
 
 namespace GurpsCompanion.Client
 {
@@ -24,6 +25,7 @@ namespace GurpsCompanion.Client
             builder.Services.AddScoped<IJsClipboardService, JsClipboardService>();
             builder.Services.AddSingleton(new AppStateContainer());
             builder.Services.AddSingleton(new PlayerViewEventBus());
+            builder.Services.AddSingleton<ISkillCpCalculator, SkillCpCalculator>();
 
             await builder.Build().RunAsync();
         }

@@ -4,9 +4,8 @@
 @inject PlayerViewEventBus EventBus
 
 <label class="col-form-label-lg">Items - @TotalMoney.ToString("C2") - Weight: @TotalWeight.ToString("N2")</label>
-<EditForm Model="ItemEditModel" OnSubmit="UpdateItem">
+<EditForm Model="ItemEditModel" OnValidSubmit="UpdateItem">
     <DataAnnotationsValidator></DataAnnotationsValidator>
-    <ValidationSummary></ValidationSummary>
     @if (SelectedCharacterModel != null)
     {
         <table class="table" style="height:500px; overflow-y:scroll;display:block">
@@ -22,6 +21,7 @@
                 </tr>
             }
         </table>
+    <ValidationSummary></ValidationSummary>
         <DataList Items="ItemNames" InputHasChanged="InputHasChanged" LabelText="Select Item"></DataList>
         <div class="d-flex col-md-12 flex-wrap">
             <div class="ml-1 flex-fill">
