@@ -97,11 +97,29 @@ namespace GurpsCompanion.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to /api/item?itemId={0}&amp;characterId={1}.
+        /// </summary>
+        public static string Item_Delete {
+            get {
+                return ResourceManager.GetString("Item_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /api/item?characterId={0}.
+        /// </summary>
+        public static string Item_Post {
+            get {
+                return ResourceManager.GetString("Item_Post", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to /api/item.
         /// </summary>
-        public static string Item_Base {
+        public static string Item_Put {
             get {
-                return ResourceManager.GetString("Item_Base", resourceCulture);
+                return ResourceManager.GetString("Item_Put", resourceCulture);
             }
         }
     }

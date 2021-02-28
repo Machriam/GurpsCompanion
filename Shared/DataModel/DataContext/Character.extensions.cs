@@ -4,10 +4,6 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
 {
     public partial class Character
     {
-        public Character()
-        {
-        }
-
         public Character(CharacterModel model)
         {
             IsPlayer = model.IsPlayer;

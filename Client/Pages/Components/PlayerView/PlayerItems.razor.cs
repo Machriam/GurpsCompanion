@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components;
 using GurpsCompanion.Client.Core;
+using GurpsCompanion.Client.JsInterop;
 using GurpsCompanion.Client.UiComponents;
 using GurpsCompanion.Shared;
 using GurpsCompanion.Shared.Core;
@@ -10,9 +12,16 @@ using GurpsCompanion.Shared.DataModel;
 
 namespace GurpsCompanion.Client.Pages.Components.PlayerView
 {
-    public partial class PlayerItems : ComponentBase
+    public partial class PlayerItems : ComponentBase, IDisposable
     {
         private CharacterModel _selectedCharacterModel;
+        private IJsFunctionCallerService _jsService;
+
+        protected override void OnInitialized()
+        {
+            _jsService = JsServiceFactory.Create(JavascriptGrids.NA, this);
+            base.OnInitialized();
+        }
 
         [Parameter]
         public IEnumerable<ItemModel> Items { get; set; }
@@ -54,8 +63,42 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
             }
         }
 
-        public void UpdateItem()
+        public async void UpdateItem()
         {
+            switch (SubmitAction)
+            {
+                case CrudActions.Delete:
+                    using (var result = await Http.DeleteAsync(
+                        string.Format(ApiAddressResources.Item_Delete, ItemEditModel.Id, SelectedCharacterModel.Id)).ConfigureAwait(false))
+                    {
+                        await _jsService.CheckHttpResponse(result).ConfigureAwait(false);
+                    }
+                    break;
+
+                case CrudActions.Add:
+                    using (var result = await Http.PostAsJsonAsync(
+                               string.Format(ApiAddressResources.Item_Post, SelectedCharacterModel.Id),
+                               ItemEditModel
+                                                                  ).ConfigureAwait(false))
+                    {
+                        await _jsService.CheckHttpResponse(result).ConfigureAwait(false);
+                        ItemEditModel = await result.Content.ReadFromJsonAsync<ItemModel>().ConfigureAwait(false);
+                        GetAllItems();
+                    }
+                    break;
+
+                case CrudActions.Update:
+                    using (var result = await Http.DeleteAsync(ApiAddressResources.Item_Put).ConfigureAwait(false))
+                    {
+                        await _jsService.CheckHttpResponse(result).ConfigureAwait(false);
+                    }
+                    break;
+            }
+        }
+
+        public void Dispose()
+        {
+            _jsService?.Dispose();
         }
     }
 }

@@ -53,23 +53,5 @@ namespace GurpsCompanion.Server.Controllers
                 CharacterModel = new CharacterModel(_dataContext.Characters.First(c => c.Id == id))
             };
         }
-
-        [HttpPost]
-        public ItemModel PostItem([FromBody] ItemModel model)
-        {
-            var item = new Item(model);
-            _dataContext.Items.Add(item);
-            _dataContext.SaveChanges();
-            return new ItemModel(item);
-        }
-
-        [HttpPut]
-        public ItemModel PutItem([FromBody] ItemModel model)
-        {
-            var item = _dataContext.Items.First(item => item.Id == model.Id);
-            _dataContext.Entry(item).CurrentValues.SetValues(model);
-            _dataContext.SaveChanges();
-            return new ItemModel(item);
-        }
     }
 }

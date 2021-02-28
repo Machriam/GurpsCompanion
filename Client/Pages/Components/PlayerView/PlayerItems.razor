@@ -1,5 +1,6 @@
 ﻿@using GurpsCompanion.Shared.DataModel
 @inject HttpClient Http
+@inject IJsFunctionCallerServiceFactory JsServiceFactory
 
 <EditForm Model="ItemEditModel" OnSubmit="UpdateItem">
     <DataAnnotationsValidator></DataAnnotationsValidator>
@@ -19,19 +20,19 @@
         <div class="d-flex col-md-12 flex-wrap">
             <div class="@itemDivClass">
                 <label class="col-form-label">Name</label>
-                <InputText @bind-Value="@ItemEditModel.Name" class="form-control col-md-4"></InputText>
+                <InputText @bind-Value="@ItemEditModel.Name" class="form-control"></InputText>
             </div>
             <div class="@itemDivClass">
                 <label class="col-form-label">Price</label>
-                <InputNumber @bind-Value="@ItemEditModel.Price" class="form-control col-md-2"></InputNumber>
+                <InputNumber @bind-Value="@ItemEditModel.Price" class="form-control"></InputNumber>
             </div>
             <div class="@itemDivClass">
                 <label class="col-form-label">Weight</label>
-                <InputNumber @bind-Value="@ItemEditModel.Weight" class="form-control col-md-2"></InputNumber>
+                <InputNumber @bind-Value="@ItemEditModel.Weight" class="form-control"></InputNumber>
             </div>
             <div class="@itemDivClass">
                 <label class="col-form-label">Description</label>
-                <InputTextArea @bind-Value="@ItemEditModel.Description" class="form-control col-md-6"></InputTextArea>
+                <InputTextArea @bind-Value="@ItemEditModel.Description" class="form-control"></InputTextArea>
             </div>
             <div class="d-flex justify-content-between col-md-12">
                 <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Add" type="submit">Add new Item</button>

@@ -7,6 +7,13 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
 {
     public partial class Character
     {
+        public Character()
+        {
+            CharacterAdvantageAssociations = new HashSet<CharacterAdvantageAssociation>();
+            CharacterItemAssociations = new HashSet<CharacterItemAssociation>();
+            CharacterSkillAssociations = new HashSet<CharacterSkillAssociation>();
+        }
+
         public long Id { get; set; }
         public long IsPlayer { get; set; }
         public string Name { get; set; }
@@ -21,5 +28,9 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
         public long BasicMoveMod { get; set; }
         public long RadexFavor { get; set; }
         public long VagrexFavor { get; set; }
+
+        public virtual ICollection<CharacterAdvantageAssociation> CharacterAdvantageAssociations { get; set; }
+        public virtual ICollection<CharacterItemAssociation> CharacterItemAssociations { get; set; }
+        public virtual ICollection<CharacterSkillAssociation> CharacterSkillAssociations { get; set; }
     }
 }

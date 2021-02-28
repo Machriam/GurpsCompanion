@@ -77,58 +77,58 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
 
             modelBuilder.Entity<CharacterAdvantageAssociation>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("character_advantage_association");
+
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.AdvantageFk).HasColumnName("advantage_fk");
 
                 entity.Property(e => e.CharacterFk).HasColumnName("character_fk");
 
                 entity.HasOne(d => d.AdvantageFkNavigation)
-                    .WithMany()
+                    .WithMany(p => p.CharacterAdvantageAssociations)
                     .HasForeignKey(d => d.AdvantageFk);
 
                 entity.HasOne(d => d.CharacterFkNavigation)
-                    .WithMany()
+                    .WithMany(p => p.CharacterAdvantageAssociations)
                     .HasForeignKey(d => d.CharacterFk);
             });
 
             modelBuilder.Entity<CharacterItemAssociation>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("character_item_association");
+
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.CharacterFk).HasColumnName("character_fk");
 
                 entity.Property(e => e.ItemFk).HasColumnName("item_fk");
 
                 entity.HasOne(d => d.CharacterFkNavigation)
-                    .WithMany()
+                    .WithMany(p => p.CharacterItemAssociations)
                     .HasForeignKey(d => d.CharacterFk);
 
                 entity.HasOne(d => d.ItemFkNavigation)
-                    .WithMany()
+                    .WithMany(p => p.CharacterItemAssociations)
                     .HasForeignKey(d => d.ItemFk);
             });
 
             modelBuilder.Entity<CharacterSkillAssociation>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("character_skill_association");
+
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.CharacterFk).HasColumnName("character_fk");
 
                 entity.Property(e => e.SkillFk).HasColumnName("skill_fk");
 
                 entity.HasOne(d => d.CharacterFkNavigation)
-                    .WithMany()
+                    .WithMany(p => p.CharacterSkillAssociations)
                     .HasForeignKey(d => d.CharacterFk);
 
                 entity.HasOne(d => d.SkillFkNavigation)
-                    .WithMany()
+                    .WithMany(p => p.CharacterSkillAssociations)
                     .HasForeignKey(d => d.SkillFk);
             });
 
