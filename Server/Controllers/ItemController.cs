@@ -34,8 +34,17 @@ namespace GurpsCompanion.Server.Controllers
         {
             using var transaction = _dataContext.Database.BeginTransaction();
             var dbItem = GetOrCreateItem(model);
-            var characterItemAssociation = new CharacterItemAssociation() { CharacterFk = characterId, ItemFk = dbItem.Id };
-            _dataContext.CharacterItemAssociations.Add(characterItemAssociation);
+            var existingAssociation = _dataContext.CharacterItemAssociations
+                .FirstOrDefault(cia => cia.CharacterFk == characterId && cia.ItemFk == dbItem.Id);
+            if (existingAssociation != null)
+            {
+                existingAssociation.Count++;
+            }
+            else
+            {
+                var characterItemAssociation = new CharacterItemAssociation() { CharacterFk = characterId, ItemFk = dbItem.Id, Count = 1 };
+                _dataContext.CharacterItemAssociations.Add(characterItemAssociation);
+            }
             _dataContext.SaveChanges();
             transaction.Commit();
             return new ItemModel(dbItem);
@@ -68,7 +77,8 @@ namespace GurpsCompanion.Server.Controllers
         {
             var association = _dataContext.CharacterItemAssociations
                 .First(cia => cia.CharacterFk == characterId && cia.ItemFk == itemId);
-            _dataContext.CharacterItemAssociations.Remove(association);
+            association.Count--;
+            if (association.Count <= 0) _dataContext.CharacterItemAssociations.Remove(association);
             _dataContext.SaveChanges();
         }
     }

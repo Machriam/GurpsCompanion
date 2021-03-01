@@ -39,7 +39,9 @@ namespace GurpsCompanion.Server.Controllers
             {
                 throw new Exception("Only one Skill of a given type is allowed.");
             }
-            var characterSkillAssociation = new CharacterSkillAssociation() { CharacterFk = characterId, SkillFk = dbItem.Id };
+            var characterSkillAssociation = new CharacterSkillAssociation()
+            { CharacterFk = characterId, SkillFk = dbItem.Id, Value = model.Value };
+
             _dataContext.CharacterSkillAssociations.Add(characterSkillAssociation);
             _dataContext.SaveChanges();
             transaction.Commit();
@@ -60,11 +62,14 @@ namespace GurpsCompanion.Server.Controllers
         }
 
         [HttpPut]
-        public SkillModel Put([FromBody] SkillModel model)
+        public SkillModel Put([FromBody] SkillModel model, long characterId)
         {
             var item = _dataContext.Skills.First(item => item.Id == model.Id);
             var dbItem = new Skill(model) { Id = model.Id };
             _dataContext.Entry(item).CurrentValues.SetValues(dbItem);
+            _dataContext.CharacterSkillAssociations
+                .First(csa => csa.SkillFk == model.Id && csa.CharacterFk == characterId)
+                .Value = model.Value;
             _dataContext.SaveChanges();
             return new SkillModel(item);
         }

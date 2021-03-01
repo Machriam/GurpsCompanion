@@ -160,7 +160,7 @@ namespace GurpsCompanion.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /api/skill.
+        ///   Looks up a localized string similar to /api/skill?characterId={0}.
         /// </summary>
         public static string Skill_Put {
             get {

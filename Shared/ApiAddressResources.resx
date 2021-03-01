@@ -154,6 +154,6 @@
     <value>/api/skill?characterId={0}</value>
   </data>
   <data name="Skill_Put" xml:space="preserve">
-    <value>/api/skill</value>
+    <value>/api/skill?characterId={0}</value>
   </data>
 </root>
