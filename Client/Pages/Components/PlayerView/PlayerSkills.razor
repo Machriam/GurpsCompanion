@@ -11,19 +11,15 @@
     <DataAnnotationsValidator></DataAnnotationsValidator>
     @if (SelectedCharacterModel != null)
     {
-        <table class="table" style="height:400px; overflow-y:scroll;display:block">
+        <table class="table" style="height:500px; overflow-y:scroll;display:block">
             @foreach (var item in Skills)
             {
                 <tr style="padding:0">
                     <td>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <b>@item.Name (@item.Difficulty.GetDescription()/@item.BaseAttribute.GetDescription())</b>
-                                <br />@item.Value.ToString()
-                            </div>
-                            <div class="col-md-9">@item.Defaults <br /> @item.Description</div>
-                        </div>
+                        <b>@item.Name (@item.Difficulty.GetDescription()/@item.BaseAttribute.GetDescription())</b>
+                        <br />@item.Value.ToString()
                     </td>
+                    <td> @item.Defaults <br /> @item.Description </td>
                 </tr>
             }
         </table>

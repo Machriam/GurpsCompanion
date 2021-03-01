@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using GurpsCompanion.Client.Pages.Components.PlayerView;
 using GurpsCompanion.Shared;
 using GurpsCompanion.Shared.Core;
 using GurpsCompanion.Shared.DataModel;
@@ -21,6 +22,7 @@ namespace GurpsCompanion.Client.Pages
         public IEnumerable<IDataListItem> DataListItems => Characters.Cast<IDataListItem>();
         public CharacterInformationModel CharacterInformation { get; set; }
         public List<CharacterModel> Characters { get; set; }
+        public PlayerViewTabsEnum SelectedTab { get; set; }
 
         private CharacterModel _selectedCharacterModel;
 

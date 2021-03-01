@@ -1,0 +1,11 @@
+﻿@using GurpsCompanion.Shared.Extensions
+@typeparam T
+<ul class="nav nav-pills small-nav flex-md-row">
+    @foreach (var item in Headers)
+    {
+        <li class="nav-item">
+            <a class="@(SelectedItem.Equals(item.Key)?"nav-link active":"nav-link")"
+               @onclick="()=>SelectedItem=item.Key">@item.Value</a>
+        </li>
+    }
+</ul>

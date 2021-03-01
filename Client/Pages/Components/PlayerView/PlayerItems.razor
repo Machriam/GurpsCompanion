@@ -3,21 +3,19 @@
 @inject IJsFunctionCallerServiceFactory JsServiceFactory
 @inject PlayerViewEventBus EventBus
 
-<label class="col-form-label-lg">Items - @TotalMoney.ToString("C2") - Weight: @TotalWeight.ToString("N2")</label>
-<EditForm Model="ItemEditModel" OnValidSubmit="UpdateItem">
+<label class="col-form-label-lg">Items  -  @TotalMoney.ToString("C2") - Weight: @TotalWeight.ToString("N2")</label>
+<EditForm class="col-md-12" Model="ItemEditModel" OnValidSubmit="UpdateItem">
     <DataAnnotationsValidator></DataAnnotationsValidator>
     @if (SelectedCharacterModel != null)
     {
-        <table class="table" style="height:500px; overflow-y:scroll;display:block">
+        <table class="table col-md-12" style="height:500px; overflow-y:scroll;display:block">
             @foreach (var item in Items)
             {
-                <tr style="padding:0">
+                <tr class="col-md-12" style="padding:0">
                     <td>
-                        <div class="row">
-                            <div class="col-md-3"><b>@item.Count x @item.Name</b><br />@item.Price.ToString("C2")<br /> @item.Weight.ToString() BL</div>
-                            <div class="col-md-9">@item.Description</div>
-                        </div>
+                        <b>@item.Count x @item.Name</b><br />@item.Price.ToString("C2") - @item.Weight.ToString() BL
                     </td>
+                    <td> @item.Description </td>
                 </tr>
             }
         </table>

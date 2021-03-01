@@ -15,19 +15,28 @@
             <div class="col-md-10">
                 <PlayerStats SelectedCharacterModel="CharacterEditModel"></PlayerStats>
             </div>
+            <div class="col-md-12">
+                <TabNavigation T="PlayerViewTabsEnum" @bind-SelectedItem="SelectedTab"></TabNavigation>
+            </div>
         }
         @if (SelectedCharacterModel != null && CharacterInformation != null)
         {
             <div class="row col-md-12 d-flex text-center">
-                <div class="col-md-4 border">
+                @if (SelectedTab == PlayerViewTabsEnum.Advantages)
+                {
+                }
+                else if (SelectedTab == PlayerViewTabsEnum.Items)
+                {
                     <PlayerItems Items="CharacterInformation.Items" SelectedCharacterModel="CharacterInformation.CharacterModel"></PlayerItems>
-                </div>
-                <div class="col-md-4 border">
+                }
+                else if (SelectedTab == PlayerViewTabsEnum.Skills)
+                {
                     <PlayerSkills Skills="CharacterInformation.Skills" SelectedCharacterModel="CharacterInformation.CharacterModel"></PlayerSkills>
-                </div>
-                <div class="col-md-4 border">
-                    <label class="col-form-label-lg">Advantages</label>
-                </div>
+                }
+                else if (SelectedTab == PlayerViewTabsEnum.Glossary)
+                {
+                    <div>Glossary</div>
+                }
             </div>
         }
     }

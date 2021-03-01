@@ -7,9 +7,9 @@
     <ValidationSummary></ValidationSummary>
     @if (SelectedCharacterModel != null)
     {
-        var editableDivClass = "ml-1";
-        var nonEditableDivClass = "ml-1 mt-1 flex-fill bold";
-        <div class="col-md-12 d-flex">
+        var editableDivClass = "col-md-1 col-3";
+        var nonEditableDivClass = "bold col-md-1 col-3";
+        <div class="col-md-12 row">
             <div class="@editableDivClass">
                 <label class="col-form-label">ST</label>
                 <InputNumber class="form-control" @bind-Value="SelectedCharacterModel.Strength"></InputNumber>
@@ -46,8 +46,12 @@
                 <label class="col-form-label">BM Mod</label>
                 <InputNumber class="form-control" @bind-Value="SelectedCharacterModel.BasicMoveMod"></InputNumber>
             </div>
+            <div style="flex:auto"></div>
+            <div class="@editableDivClass"style="align-self:center" >
+                <button class="btn btn-primary" type="submit">Update Stats</button>
+            </div>
         </div>
-        <div class="col-md-12 d-flex flex-row">
+        <div class="col-md-12 row">
             <div class="@nonEditableDivClass">
                 <label class="col-form-label">BM: @(SelectedCharacterModel.BasicMove)</label>
             </div>
@@ -83,9 +87,6 @@
             </div>
             <div class="@nonEditableDivClass">
                 <label class="col-form-label">CP Diff: @(SelectedCharacterModel.NeededCP-OriginalCharacterModel.NeededCP)</label>
-            </div>
-            <div class="flex-grow-0 @nonEditableDivClass">
-                <button class="btn btn-primary" type="submit">Update Stats</button>
             </div>
         </div>
     }
