@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Json;
+using Microsoft.AspNetCore.Components;
 using GurpsCompanion.Client.Core;
 using GurpsCompanion.Client.JsInterop;
 using GurpsCompanion.Client.UiComponents;
 using GurpsCompanion.Shared;
 using GurpsCompanion.Shared.Core;
 using GurpsCompanion.Shared.DataModel;
-using Microsoft.AspNetCore.Components;
 
 namespace GurpsCompanion.Client.Pages.Components.PlayerView
 {
@@ -51,6 +51,12 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
             var names = await Http.GetFromJsonAsync<List<string>>(ApiAddressResources.GetItemNames).ConfigureAwait(false);
             ItemNames = names.Select(n => (IDataListItem)(new ItemModel() { Name = n }));
             StateHasChanged();
+        }
+
+        public async void EquipItem(ItemModel model)
+        {
+            model.Equipped = !model.Equipped;
+            await Http.PutAsJsonAsync(string.Format(ApiAddressResources.Item_EquipItem, SelectedCharacterModel.Id), model).ConfigureAwait(false);
         }
 
         public async void InputHasChanged(DataListEntry item)

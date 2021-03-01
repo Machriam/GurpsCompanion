@@ -12,14 +12,15 @@
             @foreach (var item in Items)
             {
                 <tr class="col-md-12" style="padding:0">
-                    <td>
+                    <td><InputCheckbox style="transform:scale(1.5)" @bind-Value="item.Equipped" @onclick="()=>EquipItem(item)"></InputCheckbox></td>
+                    <td @onclick="()=>ItemEditModel=item.Clone()">
                         <b>@item.Count x @item.Name</b><br />@item.Price.ToString("C2") - @item.Weight.ToString() BL
                     </td>
                     <td> @item.Description </td>
                 </tr>
             }
         </table>
-    <ValidationSummary></ValidationSummary>
+        <ValidationSummary></ValidationSummary>
         <DataList Items="ItemNames" InputHasChanged="InputHasChanged" LabelText="Select Item"></DataList>
         <div class="d-flex col-md-12 flex-wrap">
             <div class="ml-1 flex-fill">

@@ -11,6 +11,7 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
         public virtual DbSet<CharacterAdvantageAssociation> CharacterAdvantageAssociations { get; set; }
         public virtual DbSet<CharacterItemAssociation> CharacterItemAssociations { get; set; }
         public virtual DbSet<CharacterSkillAssociation> CharacterSkillAssociations { get; set; }
+        public virtual DbSet<Glossary> Glossaries { get; set; }
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
 
@@ -106,9 +107,9 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
                     .HasColumnName("count")
                     .HasDefaultValueSql("1");
 
-                entity.Property(e => e.ItemFk).HasColumnName("item_fk");
+                entity.Property(e => e.Equipped).HasColumnName("equipped");
 
-                entity.Property(e => e.Wearing).HasColumnName("wearing");
+                entity.Property(e => e.ItemFk).HasColumnName("item_fk");
 
                 entity.HasOne(d => d.CharacterFkNavigation)
                     .WithMany(p => p.CharacterItemAssociations)
@@ -138,6 +139,21 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
                 entity.HasOne(d => d.SkillFkNavigation)
                     .WithMany(p => p.CharacterSkillAssociations)
                     .HasForeignKey(d => d.SkillFk);
+            });
+
+            modelBuilder.Entity<Glossary>(entity =>
+            {
+                entity.ToTable("glossary");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasColumnName("description");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasColumnName("name");
             });
 
             modelBuilder.Entity<Item>(entity =>

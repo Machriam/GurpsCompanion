@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
 using GurpsCompanion.Shared.DataModel;
 using GurpsCompanion.Shared.DataModel.DataContext;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GurpsCompanion.Server.Controllers
 {
@@ -27,6 +27,15 @@ namespace GurpsCompanion.Server.Controllers
         public ItemModel GetItem(string name)
         {
             return new ItemModel(_dataContext.Items.First(i => i.Name == name));
+        }
+
+        [HttpPut("equip")]
+        public void EquipItem(ItemModel model, long characterId)
+        {
+            var existingAssociation = _dataContext.CharacterItemAssociations
+                .FirstOrDefault(cia => cia.CharacterFk == characterId && cia.ItemFk == model.Id);
+            existingAssociation.Equipped = model.Equipped ? 1 : 0;
+            _dataContext.SaveChanges();
         }
 
         [HttpPost]

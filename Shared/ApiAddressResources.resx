@@ -134,6 +134,9 @@
   <data name="Item_Delete" xml:space="preserve">
     <value>/api/item?itemId={0}&amp;characterId={1}</value>
   </data>
+  <data name="Item_EquipItem" xml:space="preserve">
+    <value>/api/item/equip?characterId={0}</value>
+  </data>
   <data name="Item_Post" xml:space="preserve">
     <value>/api/item?characterId={0}</value>
   </data>

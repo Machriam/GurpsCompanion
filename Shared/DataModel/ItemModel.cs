@@ -28,7 +28,7 @@ namespace GurpsCompanion.Shared.DataModel
             Name = model.Name;
         }
 
-        public bool Wearing { get; set; }
+        public bool Equipped { get; set; }
         public long Count { get; set; }
 
         [Required]

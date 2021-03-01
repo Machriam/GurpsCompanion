@@ -106,6 +106,15 @@ namespace GurpsCompanion.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to /api/item/equip?characterId={0}.
+        /// </summary>
+        public static string Item_EquipItem {
+            get {
+                return ResourceManager.GetString("Item_EquipItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to /api/item?characterId={0}.
         /// </summary>
         public static string Item_Post {
