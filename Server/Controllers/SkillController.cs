@@ -19,19 +19,19 @@ namespace GurpsCompanion.Server.Controllers
         }
 
         [HttpGet("names")]
-        public IEnumerable<string> Get()
+        public IEnumerable<string> GetSkillNames()
         {
             return _dataContext.Skills.Select(c => c.Name);
         }
 
         [HttpGet("skill")]
-        public SkillModel GetItem(string name)
+        public SkillModel GetSkill(string name)
         {
             return new SkillModel(_dataContext.Skills.First(i => i.Name == name));
         }
 
         [HttpPost]
-        public SkillModel PostItem([FromBody] SkillModel model, long characterId)
+        public SkillModel Post([FromBody] SkillModel model, long characterId)
         {
             using var transaction = _dataContext.Database.BeginTransaction();
             var dbItem = GetOrCreateSkill(model);
@@ -60,7 +60,7 @@ namespace GurpsCompanion.Server.Controllers
         }
 
         [HttpPut]
-        public SkillModel PutItem([FromBody] SkillModel model)
+        public SkillModel Put([FromBody] SkillModel model)
         {
             var item = _dataContext.Skills.First(item => item.Id == model.Id);
             var dbItem = new Skill(model) { Id = model.Id };
@@ -70,7 +70,7 @@ namespace GurpsCompanion.Server.Controllers
         }
 
         [HttpDelete]
-        public void DeleteItem(long skillId, long characterId)
+        public void Delete(long skillId, long characterId)
         {
             var association = _dataContext.CharacterSkillAssociations
                 .First(cia => cia.CharacterFk == characterId && cia.SkillFk == skillId);

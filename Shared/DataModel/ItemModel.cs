@@ -28,7 +28,8 @@ namespace GurpsCompanion.Shared.DataModel
             Name = model.Name;
         }
 
-        public int Count { get; set; }
+        public bool Wearing { get; set; }
+        public long Count { get; set; }
 
         [Required]
         [StringExists]

@@ -15,7 +15,6 @@ namespace GurpsCompanion.Shared.DataModel
             Id = model.Id;
             Name = model.Name;
             Description = model.Description;
-            Value = model.Value;
             Difficulty = EnumConverter<SkillDifficulties>.ConvertTo(model.Difficulty);
             Defaults = model.Defaults;
             BaseAttribute = EnumConverter<SkillBaseAttributes>.ConvertTo(model.BaseAttribute);

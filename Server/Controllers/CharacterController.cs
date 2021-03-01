@@ -45,16 +45,9 @@ namespace GurpsCompanion.Server.Controllers
                     .Where(caa => caa.CharacterFk == id).Select(caa => new AdvantageModel(caa.AdvantageFkNavigation)),
                 Items = _dataContext.CharacterItemAssociations
                     .Where(caa => caa.CharacterFk == id)
-                    .Select(caa => new ItemModel(caa.ItemFkNavigation))
-                    .ToLookup(im => im.Name)
-                    .Select(im =>
-                    {
-                        var item = im.First();
-                        item.Count = im.Count();
-                        return item;
-                    }),
+                    .Select(caa => new ItemModel(caa.ItemFkNavigation) { Wearing = caa.Wearing != 0, Count = caa.Count }),
                 Skills = _dataContext.CharacterSkillAssociations
-                    .Where(caa => caa.CharacterFk == id).Select(caa => new SkillModel(caa.SkillFkNavigation)),
+                    .Where(caa => caa.CharacterFk == id).Select(caa => new SkillModel(caa.SkillFkNavigation) { Value = caa.Value }),
                 CharacterModel = new CharacterModel(_dataContext.Characters.First(c => c.Id == id))
             };
         }

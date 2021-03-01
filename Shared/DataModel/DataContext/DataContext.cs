@@ -102,7 +102,13 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
 
                 entity.Property(e => e.CharacterFk).HasColumnName("character_fk");
 
+                entity.Property(e => e.Count)
+                    .HasColumnName("count")
+                    .HasDefaultValueSql("1");
+
                 entity.Property(e => e.ItemFk).HasColumnName("item_fk");
+
+                entity.Property(e => e.Wearing).HasColumnName("wearing");
 
                 entity.HasOne(d => d.CharacterFkNavigation)
                     .WithMany(p => p.CharacterItemAssociations)
@@ -122,6 +128,8 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
                 entity.Property(e => e.CharacterFk).HasColumnName("character_fk");
 
                 entity.Property(e => e.SkillFk).HasColumnName("skill_fk");
+
+                entity.Property(e => e.Value).HasColumnName("value");
 
                 entity.HasOne(d => d.CharacterFkNavigation)
                     .WithMany(p => p.CharacterSkillAssociations)
@@ -183,8 +191,6 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasColumnName("name");
-
-                entity.Property(e => e.Value).HasColumnName("value");
             });
 
             OnModelCreatingPartial(modelBuilder);

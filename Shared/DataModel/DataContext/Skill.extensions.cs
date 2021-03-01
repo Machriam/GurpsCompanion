@@ -10,7 +10,6 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
         {
             Name = model.Name;
             Description = model.Description;
-            Value = model.Value;
             Difficulty = model.Difficulty.GetDescription();
             Defaults = model.Defaults;
             BaseAttribute = model.BaseAttribute.GetDescription();
