@@ -131,6 +131,9 @@
   <data name="GetItemNames" xml:space="preserve">
     <value>/api/item/itemnames</value>
   </data>
+  <data name="Item_ChangeCount" xml:space="preserve">
+    <value>/api/item/changeCount</value>
+  </data>
   <data name="Item_Delete" xml:space="preserve">
     <value>/api/item?characterAssId={0}</value>
   </data>

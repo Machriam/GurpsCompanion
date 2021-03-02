@@ -38,6 +38,15 @@ namespace GurpsCompanion.Server.Controllers
             _dataContext.SaveChanges();
         }
 
+        [HttpPut("changeCount")]
+        public void ChangeCount(ItemModel model)
+        {
+            var existingAssociation = _dataContext.CharacterItemAssociations
+                .FirstOrDefault(cia => cia.Id == model.CharacterItemAssId);
+            existingAssociation.Count = model.Count;
+            _dataContext.SaveChanges();
+        }
+
         [HttpPost]
         public ItemModel PostItem([FromBody] ItemModel model, long characterId)
         {

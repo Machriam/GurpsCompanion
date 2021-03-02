@@ -97,6 +97,15 @@ namespace GurpsCompanion.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to /api/item/changeCount.
+        /// </summary>
+        public static string Item_ChangeCount {
+            get {
+                return ResourceManager.GetString("Item_ChangeCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to /api/item?characterAssId={0}.
         /// </summary>
         public static string Item_Delete {

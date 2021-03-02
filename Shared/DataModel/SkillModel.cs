@@ -6,6 +6,10 @@ namespace GurpsCompanion.Shared.DataModel
 {
     public class SkillModel
     {
+        public SkillModel Clone()
+        {
+            return (SkillModel)MemberwiseClone();
+        }
         public SkillModel()
         {
         }

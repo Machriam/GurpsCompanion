@@ -11,11 +11,11 @@
     <DataAnnotationsValidator></DataAnnotationsValidator>
     @if (SelectedCharacterModel != null)
     {
-        <table class="table" style="height:500px; overflow-y:scroll;display:block">
+        <table class="table-sm" style="height:500px; overflow-y:scroll;display:block">
             @foreach (var item in Skills)
             {
                 <tr style="padding:0">
-                    <td>
+                    <td  @onclick="()=>SkillEditModel=item.Clone()">
                         <b>@item.Name (@item.Difficulty.GetDescription()/@item.BaseAttribute.GetDescription())</b>
                         <br />@item.Value.ToString()
                     </td>
@@ -24,29 +24,26 @@
             }
         </table>
         <ValidationSummary></ValidationSummary>
+        <DataList Items="SkillNames" InputHasChanged="SelectedSkillHasChanged" LabelText="Select Skill"></DataList>
         <div class="row col-md-12">
-            <div class="col-md-6">
-                <DataList Items="SkillNames" InputHasChanged="SelectedSkillHasChanged" LabelText="Select Skill"></DataList>
-            </div>
-            <div class="flex-fill">
+            <div class="col-md-4">
                 <label class="col-form-label">Name</label>
                 <InputText @bind-Value="@SkillEditModel.Name" class="form-control"></InputText>
             </div>
-        </div>
-        <div class="d-flex col-md-12 flex-wrap">
-            <div class="col-md-3">
+            <div class="col-md-1" style="align-self:center">
                 <EnumDropDown T="SkillDifficulties" @bind-SelectedItem="SkillEditModel.Difficulty"></EnumDropDown>
+                <div style="height:4px"></div>
                 <EnumDropDown T="SkillBaseAttributes" @bind-SelectedItem="SkillEditModel.BaseAttribute"></EnumDropDown>
             </div>
-            <div class="ml-1 col-md-5">
-                <label class="col-form-label">Defaults</label>
-                <InputTextArea @bind-Value="@SkillEditModel.Defaults" class="form-control"></InputTextArea>
-            </div>
-            <div class="ml-1 col-md-2">
+            <div class="col-md-1">
                 <label class="col-form-label">Value</label>
                 <InputNumber @bind-Value="@SkillEditModel.Value" class="form-control"></InputNumber>
             </div>
-            <div class="ml-1 flex-fill">
+            <div class="col-md-6">
+                <label class="col-form-label">Defaults</label>
+                <InputTextArea @bind-Value="@SkillEditModel.Defaults" class="form-control"></InputTextArea>
+            </div>
+            <div class="col-md-12">
                 <label class="col-form-label">Description</label>
                 <InputTextArea @bind-Value="@SkillEditModel.Description" class="form-control"></InputTextArea>
             </div>

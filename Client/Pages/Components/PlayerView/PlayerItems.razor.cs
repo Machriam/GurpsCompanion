@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Json;
+using Microsoft.AspNetCore.Components;
 using GurpsCompanion.Client.Core;
 using GurpsCompanion.Client.JsInterop;
 using GurpsCompanion.Client.UiComponents;
 using GurpsCompanion.Shared;
 using GurpsCompanion.Shared.Core;
 using GurpsCompanion.Shared.DataModel;
-using Microsoft.AspNetCore.Components;
+using GurpsCompanion.Shared.Features.PlayerView;
 
 namespace GurpsCompanion.Client.Pages.Components.PlayerView
 {
@@ -43,7 +44,12 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
         public CharacterModel OriginalCharacterModel { get; set; }
         public double TotalMoney => Items.Sum(i => i.Price * i.Count);
         public double TotalWeight => Items.Where(i => i.Equipped).Sum(i => i.Weight * i.Count);
+
+        public EncumbranceModel Encumbrance => EncumbranceCalculator.GetEncumbrance(SelectedCharacterModel.BasicLift, TotalWeight,
+            SelectedCharacterModel.BasicMove, SelectedCharacterModel.Dodge);
+
         public CrudActions SubmitAction { get; set; }
+
         public IEnumerable<IDataListItem> ItemNames { get; set; }
 
         public async void GetPlayerItemNames()
@@ -57,6 +63,12 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
         {
             model.Equipped = !model.Equipped;
             await Http.PutAsJsonAsync(ApiAddressResources.Item_EquipItem, model).ConfigureAwait(false);
+        }
+
+        public async void ChangeCount(ItemModel model, long newValue)
+        {
+            model.Count = newValue;
+            await Http.PutAsJsonAsync(ApiAddressResources.Item_ChangeCount, model).ConfigureAwait(false);
         }
 
         public async void InputHasChanged(DataListEntry item)

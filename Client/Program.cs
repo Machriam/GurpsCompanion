@@ -26,6 +26,7 @@ namespace GurpsCompanion.Client
             builder.Services.AddSingleton(new AppStateContainer());
             builder.Services.AddSingleton(new PlayerViewEventBus());
             builder.Services.AddSingleton<ISkillCpCalculator, SkillCpCalculator>();
+            builder.Services.AddSingleton<IEncumbranceCalculator, EncumbranceCalculator>();
 
             await builder.Build().RunAsync();
         }
