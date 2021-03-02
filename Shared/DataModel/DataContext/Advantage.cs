@@ -16,6 +16,7 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
         public string Name { get; set; }
         public string Description { get; set; }
         public long Cost { get; set; }
+        public long Skillable { get; set; }
 
         public virtual ICollection<CharacterAdvantageAssociation> CharacterAdvantageAssociations { get; set; }
     }

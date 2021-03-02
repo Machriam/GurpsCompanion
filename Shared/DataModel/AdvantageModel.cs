@@ -4,6 +4,11 @@ namespace GurpsCompanion.Shared.DataModel
 {
     public class AdvantageModel
     {
+        public AdvantageModel Clone()
+        {
+            return (AdvantageModel)MemberwiseClone();
+        }
+
         public AdvantageModel()
         {
         }
@@ -14,6 +19,7 @@ namespace GurpsCompanion.Shared.DataModel
             Name = model.Name;
             Description = model.Description;
             Cost = model.Cost;
+            Skillable = model.Skillable != 0;
         }
 
         public long Id { get; set; }
@@ -21,5 +27,6 @@ namespace GurpsCompanion.Shared.DataModel
         public string Description { get; set; }
         public long Cost { get; set; }
         public long Level { get; set; }
+        public bool Skillable { get; set; }
     }
 }

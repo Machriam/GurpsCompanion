@@ -35,6 +35,8 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasColumnName("name");
+
+                entity.Property(e => e.Skillable).HasColumnName("skillable");
             });
 
             modelBuilder.Entity<Character>(entity =>

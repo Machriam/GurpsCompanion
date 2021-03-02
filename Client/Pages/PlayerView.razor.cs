@@ -45,6 +45,8 @@ namespace GurpsCompanion.Client.Pages
                 StateContainer.PasswordModel.Hash, StateContainer.PasswordModel.Salt)).ConfigureAwait(false);
             EventBus.OnItemChanged += EventBus_OnItemChanged;
             EventBus.OnSkillChanged += EventBus_OnSkillChanged;
+            EventBus.OnAdvantageChanged += EventBus_OnAdvantageChanged;
+            EventBus.OnGlossaryChanged += EventBus_OnGlossaryChanged;
         }
 
         private void EventBus_OnItemChanged() => RetrieveCharacterInformation();
@@ -52,6 +54,8 @@ namespace GurpsCompanion.Client.Pages
         private void EventBus_OnSkillChanged() => RetrieveCharacterInformation();
 
         private void EventBus_OnAdvantageChanged() => RetrieveCharacterInformation();
+
+        private void EventBus_OnGlossaryChanged() => RetrieveCharacterInformation();
 
         public async void RetrieveCharacterInformation()
         {
@@ -66,6 +70,8 @@ namespace GurpsCompanion.Client.Pages
         {
             EventBus.OnItemChanged -= EventBus_OnItemChanged;
             EventBus.OnSkillChanged -= EventBus_OnSkillChanged;
+            EventBus.OnAdvantageChanged -= EventBus_OnAdvantageChanged;
+            EventBus.OnGlossaryChanged -= EventBus_OnGlossaryChanged;
         }
     }
 }

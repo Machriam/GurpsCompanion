@@ -1,10 +1,52 @@
 ﻿@using GurpsCompanion.Shared.DataModel
 @inject HttpClient Http
+@inject PlayerViewEventBus EventBus
+@inject IJsFunctionCallerServiceFactory JsServiceFactory
 
-<EditForm Model="SelectedCharacterModel" OnSubmit="UpdateStats">
+<EditForm Model="AdvantageEditModel" OnValidSubmit="UpdateAdvantages">
     <DataAnnotationsValidator></DataAnnotationsValidator>
     <ValidationSummary></ValidationSummary>
     @if (SelectedCharacterModel != null)
     {
+        <table class="table-sm" style="height:500px; overflow-y:scroll;display:block">
+            @foreach (var item in Advantages)
+            {
+                <tr style="padding:0">
+                    <td @onclick="()=>AdvantageEditModel=item.Clone()">
+                        <b>@item.Name @(item.Skillable?item.Cost+"/Level":item.Cost)</b>
+                    </td>
+                    <td> @item.Description </td>
+                </tr>
+            }
+        </table>
+        <ValidationSummary></ValidationSummary>
+        <DataList Items="AdvantageNames" InputHasChanged="SelectedAdvantageHasChanged" LabelText="Select Advantage"></DataList>
+        <div class="row col-md-12">
+            <div class="col-md-3">
+                <label class="col-form-label">Name</label>
+                <InputTextArea @bind-Value="@AdvantageEditModel.Name" class="form-control"></InputTextArea>
+            </div>
+            <div class="col-md-1">
+                <label class="col-form-label">Level</label>
+                <InputNumber @bind-Value="@AdvantageEditModel.Level" class="form-control"></InputNumber>
+            </div>
+            <div class="col-md-1">
+                <label class="col-form-label">Base Cost</label>
+                <InputNumber @bind-Value="@AdvantageEditModel.Cost" class="form-control"></InputNumber>
+            </div>
+            <div class="col-md-1">
+                <label class="col-form-label">Has Levels</label>
+                <InputCheckbox style="transform:scale(1.5)" @bind-Value="@AdvantageEditModel.Skillable" class="form-control"></InputCheckbox>
+            </div>
+            <div class="col-md-12">
+                <label class="col-form-label">Description</label>
+                <InputTextArea @bind-Value="@AdvantageEditModel.Description" class="form-control"></InputTextArea>
+            </div>
+            <div class="d-flex justify-content-between col-md-12">
+                <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Add" type="submit">Add new Advantage</button>
+                <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Update" type="submit">Update Advantage</button>
+                <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Delete" type="submit">Delete Advantage</button>
+            </div>
+        </div>
     }
 </EditForm>

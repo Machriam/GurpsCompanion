@@ -9,6 +9,7 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
             Name = model.Name;
             Description = model.Description;
             Cost = model.Cost;
+            Skillable = model.Skillable ? 1 : 0;
         }
     }
 }
