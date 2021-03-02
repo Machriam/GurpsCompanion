@@ -146,6 +146,12 @@
   <data name="GetItemNames" xml:space="preserve">
     <value>/api/item/itemnames</value>
   </data>
+  <data name="Glossary_Delete" xml:space="preserve">
+    <value>/api/glossary?glossaryId={0}</value>
+  </data>
+  <data name="Glossary_GetPutPost" xml:space="preserve">
+    <value>/api/glossary</value>
+  </data>
   <data name="Item_ChangeCount" xml:space="preserve">
     <value>/api/item/changeCount</value>
   </data>

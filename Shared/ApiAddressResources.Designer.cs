@@ -142,6 +142,24 @@ namespace GurpsCompanion.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to /api/glossary?glossaryId={0}.
+        /// </summary>
+        public static string Glossary_Delete {
+            get {
+                return ResourceManager.GetString("Glossary_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /api/glossary.
+        /// </summary>
+        public static string Glossary_GetPutPost {
+            get {
+                return ResourceManager.GetString("Glossary_GetPutPost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to /api/item/changeCount.
         /// </summary>
         public static string Item_ChangeCount {
