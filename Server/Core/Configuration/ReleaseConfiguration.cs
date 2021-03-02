@@ -1,4 +1,6 @@
-﻿namespace GurpsCompanion.Server.Core
+﻿using System.IO;
+
+namespace GurpsCompanion.Server.Core
 {
     public interface IEnvironmentConfiguration
     {
@@ -15,7 +17,7 @@
             _options = options;
         }
 
-        public string DatabaseConnection => "Data Source=" + _options.DatabaseConnection;
+        public string DatabaseConnection => "Data Source=" + Directory.GetCurrentDirectory() + "\\" + _options.DatabaseConnection;
         public string GameMasterPasswordHash => _options.GameMasterPasswordHash;
     }
 }

@@ -1,4 +1,5 @@
-﻿using GurpsCompanion.Shared.Core;
+﻿using System.ComponentModel.DataAnnotations;
+using GurpsCompanion.Shared.Core;
 using GurpsCompanion.Shared.DataModel.DataContext;
 using GurpsCompanion.Shared.Validation;
 
@@ -10,6 +11,7 @@ namespace GurpsCompanion.Shared.DataModel
         {
             return (SkillModel)MemberwiseClone();
         }
+
         public SkillModel()
         {
         }
@@ -32,7 +34,9 @@ namespace GurpsCompanion.Shared.DataModel
         [StringExists]
         public string Description { get; set; }
 
+        [Range(1, 999)]
         public long Value { get; set; }
+
         public SkillDifficulties Difficulty { get; set; }
 
         [StringExists]

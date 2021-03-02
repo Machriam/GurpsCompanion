@@ -39,12 +39,14 @@ namespace GurpsCompanion.Shared.DataModel
         public string Description { get; set; }
 
         [Required]
+        [Range(0, 999)]
         public double Price { get; set; }
 
         public long Id { get; set; }
         public byte[] Image { get; set; }
 
         [Required]
+        [Range(0, 999)]
         public double Weight { get; set; }
 
         public long CharacterItemAssId { get; set; }
