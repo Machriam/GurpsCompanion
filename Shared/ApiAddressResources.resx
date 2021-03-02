@@ -132,10 +132,10 @@
     <value>/api/item/itemnames</value>
   </data>
   <data name="Item_Delete" xml:space="preserve">
-    <value>/api/item?itemId={0}&amp;characterId={1}</value>
+    <value>/api/item?characterAssId={0}</value>
   </data>
   <data name="Item_EquipItem" xml:space="preserve">
-    <value>/api/item/equip?characterId={0}</value>
+    <value>/api/item/equip</value>
   </data>
   <data name="Item_Post" xml:space="preserve">
     <value>/api/item?characterId={0}</value>

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Json;
+using Microsoft.AspNetCore.Components;
 using GurpsCompanion.Client.Core;
 using GurpsCompanion.Client.JsInterop;
 using GurpsCompanion.Client.UiComponents;
 using GurpsCompanion.Shared;
 using GurpsCompanion.Shared.Core;
 using GurpsCompanion.Shared.DataModel;
-using Microsoft.AspNetCore.Components;
 
 namespace GurpsCompanion.Client.Pages.Components.PlayerView
 {

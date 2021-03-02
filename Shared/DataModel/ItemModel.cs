@@ -46,5 +46,7 @@ namespace GurpsCompanion.Shared.DataModel
 
         [Required]
         public double Weight { get; set; }
+
+        public long CharacterItemAssId { get; set; }
     }
 }

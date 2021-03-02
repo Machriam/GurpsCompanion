@@ -97,7 +97,7 @@ namespace GurpsCompanion.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /api/item?itemId={0}&amp;characterId={1}.
+        ///   Looks up a localized string similar to /api/item?characterAssId={0}.
         /// </summary>
         public static string Item_Delete {
             get {
@@ -106,7 +106,7 @@ namespace GurpsCompanion.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /api/item/equip?characterId={0}.
+        ///   Looks up a localized string similar to /api/item/equip.
         /// </summary>
         public static string Item_EquipItem {
             get {

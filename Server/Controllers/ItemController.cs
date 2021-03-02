@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using GurpsCompanion.Shared.DataModel;
 using GurpsCompanion.Shared.DataModel.DataContext;
-using Microsoft.AspNetCore.Mvc;
 
 namespace GurpsCompanion.Server.Controllers
 {
@@ -30,10 +30,10 @@ namespace GurpsCompanion.Server.Controllers
         }
 
         [HttpPut("equip")]
-        public void EquipItem(ItemModel model, long characterId)
+        public void EquipItem(ItemModel model)
         {
             var existingAssociation = _dataContext.CharacterItemAssociations
-                .FirstOrDefault(cia => cia.CharacterFk == characterId && cia.ItemFk == model.Id);
+                .FirstOrDefault(cia => cia.Id == model.CharacterItemAssId);
             existingAssociation.Equipped = model.Equipped ? 1 : 0;
             _dataContext.SaveChanges();
         }
@@ -43,20 +43,11 @@ namespace GurpsCompanion.Server.Controllers
         {
             using var transaction = _dataContext.Database.BeginTransaction();
             var dbItem = GetOrCreateItem(model);
-            var existingAssociation = _dataContext.CharacterItemAssociations
-                .FirstOrDefault(cia => cia.CharacterFk == characterId && cia.ItemFk == dbItem.Id);
-            if (existingAssociation != null)
-            {
-                existingAssociation.Count++;
-            }
-            else
-            {
-                var characterItemAssociation = new CharacterItemAssociation() { CharacterFk = characterId, ItemFk = dbItem.Id, Count = 1 };
-                _dataContext.CharacterItemAssociations.Add(characterItemAssociation);
-            }
+            var characterItemAssociation = new CharacterItemAssociation() { CharacterFk = characterId, ItemFk = dbItem.Id, Count = 1 };
+            _dataContext.CharacterItemAssociations.Add(characterItemAssociation);
             _dataContext.SaveChanges();
             transaction.Commit();
-            return new ItemModel(dbItem);
+            return new ItemModel(dbItem) { CharacterItemAssId = characterItemAssociation.Id, Count = characterItemAssociation.Count };
         }
 
         private Item GetOrCreateItem(ItemModel model)
@@ -82,12 +73,11 @@ namespace GurpsCompanion.Server.Controllers
         }
 
         [HttpDelete]
-        public void DeleteItem(long itemId, long characterId)
+        public void DeleteItem(long characterAssId)
         {
             var association = _dataContext.CharacterItemAssociations
-                .First(cia => cia.CharacterFk == characterId && cia.ItemFk == itemId);
-            association.Count--;
-            if (association.Count <= 0) _dataContext.CharacterItemAssociations.Remove(association);
+                .First(cia => cia.Id == characterAssId);
+            _dataContext.CharacterItemAssociations.Remove(association);
             _dataContext.SaveChanges();
         }
     }

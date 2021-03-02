@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Json;
-using Microsoft.AspNetCore.Components;
 using GurpsCompanion.Client.Core;
 using GurpsCompanion.Client.JsInterop;
 using GurpsCompanion.Client.UiComponents;
 using GurpsCompanion.Shared;
 using GurpsCompanion.Shared.Core;
 using GurpsCompanion.Shared.DataModel;
+using Microsoft.AspNetCore.Components;
 
 namespace GurpsCompanion.Client.Pages.Components.PlayerView
 {
@@ -42,7 +42,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
 
         public CharacterModel OriginalCharacterModel { get; set; }
         public double TotalMoney => Items.Sum(i => i.Price * i.Count);
-        public double TotalWeight => Items.Sum(i => i.Weight * i.Count);
+        public double TotalWeight => Items.Where(i => i.Equipped).Sum(i => i.Weight * i.Count);
         public CrudActions SubmitAction { get; set; }
         public IEnumerable<IDataListItem> ItemNames { get; set; }
 
@@ -56,7 +56,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
         public async void EquipItem(ItemModel model)
         {
             model.Equipped = !model.Equipped;
-            await Http.PutAsJsonAsync(string.Format(ApiAddressResources.Item_EquipItem, SelectedCharacterModel.Id), model).ConfigureAwait(false);
+            await Http.PutAsJsonAsync(ApiAddressResources.Item_EquipItem, model).ConfigureAwait(false);
         }
 
         public async void InputHasChanged(DataListEntry item)
@@ -79,7 +79,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
             {
                 case CrudActions.Delete:
                     using (var result = await Http.DeleteAsync(
-                        string.Format(ApiAddressResources.Item_Delete, ItemEditModel.Id, SelectedCharacterModel.Id)).ConfigureAwait(false))
+                        string.Format(ApiAddressResources.Item_Delete, ItemEditModel.CharacterItemAssId)).ConfigureAwait(false))
                     {
                         await _jsService.CheckHttpResponse(result).ConfigureAwait(false);
                     }
