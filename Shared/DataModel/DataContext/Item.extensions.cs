@@ -6,7 +6,7 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
     {
         public Item(ItemModel model)
         {
-            Description = model.Description;
+            Description = model.Description.Trim();
             Price = model.Price;
             Image = model.Image;
             Weight = model.Weight;

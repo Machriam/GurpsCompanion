@@ -71,6 +71,8 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
         [Parameter]
         public IEnumerable<SkillModel> Skills { get; set; }
 
+        public SkillModel SelectedRow { get; set; }
+
         public CharacterModel OriginalCharacterModel { get; set; }
 
         public async void UpdateStats()
@@ -81,7 +83,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
                     using (var result = await Http.DeleteAsync(
                         string.Format(ApiAddressResources.Skill_Delete, SkillEditModel.Id, SelectedCharacterModel.Id)).ConfigureAwait(false))
                     {
-                        await _jsService.CheckHttpResponse(result).ConfigureAwait(false);
+                        if (!await _jsService.CheckHttpResponse(result).ConfigureAwait(false)) return;
                     }
                     break;
 
@@ -91,7 +93,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
                                SkillEditModel
                                                                   ).ConfigureAwait(false))
                     {
-                        await _jsService.CheckHttpResponse(result).ConfigureAwait(false);
+                        if (!await _jsService.CheckHttpResponse(result).ConfigureAwait(false)) return;
                         SkillEditModel = await result.Content.ReadFromJsonAsync<SkillModel>().ConfigureAwait(false);
                     }
                     break;
@@ -101,7 +103,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
                         string.Format(ApiAddressResources.Skill_Put, SelectedCharacterModel.Id),
                         SkillEditModel).ConfigureAwait(false))
                     {
-                        await _jsService.CheckHttpResponse(result).ConfigureAwait(false);
+                        if (!await _jsService.CheckHttpResponse(result).ConfigureAwait(false)) return;
                     }
                     break;
             }

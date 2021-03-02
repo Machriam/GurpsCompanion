@@ -6,8 +6,8 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
     {
         public Advantage(AdvantageModel model)
         {
-            Name = model.Name;
-            Description = model.Description;
+            Name = model.Name.Trim();
+            Description = model.Description.Trim();
             Cost = model.Cost;
             Skillable = model.Skillable ? 1 : 0;
         }

@@ -143,11 +143,11 @@ namespace GurpsCompanion.Shared.DataModel
 
         [JsonIgnore]
         [Display]
-        public decimal VagrexPointRegeneration => VagrexFavor;
+        public decimal VagrexPointRegeneration => VagrexFavor <= 0 ? 0 : Math.Ceiling(VagrexFavor * 10m / (10m + VagrexFavor));
 
         [JsonIgnore]
         [Display]
-        public long VagrexPoints => (long)(Math.Round((Health * 0.5) + (Strength * 0.2), 0) + VagrexFavor);
+        public long VagrexPoints => Math.Max(0, (long)(Math.Round((Health * 0.5) + (Strength * 0.2), 0) + VagrexFavor));
 
         [JsonIgnore]
         [Display]

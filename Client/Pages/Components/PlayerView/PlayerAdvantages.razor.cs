@@ -29,12 +29,15 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
             {
                 if (_selectedCharacterModel == value) return;
                 _selectedCharacterModel = value;
+                GetAvailableAdvantages();
                 OriginalCharacterModel = value?.Clone();
             }
         }
 
         [Parameter]
         public IEnumerable<AdvantageModel> Advantages { get; set; }
+
+        public AdvantageModel SelectedRow { get; set; }
 
         public CrudActions SubmitAction { get; set; }
 
@@ -61,6 +64,8 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
             StateHasChanged();
         }
 
+        public long CpSumOfAdvantages => Advantages.Sum(a => a.Level * a.Cost);
+
         public AdvantageModel AdvantageEditModel { get; set; } = new AdvantageModel();
 
         public CharacterModel OriginalCharacterModel { get; set; }
@@ -73,7 +78,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
                     using (var result = await Http.DeleteAsync(
                         string.Format(ApiAddressResources.Advantage_Delete, AdvantageEditModel.Id, SelectedCharacterModel.Id)).ConfigureAwait(false))
                     {
-                        await _jsService.CheckHttpResponse(result).ConfigureAwait(false);
+                        if (!await _jsService.CheckHttpResponse(result).ConfigureAwait(false)) return;
                     }
                     break;
 
@@ -82,17 +87,17 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
                                string.Format(ApiAddressResources.Advantage_Post, SelectedCharacterModel.Id),
                                AdvantageEditModel).ConfigureAwait(false))
                     {
-                        await _jsService.CheckHttpResponse(result).ConfigureAwait(false);
+                        if (!await _jsService.CheckHttpResponse(result).ConfigureAwait(false)) return;
                         AdvantageEditModel = await result.Content.ReadFromJsonAsync<AdvantageModel>().ConfigureAwait(false);
                     }
                     break;
 
                 case CrudActions.Update:
                     using (var result = await Http.PutAsJsonAsync(
-                        string.Format(ApiAddressResources.Skill_Put, SelectedCharacterModel.Id),
+                        string.Format(ApiAddressResources.Advantage_Put, SelectedCharacterModel.Id),
                         AdvantageEditModel).ConfigureAwait(false))
                     {
-                        await _jsService.CheckHttpResponse(result).ConfigureAwait(false);
+                        if (!await _jsService.CheckHttpResponse(result).ConfigureAwait(false)) return;
                     }
                     break;
             }

@@ -19,13 +19,13 @@ namespace GurpsCompanion.Server.Controllers
         }
 
         [HttpGet("names")]
-        public IEnumerable<string> GetSkillNames()
+        public IEnumerable<string> GetAdvantageNames()
         {
             return _dataContext.Advantages.Select(c => c.Name);
         }
 
         [HttpGet("advantage")]
-        public AdvantageModel GetSkill(string name)
+        public AdvantageModel GetAdvantage(string name)
         {
             return new AdvantageModel(_dataContext.Advantages.First(i => i.Name == name));
         }

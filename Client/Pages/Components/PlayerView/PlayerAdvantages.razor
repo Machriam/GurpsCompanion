@@ -3,6 +3,7 @@
 @inject PlayerViewEventBus EventBus
 @inject IJsFunctionCallerServiceFactory JsServiceFactory
 
+<label class="col-form-label-lg">Advantages (@CpSumOfAdvantages CP)</label>
 <EditForm Model="AdvantageEditModel" OnValidSubmit="UpdateAdvantages">
     <DataAnnotationsValidator></DataAnnotationsValidator>
     <ValidationSummary></ValidationSummary>
@@ -11,10 +12,12 @@
         <table class="table-sm" style="height:500px; overflow-y:scroll;display:block">
             @foreach (var item in Advantages)
             {
-                <tr style="padding:0">
-                    <td @onclick="()=>AdvantageEditModel=item.Clone()">
-                        <b>@item.Name @(item.Skillable?item.Cost+"/Level":item.Cost)</b>
+                <tr @onclick="()=> { AdvantageEditModel = item.Clone();SelectedRow = item; }"
+                    class="@(item==SelectedRow?"table-active":"")" style="padding:0">
+                    <td>
+                        <b>@item.Name <br /> @(item.Skillable?item.Cost+" CP/Level":item.Cost+" CP")</b>
                     </td>
+                    <td> @item.Level</td>
                     <td> @item.Description </td>
                 </tr>
             }
@@ -24,7 +27,7 @@
         <div class="row col-md-12">
             <div class="col-md-3">
                 <label class="col-form-label">Name</label>
-                <InputTextArea @bind-Value="@AdvantageEditModel.Name" class="form-control"></InputTextArea>
+                <InputText @bind-Value="@AdvantageEditModel.Name" class="form-control"></InputText>
             </div>
             <div class="col-md-1">
                 <label class="col-form-label">Level</label>
@@ -36,7 +39,7 @@
             </div>
             <div class="col-md-1">
                 <label class="col-form-label">Has Levels</label>
-                <InputCheckbox style="transform:scale(1.5)" @bind-Value="@AdvantageEditModel.Skillable" class="form-control"></InputCheckbox>
+                <InputCheckbox @bind-Value="@AdvantageEditModel.Skillable" class="form-control"></InputCheckbox>
             </div>
             <div class="col-md-12">
                 <label class="col-form-label">Description</label>

@@ -14,12 +14,13 @@
         <table class="table-sm" style="height:500px; overflow-y:scroll;display:block">
             @foreach (var item in Skills)
             {
-                <tr style="padding:0">
-                    <td  @onclick="()=>SkillEditModel=item.Clone()">
+                Action SelectAction = () => { SkillEditModel = item.Clone(); SelectedRow = item; };
+                <tr class="@(SelectedRow==item?"table-active":"")" style="padding:0">
+                    <td @onclick="SelectAction">
                         <b>@item.Name (@item.Difficulty.GetDescription()/@item.BaseAttribute.GetDescription())</b>
                         <br />@item.Value.ToString()
                     </td>
-                    <td> @item.Defaults <br /> @item.Description </td>
+                    <td @onclick="SelectAction"> @item.Defaults <br /> @item.Description </td>
                 </tr>
             }
         </table>

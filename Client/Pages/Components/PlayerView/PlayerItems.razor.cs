@@ -40,6 +40,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
         }
 
         public ItemModel ItemEditModel { get; set; } = new ItemModel();
+        public ItemModel SelectedRow { get; set; }
 
         public CharacterModel OriginalCharacterModel { get; set; }
         public double TotalMoney => Items.Sum(i => i.Price * i.Count);
@@ -93,7 +94,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
                     using (var result = await Http.DeleteAsync(
                         string.Format(ApiAddressResources.Item_Delete, ItemEditModel.CharacterItemAssId)).ConfigureAwait(false))
                     {
-                        await _jsService.CheckHttpResponse(result).ConfigureAwait(false);
+                        if (!await _jsService.CheckHttpResponse(result).ConfigureAwait(false)) return;
                     }
                     break;
 
@@ -103,7 +104,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
                                ItemEditModel
                                                                   ).ConfigureAwait(false))
                     {
-                        await _jsService.CheckHttpResponse(result).ConfigureAwait(false);
+                        if (!await _jsService.CheckHttpResponse(result).ConfigureAwait(false)) return;
                         ItemEditModel = await result.Content.ReadFromJsonAsync<ItemModel>().ConfigureAwait(false);
                     }
                     break;
@@ -111,7 +112,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
                 case CrudActions.Update:
                     using (var result = await Http.PutAsJsonAsync(ApiAddressResources.Item_Put, ItemEditModel).ConfigureAwait(false))
                     {
-                        await _jsService.CheckHttpResponse(result).ConfigureAwait(false);
+                        if (!await _jsService.CheckHttpResponse(result).ConfigureAwait(false)) return;
                     }
                     break;
             }

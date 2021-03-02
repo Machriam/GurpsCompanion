@@ -121,10 +121,10 @@
     <value>/api/advantage?advantageId={0}&amp;characterId={1}</value>
   </data>
   <data name="Advantage_GetAdvantage" xml:space="preserve">
-    <value>/api/advantage?name={0}</value>
+    <value>/api/advantage/advantage?name={0}</value>
   </data>
   <data name="Advantage_GetNames" xml:space="preserve">
-    <value>/api/advantage</value>
+    <value>/api/advantage/names</value>
   </data>
   <data name="Advantage_Post" xml:space="preserve">
     <value>/api/advantage?characterId={0}</value>

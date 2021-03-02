@@ -8,10 +8,10 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
     {
         public Skill(SkillModel model)
         {
-            Name = model.Name;
-            Description = model.Description;
+            Name = model.Name.Trim();
+            Description = model.Description.Trim();
             Difficulty = model.Difficulty.GetDescription();
-            Defaults = model.Defaults;
+            Defaults = model.Defaults.Trim();
             BaseAttribute = model.BaseAttribute.GetDescription();
         }
     }

@@ -24,6 +24,7 @@
             <div class="row col-md-12 d-flex text-center">
                 @if (SelectedTab == PlayerViewTabsEnum.Advantages)
                 {
+                    <PlayerAdvantages Advantages="CharacterInformation.Advantages" SelectedCharacterModel="CharacterInformation.CharacterModel"></PlayerAdvantages>
                 }
                 else if (SelectedTab == PlayerViewTabsEnum.Items)
                 {

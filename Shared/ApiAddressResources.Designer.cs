@@ -70,7 +70,7 @@ namespace GurpsCompanion.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /api/advantage?name={0}.
+        ///   Looks up a localized string similar to /api/advantage/advantage?name={0}.
         /// </summary>
         public static string Advantage_GetAdvantage {
             get {
@@ -79,7 +79,7 @@ namespace GurpsCompanion.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /api/advantage.
+        ///   Looks up a localized string similar to /api/advantage/names.
         /// </summary>
         public static string Advantage_GetNames {
             get {

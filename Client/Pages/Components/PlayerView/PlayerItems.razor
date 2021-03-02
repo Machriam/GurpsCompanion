@@ -19,13 +19,14 @@
         <table class="table-sm col-md-12" style="height:500px; overflow-y:scroll;display:block">
             @foreach (var item in Items)
             {
-                <tr class="col-md-12" style="padding:0">
+                Action ClickAction = () => { ItemEditModel = item.Clone(); SelectedRow = item; };
+                <tr class="col-md-12 @(SelectedRow==item?"table-active":"")" style="padding:0">
                     <td><InputCheckbox style="transform:scale(1.5)" @bind-Value="item.Equipped" @onclick="()=>EquipItem(item)"></InputCheckbox></td>
                     <td><InputNumber style="width:100px" @bind-Value="item.Count" @onblur="()=> ChangeCount(item,item.Count)"></InputNumber> </td>
-                    <td @onclick="()=>ItemEditModel=item.Clone()">
+                    <td @onclick="ClickAction">
                         <b>@item.Name</b><br />@item.Price.ToString("C2") - @item.Weight.ToString() BL
                     </td>
-                    <td> @item.Description </td>
+                    <td @onclick="ClickAction"> @item.Description </td>
                 </tr>
             }
         </table>
