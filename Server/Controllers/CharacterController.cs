@@ -42,7 +42,7 @@ namespace GurpsCompanion.Server.Controllers
             return new CharacterInformationModel()
             {
                 Advantages = _dataContext.CharacterAdvantageAssociations
-                    .Where(caa => caa.CharacterFk == id).Select(caa => new AdvantageModel(caa.AdvantageFkNavigation)),
+                    .Where(caa => caa.CharacterFk == id).Select(caa => new AdvantageModel(caa.AdvantageFkNavigation) { Level = caa.Level }),
                 Items = _dataContext.CharacterItemAssociations
                     .Where(caa => caa.CharacterFk == id)
                     .Select(caa => new ItemModel(caa.ItemFkNavigation) { Equipped = caa.Equipped != 0, Count = caa.Count, CharacterItemAssId = caa.Id }),

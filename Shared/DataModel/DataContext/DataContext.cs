@@ -86,6 +86,10 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
 
                 entity.Property(e => e.CharacterFk).HasColumnName("character_fk");
 
+                entity.Property(e => e.Level)
+                    .HasColumnName("level")
+                    .HasDefaultValueSql("1");
+
                 entity.HasOne(d => d.AdvantageFkNavigation)
                     .WithMany(p => p.CharacterAdvantageAssociations)
                     .HasForeignKey(d => d.AdvantageFk);

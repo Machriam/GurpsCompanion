@@ -61,6 +61,51 @@ namespace GurpsCompanion.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to /api/advantage?advantageId={0}&amp;characterId={1}.
+        /// </summary>
+        public static string Advantage_Delete {
+            get {
+                return ResourceManager.GetString("Advantage_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /api/advantage?name={0}.
+        /// </summary>
+        public static string Advantage_GetAdvantage {
+            get {
+                return ResourceManager.GetString("Advantage_GetAdvantage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /api/advantage.
+        /// </summary>
+        public static string Advantage_GetNames {
+            get {
+                return ResourceManager.GetString("Advantage_GetNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /api/advantage?characterId={0}.
+        /// </summary>
+        public static string Advantage_Post {
+            get {
+                return ResourceManager.GetString("Advantage_Post", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /api/advantage?characterId={0}.
+        /// </summary>
+        public static string Advantage_Put {
+            get {
+                return ResourceManager.GetString("Advantage_Put", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to /api/character?hash={0}&amp;salt={1}.
         /// </summary>
         public static string Character_Base {

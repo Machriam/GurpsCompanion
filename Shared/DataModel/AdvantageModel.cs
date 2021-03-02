@@ -20,5 +20,6 @@ namespace GurpsCompanion.Shared.DataModel
         public string Name { get; set; }
         public string Description { get; set; }
         public long Cost { get; set; }
+        public long Level { get; set; }
     }
 }

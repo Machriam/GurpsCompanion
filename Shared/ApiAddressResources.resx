@@ -117,6 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Advantage_Delete" xml:space="preserve">
+    <value>/api/advantage?advantageId={0}&amp;characterId={1}</value>
+  </data>
+  <data name="Advantage_GetAdvantage" xml:space="preserve">
+    <value>/api/advantage?name={0}</value>
+  </data>
+  <data name="Advantage_GetNames" xml:space="preserve">
+    <value>/api/advantage</value>
+  </data>
+  <data name="Advantage_Post" xml:space="preserve">
+    <value>/api/advantage?characterId={0}</value>
+  </data>
+  <data name="Advantage_Put" xml:space="preserve">
+    <value>/api/advantage?characterId={0}</value>
+  </data>
   <data name="Character_Base" xml:space="preserve">
     <value>/api/character?hash={0}&amp;salt={1}</value>
   </data>
