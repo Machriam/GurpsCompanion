@@ -4,34 +4,30 @@ namespace GurpsCompanion.Shared.Features.PlayerView
 {
     public interface ISkillCpCalculator
     {
-        long GetCpForSkill(long value, SkillDifficulties difficulty);
+        long GetSkillModifier(long value, SkillDifficulties difficulty);
+
+        long GetCpForSkill(long value);
     }
 
     public class SkillCpCalculator : ISkillCpCalculator
     {
-        public long GetCpForSkill(long value, SkillDifficulties difficulty)
+        public long GetCpForSkill(long value)
+        {
+            if (value == 0) return 0;
+            if (value == 1) return 1;
+            if (value == 2) return 2;
+            return (value - 2) * 4;
+        }
+
+        public long GetSkillModifier(long value, SkillDifficulties difficulty)
         {
             switch (difficulty)
             {
-                case SkillDifficulties.VH:
-                    if (value == -3) return 1;
-                    if (value == -2) return 2;
-                    return (value + 2) * 4;
-
-                case SkillDifficulties.H:
-                    if (value == -2) return 1;
-                    if (value == -1) return 2;
-                    return (value + 1) * 4;
-
-                case SkillDifficulties.A:
-                    if (value == -1) return 1;
-                    if (value == 0) return 2;
-                    return value * 4;
-
-                case SkillDifficulties.E:
-                    if (value == 0) return 1;
-                    if (value == 1) return 2;
-                    return (value - 1) * 4;
+                case SkillDifficulties.VH: return -4 + value;
+                case SkillDifficulties.H: return -3 + value;
+                case SkillDifficulties.A: return -2 + value;
+                case SkillDifficulties.E: return -1 + value;
+                default: break;
             }
             return 0;
         }

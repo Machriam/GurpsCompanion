@@ -18,7 +18,9 @@
                 <tr class="@(SelectedRow==item?"table-active":"")" style="padding:0">
                     <td @onclick="SelectAction">
                         <b>@item.Name (@item.Difficulty.GetDescription()/@item.BaseAttribute.GetDescription())</b>
-                        <br />@item.Value.ToString()
+                        <br />@(item.Value==0?
+                                item.Defaults:
+                                item.BaseAttribute.GetDescription() + " + " + SkillCpCalculator.GetSkillModifier(item.Value,item.Difficulty))
                     </td>
                     <td @onclick="SelectAction"> @item.Defaults <br /> @item.Description </td>
                 </tr>

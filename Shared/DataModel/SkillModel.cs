@@ -34,7 +34,7 @@ namespace GurpsCompanion.Shared.DataModel
         [StringExists]
         public string Description { get; set; }
 
-        [Range(1, 999)]
+        [Range(0, 100)]
         public long Value { get; set; }
 
         public SkillDifficulties Difficulty { get; set; }

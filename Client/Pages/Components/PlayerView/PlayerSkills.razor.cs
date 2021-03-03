@@ -31,7 +31,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
         public IEnumerable<IDataListItem> SkillDifficulties { get; private set; }
 
         public IEnumerable<IDataListItem> SkillBaseAttributes { get; private set; }
-        public long CpSumOfSkills => Skills.Sum(s => SkillCpCalculator.GetCpForSkill(s.Value, s.Difficulty));
+        public long CpSumOfSkills => Skills.Sum(s => SkillCpCalculator.GetCpForSkill(s.Value));
 
         [Parameter]
         public CharacterModel SelectedCharacterModel

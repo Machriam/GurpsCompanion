@@ -29,6 +29,8 @@ namespace GurpsCompanion.Shared.DataModel
         }
 
         public bool Equipped { get; set; }
+
+        [Range(0, long.MaxValue)]
         public long Count { get; set; }
 
         [Required]
@@ -39,14 +41,14 @@ namespace GurpsCompanion.Shared.DataModel
         public string Description { get; set; }
 
         [Required]
-        [Range(0, 999)]
+        [Range(0, long.MaxValue)]
         public double Price { get; set; }
 
         public long Id { get; set; }
         public byte[] Image { get; set; }
 
         [Required]
-        [Range(0, 999)]
+        [Range(0, long.MaxValue)]
         public double Weight { get; set; }
 
         public long CharacterItemAssId { get; set; }
