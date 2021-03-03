@@ -6,7 +6,7 @@
 <label class="col-md-12 col-form-label-lg">Glossary</label>
 @if (GlossaryEntries != null && GlossaryEntries.Any())
 {
-    <table class="table" style="height:500px; overflow-y:scroll;display:block">
+    <table class="table" style="height:600px; overflow-y:scroll;display:block">
         @foreach (var item in GlossaryEntries)
         {
             <tr @onclick="()=> { SelectedRow = item;EventBus.InvokeSelectedGlossaryChanged(item.Clone()); }"
