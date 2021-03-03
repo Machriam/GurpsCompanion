@@ -12,6 +12,7 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
         {
             Name = model.Name.Trim();
             Description = model.Description.Trim();
+            Image = model.Image;
         }
     }
 }

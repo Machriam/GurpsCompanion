@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http.Json;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using GurpsCompanion.Client.Core;
 using GurpsCompanion.Client.JsInterop;
@@ -12,9 +13,15 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
     {
         protected override void OnInitialized()
         {
-            _jsService = JsServiceFactory.Create(JavascriptGrids.NA, this);
-            EventBus.OnGlossarySelected += OnGlossaryModelSelected;
+            _jsService = JsServiceFactory.Create(this);
+            EventBus.OnGlossarySelected += OnGlossaryModelSelectedAsync;
             base.OnInitialized();
+        }
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            if (firstRender) _jsService.ImagePaster.RegisterImagePasteCanvas();
+            base.OnAfterRender(firstRender);
         }
 
         private IJsFunctionCallerService _jsService;
@@ -22,9 +29,11 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
         public CrudActions SubmitAction { get; set; }
         public GlossaryModel GlossaryEditModel { get; set; } = new GlossaryModel();
 
-        public void OnGlossaryModelSelected(GlossaryModel model)
+        public async Task OnGlossaryModelSelectedAsync(GlossaryModel model)
         {
-            GlossaryEditModel = model;
+            GlossaryEditModel = await Http.GetFromJsonAsync<GlossaryModel>(
+                string.Format(ApiAddressResources.Glossary_GetImage, model.Id));
+            _ = _jsService.ImagePaster.SetImageDataToCanvas(GlossaryEditModel.Image);
             StateHasChanged();
         }
 
@@ -41,6 +50,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
                     break;
 
                 case CrudActions.Add:
+                    GlossaryEditModel.Image = await _jsService.ImagePaster.GetImageDataFromCanvas();
                     using (var result = await Http.PostAsJsonAsync(
                                ApiAddressResources.Glossary_GetPutPost, GlossaryEditModel).ConfigureAwait(false))
                     {
@@ -50,6 +60,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
                     break;
 
                 case CrudActions.Update:
+                    GlossaryEditModel.Image = await _jsService.ImagePaster.GetImageDataFromCanvas();
                     using (var result = await Http.PutAsJsonAsync(
                         ApiAddressResources.Glossary_GetPutPost, GlossaryEditModel).ConfigureAwait(false))
                     {
@@ -63,8 +74,9 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
 
         public void Dispose()
         {
+            _jsService.ImagePaster.UnregisterImagePasteCanvas();
             _jsService?.Dispose();
-            EventBus.OnGlossarySelected -= OnGlossaryModelSelected;
+            EventBus.OnGlossarySelected -= OnGlossaryModelSelectedAsync;
         }
     }
 }

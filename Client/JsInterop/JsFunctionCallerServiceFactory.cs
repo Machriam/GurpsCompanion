@@ -1,21 +1,13 @@
-﻿using System.ComponentModel;
-using System.Net.Http;
+﻿using System.Net.Http;
 using Microsoft.JSInterop;
 using GurpsCompanion.Shared.Core;
-using GurpsCompanion.Shared.Extensions;
 using GurpsCompanion.Shared.Features.Authentication;
 
 namespace GurpsCompanion.Client.JsInterop
 {
-    public enum JavascriptGrids
-    {
-        [Description("")]
-        NA,
-    }
-
     public interface IJsFunctionCallerServiceFactory
     {
-        IJsFunctionCallerService Create<T>(JavascriptGrids grid, T objectRef) where T : class;
+        IJsFunctionCallerService Create<T>(T objectRef) where T : class;
     }
 
     public class JsFunctionCallerServiceFactory : IJsFunctionCallerServiceFactory
@@ -36,9 +28,9 @@ namespace GurpsCompanion.Client.JsInterop
             _objectValidator = objectValidator;
         }
 
-        public IJsFunctionCallerService Create<T>(JavascriptGrids grid, T objectRef) where T : class
+        public IJsFunctionCallerService Create<T>(T objectRef) where T : class
         {
-            return new JsFunctionCallerService<T>(grid.GetDescription(), _jsRuntime, objectRef, _cryptologizer, _httpClient, _clipboardService, _objectValidator);
+            return new JsFunctionCallerService<T>(_jsRuntime, objectRef, _cryptologizer, _httpClient, _clipboardService, _objectValidator);
         }
     }
 }

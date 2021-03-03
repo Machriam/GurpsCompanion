@@ -30,5 +30,7 @@ namespace GurpsCompanion.Shared.DataModel
 
         [StringExists]
         public string Description { get; set; }
+
+        public string Image { get; set; }
     }
 }

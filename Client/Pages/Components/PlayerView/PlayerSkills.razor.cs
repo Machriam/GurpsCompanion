@@ -18,7 +18,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
 
         protected override void OnInitialized()
         {
-            _jsService = JsServiceFactory.Create(JavascriptGrids.NA, this);
+            _jsService = JsServiceFactory.Create(this);
             SkillBaseAttributes = EnumConverter<SkillBaseAttributes>.GetDescriptions().Select(d => new GenericDataListItem(d));
             SkillDifficulties = EnumConverter<SkillDifficulties>.GetDescriptions().Select(d => new GenericDataListItem(d));
             EventBus.OnSkillSelected += SelectedSkillChanged;

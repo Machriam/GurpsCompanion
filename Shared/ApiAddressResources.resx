@@ -149,6 +149,9 @@
   <data name="Glossary_Delete" xml:space="preserve">
     <value>/api/glossary?glossaryId={0}</value>
   </data>
+  <data name="Glossary_GetImage" xml:space="preserve">
+    <value>/api/glossary/image?glossaryId={0}</value>
+  </data>
   <data name="Glossary_GetPutPost" xml:space="preserve">
     <value>/api/glossary</value>
   </data>

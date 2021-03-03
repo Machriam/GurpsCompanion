@@ -7,6 +7,11 @@
     <DataAnnotationsValidator></DataAnnotationsValidator>
     <ValidationSummary></ValidationSummary>
     <div class="row col-md-12">
+        <div class="d-flex justify-content-between col-md-12">
+            <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Add" type="submit">Add new Entry</button>
+            <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Update" type="submit">Update Entry</button>
+            <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Delete" type="submit">Delete Entry</button>
+        </div>
         <div class="col-md-2">
             <label class="col-form-label">Name</label>
             <InputText @bind-Value="@GlossaryEditModel.Name" class="form-control"></InputText>
@@ -15,10 +20,6 @@
             <label class="col-form-label">Description</label>
             <InputTextArea @bind-Value="@GlossaryEditModel.Description" class="form-control"></InputTextArea>
         </div>
-        <div class="d-flex justify-content-between col-md-12">
-            <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Add" type="submit">Add new Entry</button>
-            <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Update" type="submit">Update Entry</button>
-            <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Delete" type="submit">Delete Entry</button>
-        </div>
+        <canvas style="border:1px solid grey;" id="pasteArea" width="300" height="300"></canvas>
     </div>
 </EditForm>
