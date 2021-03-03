@@ -14,7 +14,13 @@ namespace GurpsCompanion.Shared.Core
         IQ,
 
         [Description("ST")]
-        ST
+        ST,
+
+        [Description("Will")]
+        Will,
+
+        [Description("Per")]
+        Per,
     }
 
     public enum SkillDifficulties

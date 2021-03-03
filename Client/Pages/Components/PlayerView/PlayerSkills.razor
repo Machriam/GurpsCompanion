@@ -6,7 +6,7 @@
 @inject PlayerViewEventBus EventBus
 @inject ISkillCpCalculator SkillCpCalculator
 
-<label class="col-form-label-lg">Skills (@CpSumOfSkills CP)</label>
+<label class="col-form-label-lg">Skills (@CpSumOfSkills Estimated CP)</label>
 <EditForm Model="SkillEditModel" OnValidSubmit="UpdateStats">
     <DataAnnotationsValidator></DataAnnotationsValidator>
     @if (SelectedCharacterModel != null)
@@ -14,13 +14,13 @@
         <table class="table-sm" style="height:500px; overflow-y:scroll;display:block">
             @foreach (var item in Skills)
             {
+                var skillMod = SkillCpCalculator.GetSkillModifier(item.Value, item.Difficulty);
                 Action SelectAction = () => { SkillEditModel = item.Clone(); SelectedRow = item; };
                 <tr class="@(SelectedRow==item?"table-active":"")" style="padding:0">
                     <td @onclick="SelectAction">
                         <b>@item.Name (@item.Difficulty.GetDescription()/@item.BaseAttribute.GetDescription())</b>
-                        <br />@(item.Value==0?
-                                item.Defaults:
-                                item.BaseAttribute.GetDescription() + " + " + SkillCpCalculator.GetSkillModifier(item.Value,item.Difficulty))
+                        <br />
+                        @(item.Value==0?  item.Defaults: item.BaseAttribute.GetDescription() + (skillMod<0?"":"+") + skillMod)
                     </td>
                     <td @onclick="SelectAction"> @item.Defaults <br /> @item.Description </td>
                 </tr>
@@ -39,7 +39,7 @@
                 <EnumDropDown T="SkillBaseAttributes" @bind-SelectedItem="SkillEditModel.BaseAttribute"></EnumDropDown>
             </div>
             <div class="col-md-1">
-                <label class="col-form-label">Value</label>
+                <label class="col-form-label">Level</label>
                 <InputNumber @bind-Value="@SkillEditModel.Value" class="form-control"></InputNumber>
             </div>
             <div class="col-md-6">
