@@ -23,7 +23,13 @@ namespace GurpsCompanion.Client.Shared
         {
             OnGlossaryChanged?.Invoke();
         }
+        public void InvokeItemSelected(long itemId, long assId)
+        {
+            OnItemSelected?.Invoke(itemId, assId);
+        }
 
+
+        public event Action<long, long> OnItemSelected;
         public event Action OnItemChanged;
 
         public event Action OnSkillChanged;

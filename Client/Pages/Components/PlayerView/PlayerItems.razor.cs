@@ -9,7 +9,6 @@ using GurpsCompanion.Client.UiComponents;
 using GurpsCompanion.Shared;
 using GurpsCompanion.Shared.Core;
 using GurpsCompanion.Shared.DataModel;
-using GurpsCompanion.Shared.Features.PlayerView;
 
 namespace GurpsCompanion.Client.Pages.Components.PlayerView
 {
@@ -21,6 +20,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
         protected override void OnInitialized()
         {
             _jsService = JsServiceFactory.Create(JavascriptGrids.NA, this);
+            EventBus.OnItemSelected += SelectedItemChanged;
             base.OnInitialized();
         }
 
@@ -35,19 +35,16 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
                 if (_selectedCharacterModel == value) return;
                 _selectedCharacterModel = value;
                 GetPlayerItemNames();
-                OriginalCharacterModel = value?.Clone();
             }
         }
 
+        public void SelectedItemChanged(long itemId, long itemAssId)
+        {
+            ItemEditModel = Items.First(i => i.Id == itemId && i.CharacterItemAssId == itemAssId).Clone();
+            StateHasChanged();
+        }
+
         public ItemModel ItemEditModel { get; set; } = new ItemModel();
-        public ItemModel SelectedRow { get; set; }
-
-        public CharacterModel OriginalCharacterModel { get; set; }
-        public double TotalMoney => Items.Sum(i => i.Price * i.Count);
-        public double TotalWeight => Items.Where(i => i.Equipped).Sum(i => i.Weight * i.Count);
-
-        public EncumbranceModel Encumbrance => EncumbranceCalculator.GetEncumbrance(SelectedCharacterModel.BasicLift, TotalWeight,
-            SelectedCharacterModel.BasicMove, SelectedCharacterModel.Dodge);
 
         public CrudActions SubmitAction { get; set; }
 
@@ -58,18 +55,6 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
             var names = await Http.GetFromJsonAsync<List<string>>(ApiAddressResources.GetItemNames).ConfigureAwait(false);
             ItemNames = names.Select(n => (IDataListItem)(new ItemModel() { Name = n }));
             StateHasChanged();
-        }
-
-        public async void EquipItem(ItemModel model)
-        {
-            model.Equipped = !model.Equipped;
-            await Http.PutAsJsonAsync(ApiAddressResources.Item_EquipItem, model).ConfigureAwait(false);
-        }
-
-        public async void ChangeCount(ItemModel model, long newValue)
-        {
-            model.Count = newValue;
-            await Http.PutAsJsonAsync(ApiAddressResources.Item_ChangeCount, model).ConfigureAwait(false);
         }
 
         public async void InputHasChanged(DataListEntry item)
@@ -122,6 +107,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
         public void Dispose()
         {
             _jsService?.Dispose();
+            EventBus.OnItemSelected -= SelectedItemChanged;
         }
     }
 }

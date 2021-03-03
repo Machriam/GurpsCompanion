@@ -5,18 +5,10 @@
 @inject PlayerViewEventBus EventBus
 @inject IEncumbranceCalculator EncumbranceCalculator
 
-<div class="row col-md-12">
-    <label class="col-form-label-lg col-md-2"> @TotalMoney.ToString("C2") </label>
-    <label class="col-form-label-lg col-md-2"> Weight: @TotalWeight.ToString("N2") </label>
-    <label class="col-form-label-lg col-md-3"> @Encumbrance.Description </label>
-    <label class="col-form-label-lg col-md-2"> BM: @Encumbrance.BM </label>
-    <label class="col-form-label-lg col-md-2"> Dodge: @Encumbrance.Dodge </label>
-</div>
 <EditForm class="col-md-12" Model="ItemEditModel" OnValidSubmit="UpdateItem">
     <DataAnnotationsValidator></DataAnnotationsValidator>
     @if (SelectedCharacterModel != null)
     {
-        <PlayerItemsTable ChangeCount="ChangeCount" EquipItem="EquipItem" Items="Items" @bind-SelectedItemModel="ItemEditModel"></PlayerItemsTable>
         <ValidationSummary></ValidationSummary>
         <DataList Items="ItemNames" InputHasChanged="InputHasChanged" LabelText="Select Item"></DataList>
         <div class="d-flex col-md-12 flex-wrap">
