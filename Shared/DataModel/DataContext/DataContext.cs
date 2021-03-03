@@ -151,11 +151,16 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
             {
                 entity.ToTable("glossary");
 
+                entity.HasIndex(e => e.Name, "IX_glossary_name")
+                    .IsUnique();
+
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Description)
                     .IsRequired()
                     .HasColumnName("description");
+
+                entity.Property(e => e.Image).HasColumnName("image");
 
                 entity.Property(e => e.Name)
                     .IsRequired()

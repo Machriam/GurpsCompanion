@@ -50,5 +50,12 @@ namespace GurpsCompanion.Server.Controllers
             _dataContext.Glossaries.Remove(entry);
             _dataContext.SaveChanges();
         }
+
+        [HttpGet("image")]
+        public GlossaryModel GetImage(long glossaryId)
+        {
+            var glossary = _dataContext.Glossaries.First(g => g.Id == glossaryId);
+            return new GlossaryModel(glossary) { Image = glossary.Image };
+        }
     }
 }
