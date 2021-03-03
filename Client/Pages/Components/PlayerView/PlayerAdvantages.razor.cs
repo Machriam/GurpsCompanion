@@ -16,6 +16,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
         protected override void OnInitialized()
         {
             _jsService = JsServiceFactory.Create(JavascriptGrids.NA, this);
+            EventBus.OnAdvantageSelected += OnAdvantageSelected;
             base.OnInitialized();
         }
 
@@ -30,14 +31,8 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
                 if (_selectedCharacterModel == value) return;
                 _selectedCharacterModel = value;
                 GetAvailableAdvantages();
-                OriginalCharacterModel = value?.Clone();
             }
         }
-
-        [Parameter]
-        public IEnumerable<AdvantageModel> Advantages { get; set; }
-
-        public AdvantageModel SelectedRow { get; set; }
 
         public CrudActions SubmitAction { get; set; }
 
@@ -57,6 +52,12 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
             StateHasChanged();
         }
 
+        public void OnAdvantageSelected(AdvantageModel model)
+        {
+            AdvantageEditModel = model;
+            StateHasChanged();
+        }
+
         public async void GetAvailableAdvantages()
         {
             var advantages = await Http.GetFromJsonAsync<List<string>>(ApiAddressResources.Advantage_GetNames).ConfigureAwait(false);
@@ -64,11 +65,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
             StateHasChanged();
         }
 
-        public long CpSumOfAdvantages => Advantages.Sum(a => a.Level * a.Cost);
-
         public AdvantageModel AdvantageEditModel { get; set; } = new AdvantageModel();
-
-        public CharacterModel OriginalCharacterModel { get; set; }
 
         public async void UpdateAdvantages()
         {
@@ -101,12 +98,13 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
                     }
                     break;
             }
-            EventBus.InvokeItemChanged();
+            EventBus.InvokeAdvantageChanged();
         }
 
         public void Dispose()
         {
             _jsService?.Dispose();
+            EventBus.OnAdvantageSelected -= OnAdvantageSelected;
         }
     }
 }

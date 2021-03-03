@@ -21,6 +21,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
             _jsService = JsServiceFactory.Create(JavascriptGrids.NA, this);
             SkillBaseAttributes = EnumConverter<SkillBaseAttributes>.GetDescriptions().Select(d => new GenericDataListItem(d));
             SkillDifficulties = EnumConverter<SkillDifficulties>.GetDescriptions().Select(d => new GenericDataListItem(d));
+            EventBus.OnSkillSelected += SelectedSkillChanged;
             base.OnInitialized();
         }
 
@@ -31,7 +32,6 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
         public IEnumerable<IDataListItem> SkillDifficulties { get; private set; }
 
         public IEnumerable<IDataListItem> SkillBaseAttributes { get; private set; }
-        public long CpSumOfSkills => Skills.Sum(s => SkillCpCalculator.GetCpForSkill(s.Value));
 
         [Parameter]
         public CharacterModel SelectedCharacterModel
@@ -41,8 +41,13 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
                 if (_selectedCharacterModel == value) return;
                 _selectedCharacterModel = value;
                 GetAvailableSkills();
-                OriginalCharacterModel = value?.Clone();
             }
+        }
+
+        public void SelectedSkillChanged(SkillModel model)
+        {
+            SkillEditModel = model;
+            StateHasChanged();
         }
 
         public SkillModel SkillEditModel { get; set; } = new SkillModel();
@@ -67,13 +72,6 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
             SkillNames = skills.Select(n => new GenericDataListItem(n));
             StateHasChanged();
         }
-
-        [Parameter]
-        public IEnumerable<SkillModel> Skills { get; set; }
-
-        public SkillModel SelectedRow { get; set; }
-
-        public CharacterModel OriginalCharacterModel { get; set; }
 
         public async void UpdateStats()
         {
@@ -107,12 +105,13 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
                     }
                     break;
             }
-            EventBus.InvokeItemChanged();
+            EventBus.InvokeSkillChanged();
         }
 
         public void Dispose()
         {
             _jsService?.Dispose();
+            EventBus.OnSkillSelected -= SelectedSkillChanged;
         }
     }
 }

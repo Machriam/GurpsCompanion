@@ -1,0 +1,29 @@
+﻿@using GurpsCompanion.Shared.Features.PlayerView
+@using GurpsCompanion.Shared.DataModel
+@using GurpsCompanion.Shared.Extensions
+@inject ISkillCpCalculator SkillCpCalculator
+@inject PlayerViewEventBus EventBus
+<label class="col-form-label-lg">Skills (@CpSumOfSkills Estimated CP)</label>
+<table class="table-sm" style="height:500px; overflow-y:scroll;display:block">
+    @foreach (var item in Skills)
+    {
+        var skillMod = SkillCpCalculator.GetSkillModifier(item.Value, item.Difficulty);
+        Action SelectAction = () => { SelectedRow = item; EventBus.InvokeSelectedSkillChanged(item.Clone()); };
+        <tr class="@(SelectedRow==item?"table-active":"")" style="padding:0">
+            <td @onclick="SelectAction">
+                <b>@item.Name (@item.Difficulty.GetDescription()/@item.BaseAttribute.GetDescription())</b>
+                <br />
+                @(item.Value==0?  item.Defaults: item.BaseAttribute.GetDescription() + (skillMod<0?"":"+") + skillMod)
+            </td>
+            <td @onclick="SelectAction"> @item.Defaults <br /> @item.Description </td>
+        </tr>
+    }
+</table>
+
+@code {
+    [Parameter]
+    public IEnumerable<SkillModel> Skills { get; set; }
+    public long CpSumOfSkills => Skills.Sum(s => SkillCpCalculator.GetCpForSkill(s.Value));
+    public SkillModel SelectedRow { get; set; }
+
+}

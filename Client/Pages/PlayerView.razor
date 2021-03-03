@@ -1,5 +1,4 @@
 ﻿@page "/playerview"
-@using GurpsCompanion.Shared.Core
 @inject HttpClient Http
 @inject AppStateContainer StateContainer
 @inject PlayerViewEventBus EventBus
@@ -24,19 +23,22 @@
             <div class="row col-md-12 d-flex text-center">
                 @if (SelectedTab == PlayerViewTabsEnum.Advantages)
                 {
-                    <PlayerAdvantages Advantages="CharacterInformation.Advantages" SelectedCharacterModel="CharacterInformation.CharacterModel"></PlayerAdvantages>
+                    <PlayerAdvantagesTable Advantages="CharacterInformation.Advantages"></PlayerAdvantagesTable>
+                    <PlayerAdvantages SelectedCharacterModel="CharacterInformation.CharacterModel"></PlayerAdvantages>
                 }
                 else if (SelectedTab == PlayerViewTabsEnum.Items)
                 {
                     <PlayerItemsTable SelectedCharacter="CharacterInformation.CharacterModel" Items="CharacterInformation.Items"></PlayerItemsTable>
-                    <PlayerItems Items="CharacterInformation.Items" SelectedCharacterModel="CharacterInformation.CharacterModel"></PlayerItems>
+                    <PlayerItems SelectedCharacterModel="CharacterInformation.CharacterModel"></PlayerItems>
                 }
                 else if (SelectedTab == PlayerViewTabsEnum.Skills)
                 {
-                    <PlayerSkills Skills="CharacterInformation.Skills" SelectedCharacterModel="CharacterInformation.CharacterModel"></PlayerSkills>
+                    <PlayerSkillsTable Skills="CharacterInformation.Skills"></PlayerSkillsTable>
+                    <PlayerSkills SelectedCharacterModel="CharacterInformation.CharacterModel"></PlayerSkills>
                 }
                 else if (SelectedTab == PlayerViewTabsEnum.Glossary)
                 {
+                    <PlayerGlossaryTable></PlayerGlossaryTable>
                     <PlayerGlossary></PlayerGlossary>
                 }
             </div>

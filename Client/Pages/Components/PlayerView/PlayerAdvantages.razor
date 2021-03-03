@@ -1,27 +1,12 @@
-﻿@using GurpsCompanion.Shared.DataModel
-@inject HttpClient Http
+﻿@inject HttpClient Http
 @inject PlayerViewEventBus EventBus
 @inject IJsFunctionCallerServiceFactory JsServiceFactory
 
-<label class="col-form-label-lg">Advantages (@CpSumOfAdvantages CP)</label>
 <EditForm Model="AdvantageEditModel" OnValidSubmit="UpdateAdvantages">
     <DataAnnotationsValidator></DataAnnotationsValidator>
     <ValidationSummary></ValidationSummary>
     @if (SelectedCharacterModel != null)
     {
-        <table class="table-sm" style="height:500px; overflow-y:scroll;display:block">
-            @foreach (var item in Advantages)
-            {
-                <tr @onclick="()=> { AdvantageEditModel = item.Clone();SelectedRow = item; }"
-                    class="@(item==SelectedRow?"table-active":"")" style="padding:0">
-                    <td>
-                        <b>@item.Name <br /> @(item.Skillable?item.Cost+" CP/Level":item.Cost+" CP")</b>
-                    </td>
-                    <td> @item.Level</td>
-                    <td> @item.Description </td>
-                </tr>
-            }
-        </table>
         <ValidationSummary></ValidationSummary>
         <DataList Items="AdvantageNames" InputHasChanged="SelectedAdvantageHasChanged" LabelText="Select Advantage"></DataList>
         <div class="row col-md-12">

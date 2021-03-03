@@ -38,7 +38,7 @@
     public void OnItemSelected(ItemModel item)
     {
         SelectedRow = item;
-        EventBus.InvokeItemSelected(item.Id, item.CharacterItemAssId);
+        EventBus.InvokeSelectedItemChanged(item.Clone());
     }
 
     public async void EquipItem(ItemModel model)

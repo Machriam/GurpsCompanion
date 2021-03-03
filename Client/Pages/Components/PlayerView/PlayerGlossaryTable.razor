@@ -1,0 +1,39 @@
+﻿@using GurpsCompanion.Shared.DataModel
+@using GurpsCompanion.Shared
+@inject HttpClient Http
+@inject PlayerViewEventBus EventBus
+@implements IDisposable
+<label class="col-md-12 col-form-label-lg">Glossary</label>
+@if (GlossaryEntries != null && GlossaryEntries.Any())
+{
+    <table class="table" style="height:500px; overflow-y:scroll;display:block">
+        @foreach (var item in GlossaryEntries)
+        {
+            <tr @onclick="()=> { SelectedRow = item;EventBus.InvokeSelectedGlossaryChanged(item.Clone()); }"
+                class="@(item==SelectedRow?"table-active":"")" style="padding:0">
+                <td> <b>@item.Name </b> </td>
+                <td> @item.Description </td>
+            </tr>
+        }
+    </table>
+}
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        EventBus.OnGlossaryChanged += GetGlossaryEntries;
+        await GetGlossaryEntries();
+        _ = base.OnInitializedAsync();
+    }
+    public GlossaryModel SelectedRow { get; set; }
+    public async Task GetGlossaryEntries()
+    {
+        GlossaryEntries = await Http.GetFromJsonAsync<IEnumerable<GlossaryModel>>
+            (ApiAddressResources.Glossary_GetPutPost).ConfigureAwait(false);
+        StateHasChanged();
+    }
+    public IEnumerable<GlossaryModel> GlossaryEntries { get; set; }
+    public void Dispose()
+    {
+        EventBus.OnGlossaryChanged -= GetGlossaryEntries;
+    }
+}

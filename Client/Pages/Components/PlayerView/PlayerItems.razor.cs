@@ -25,9 +25,6 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
         }
 
         [Parameter]
-        public IEnumerable<ItemModel> Items { get; set; }
-
-        [Parameter]
         public CharacterModel SelectedCharacterModel
         {
             get => _selectedCharacterModel; set
@@ -38,9 +35,9 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
             }
         }
 
-        public void SelectedItemChanged(long itemId, long itemAssId)
+        public void SelectedItemChanged(ItemModel model)
         {
-            ItemEditModel = Items.First(i => i.Id == itemId && i.CharacterItemAssId == itemAssId).Clone();
+            ItemEditModel = model;
             StateHasChanged();
         }
 
