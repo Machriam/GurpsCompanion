@@ -28,7 +28,7 @@ namespace GurpsCompanion.Client.Shared
 
         public event Action<AdvantageModel> OnAdvantageSelected;
 
-        public event Action<GlossaryModel> OnGlossarySelected;
+        public event Func<GlossaryModel, Task> OnGlossarySelected;
 
         public event Action OnItemChanged;
 

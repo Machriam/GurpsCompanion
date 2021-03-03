@@ -29,6 +29,7 @@ namespace GurpsCompanion.Client.JsInterop
     public interface IJsFunctionCallerService : IDisposable
     {
         IJsClipboardService ClipboardService { get; }
+        IImagePaster ImagePaster { get; }
 
         Task<bool> CheckHttpResponse(HttpResponseMessage message, string potentialReason = "");
 
@@ -47,18 +48,15 @@ namespace GurpsCompanion.Client.JsInterop
         Task<string> GetUserInput(string message);
 
         Task<bool> ModelIsValid(object model, bool automaticPrompt = true);
-
-        Task RegisterImagePasteCanvas();
-
-        Task UnregisterImagePasteCanvas();
-
-        Task<string> GetImageDataFromCanvas();
     }
 
     public class JsFunctionCallerService<T> : IJsFunctionCallerService where T : class
     {
         private readonly IJSRuntime _jsRuntime;
+
+        public IImagePaster ImagePaster { get; }
         private readonly DotNetObjectReference<T> _objectReference;
+
         private readonly IPasswordCryptologizer _cryptologizer;
         private readonly IObjectValidator _objectValidator;
         private readonly HttpClient _http;
@@ -72,22 +70,8 @@ namespace GurpsCompanion.Client.JsInterop
             _cryptologizer = cryptologizer;
             _http = http;
             ClipboardService = jsClipboardService;
+            ImagePaster = new ImagePaster<T>(jSRuntime, _objectReference);
             _objectValidator = objectValidator;
-        }
-
-        public async Task RegisterImagePasteCanvas()
-        {
-            await _jsRuntime.InvokeVoidAsync("imageFunctions.initialize", _objectReference).ConfigureAwait(false);
-        }
-
-        public async Task<string> GetImageDataFromCanvas()
-        {
-            return await _jsRuntime.InvokeAsync<string>("imageFunctions.getImageData");
-        }
-
-        public async Task UnregisterImagePasteCanvas()
-        {
-            await _jsRuntime.InvokeVoidAsync("imageFunctions.dispose").ConfigureAwait(false);
         }
 
         public async Task<bool> CheckHttpResponse(HttpResponseMessage message, string potentialReason = "")

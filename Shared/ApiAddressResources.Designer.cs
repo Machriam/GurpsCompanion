@@ -151,6 +151,15 @@ namespace GurpsCompanion.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to /api/glossary/image?glossaryId={0}.
+        /// </summary>
+        public static string Glossary_GetImage {
+            get {
+                return ResourceManager.GetString("Glossary_GetImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to /api/glossary.
         /// </summary>
         public static string Glossary_GetPutPost {

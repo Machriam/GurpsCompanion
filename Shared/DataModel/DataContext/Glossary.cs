@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-#nullable disable
+﻿#nullable disable
 
 namespace GurpsCompanion.Shared.DataModel.DataContext
 {
@@ -10,6 +7,6 @@ namespace GurpsCompanion.Shared.DataModel.DataContext
         public long Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
     }
 }

@@ -3,6 +3,7 @@
     pasteAreaContext;
     createImage(source) {
         let pastedImage = new Image();
+        this.initializeCanvas();
         pastedImage.onload = function () {
             let instance = ImageHandler.getInstance();
             instance.pasteArea.width = pastedImage.width;
@@ -10,6 +11,11 @@
             instance.pasteAreaContext.drawImage(pastedImage, 0, 0);
         };
         pastedImage.src = source;
+    }
+    initializeCanvas() {
+        let pasteArea = document.getElementById("pasteArea");
+        this.pasteArea = pasteArea;
+        this.pasteAreaContext = pasteArea.getContext("2d");
     }
     pasteHandler(e) {
         if (e.clipboardData) {
@@ -41,14 +47,16 @@ window.imageFunctions = {
     instance: new ImageHandler(),
     initialize: function () {
         let instance = ImageHandler.getInstance();
-        let pasteArea = document.getElementById("pasteArea");
-        instance.pasteArea = pasteArea;
-        instance.pasteAreaContext = pasteArea.getContext("2d");
+        instance.initializeCanvas();
         document.addEventListener("paste", instance.pasteHandler, false);
     },
     getImageData: function () {
         let instance = ImageHandler.getInstance();
-        instance.pasteArea.toDataURL();
+        return instance.pasteArea.toDataURL();
+    },
+    setImageData: function (data) {
+        let instance = ImageHandler.getInstance();
+        instance.createImage(data);
     },
     dispose: function () {
         document.removeEventListener("paste", instance.pasteHandler, false);
