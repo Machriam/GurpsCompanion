@@ -12,9 +12,15 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
     {
         protected override void OnInitialized()
         {
-            _jsService = JsServiceFactory.Create(JavascriptGrids.NA, this);
+            _jsService = JsServiceFactory.Create(this);
             EventBus.OnGlossarySelected += OnGlossaryModelSelected;
             base.OnInitialized();
+        }
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            if (firstRender) _jsService.RegisterImagePasteCanvas();
+            base.OnAfterRender(firstRender);
         }
 
         private IJsFunctionCallerService _jsService;
@@ -63,6 +69,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
 
         public void Dispose()
         {
+            _jsService.UnregisterImagePasteCanvas();
             _jsService?.Dispose();
             EventBus.OnGlossarySelected -= OnGlossaryModelSelected;
         }

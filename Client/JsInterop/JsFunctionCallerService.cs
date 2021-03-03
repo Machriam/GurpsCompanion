@@ -30,12 +30,6 @@ namespace GurpsCompanion.Client.JsInterop
     {
         IJsClipboardService ClipboardService { get; }
 
-        ValueTask ExportGridAsCsv();
-
-        ValueTask SelectGridRow(int position);
-
-        ValueTask UpdateGrid(string content, params string[] items);
-
         Task<bool> CheckHttpResponse(HttpResponseMessage message, string potentialReason = "");
 
         Task<bool> ConfirmPassword(string description = "");
@@ -53,50 +47,47 @@ namespace GurpsCompanion.Client.JsInterop
         Task<string> GetUserInput(string message);
 
         Task<bool> ModelIsValid(object model, bool automaticPrompt = true);
+
+        Task RegisterImagePasteCanvas();
+
+        Task UnregisterImagePasteCanvas();
+
+        Task<string> GetImageDataFromCanvas();
     }
 
     public class JsFunctionCallerService<T> : IJsFunctionCallerService where T : class
     {
         private readonly IJSRuntime _jsRuntime;
-        private readonly string _namespace;
-        private string JsInitialize => _namespace + ".initialize";
-        private string JsUpdate => _namespace + ".updateData";
-        private string JsSelect => _namespace + ".select";
-        private string JsCsvExport => _namespace + ".getCsvExport";
         private readonly DotNetObjectReference<T> _objectReference;
         private readonly IPasswordCryptologizer _cryptologizer;
         private readonly IObjectValidator _objectValidator;
         private readonly HttpClient _http;
-        private bool _initialized = false;
         public IJsClipboardService ClipboardService { get; }
 
-        public JsFunctionCallerService(string @namespace, IJSRuntime jSRuntime, T objectReference, IPasswordCryptologizer cryptologizer,
+        public JsFunctionCallerService(IJSRuntime jSRuntime, T objectReference, IPasswordCryptologizer cryptologizer,
             HttpClient http, IJsClipboardService jsClipboardService, IObjectValidator objectValidator)
         {
-            _namespace = @namespace;
             _jsRuntime = jSRuntime;
-            _objectReference = DotNetObjectReference.Create<T>(objectReference);
+            _objectReference = DotNetObjectReference.Create(objectReference);
             _cryptologizer = cryptologizer;
             _http = http;
             ClipboardService = jsClipboardService;
             _objectValidator = objectValidator;
         }
 
-        public ValueTask UpdateGrid(string content, params string[] items)
+        public async Task RegisterImagePasteCanvas()
         {
-            if (_initialized) return _jsRuntime.InvokeVoidAsync(JsUpdate, content, items);
-            _initialized = true;
-            return _jsRuntime.InvokeVoidAsync(JsInitialize, content, _objectReference, items);
+            await _jsRuntime.InvokeVoidAsync("imageFunctions.initialize", _objectReference).ConfigureAwait(false);
         }
 
-        public ValueTask SelectGridRow(int position)
+        public async Task<string> GetImageDataFromCanvas()
         {
-            return _jsRuntime.InvokeVoidAsync(JsSelect, position);
+            return await _jsRuntime.InvokeAsync<string>("imageFunctions.getImageData");
         }
 
-        public ValueTask ExportGridAsCsv()
+        public async Task UnregisterImagePasteCanvas()
         {
-            return _jsRuntime.InvokeVoidAsync(JsCsvExport);
+            await _jsRuntime.InvokeVoidAsync("imageFunctions.dispose").ConfigureAwait(false);
         }
 
         public async Task<bool> CheckHttpResponse(HttpResponseMessage message, string potentialReason = "")

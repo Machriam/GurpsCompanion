@@ -15,7 +15,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
     {
         protected override void OnInitialized()
         {
-            _jsService = JsServiceFactory.Create(JavascriptGrids.NA, this);
+            _jsService = JsServiceFactory.Create(this);
             EventBus.OnAdvantageSelected += OnAdvantageSelected;
             base.OnInitialized();
         }
