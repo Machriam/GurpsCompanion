@@ -1,0 +1,47 @@
+﻿@page "/playerview"
+@inject HttpClient Http
+@inject AppStateContainer StateContainer
+@inject PlayerViewEventBus EventBus
+
+<div class="row">
+    @if (Characters?.Count > 0)
+    {
+        <div class="col-md-2">
+            <DataList LabelText="Select Character" SelectedItemChanged="SelectedDataListItemChanged" Items="DataListItems"></DataList>
+        </div>
+        @if (SelectedCharacterModel != null)
+        {
+            <div class="col-md-10">
+                <PlayerStats SelectedCharacterModel="CharacterEditModel"></PlayerStats>
+            </div>
+            <div class="col-md-12">
+                <TabNavigation T="PlayerViewTabsEnum" @bind-SelectedItem="SelectedTab"></TabNavigation>
+            </div>
+        }
+        @if (SelectedCharacterModel != null && CharacterInformation != null)
+        {
+            <div class="row col-md-12 d-flex text-center">
+                @if (SelectedTab == PlayerViewTabsEnum.Advantages)
+                {
+                    <PlayerAdvantagesTable Advantages="CharacterInformation.Advantages"></PlayerAdvantagesTable>
+                    <PlayerAdvantages SelectedCharacterModel="CharacterInformation.CharacterModel"></PlayerAdvantages>
+                }
+                else if (SelectedTab == PlayerViewTabsEnum.Items)
+                {
+                    <PlayerItemsTable SelectedCharacter="CharacterInformation.CharacterModel" Items="CharacterInformation.Items"></PlayerItemsTable>
+                    <PlayerItems SelectedCharacterModel="CharacterInformation.CharacterModel"></PlayerItems>
+                }
+                else if (SelectedTab == PlayerViewTabsEnum.Skills)
+                {
+                    <PlayerSkillsTable Skills="CharacterInformation.Skills"></PlayerSkillsTable>
+                    <PlayerSkills SelectedCharacterModel="CharacterInformation.CharacterModel"></PlayerSkills>
+                }
+                else if (SelectedTab == PlayerViewTabsEnum.Glossary)
+                {
+                    <PlayerGlossaryTable></PlayerGlossaryTable>
+                    <PlayerGlossary></PlayerGlossary>
+                }
+            </div>
+        }
+    }
+</div>

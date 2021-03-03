@@ -1,0 +1,22 @@
+﻿@using GurpsCompanion.Shared.Features.Authentication
+@page "/"
+@inject AppStateContainer StateContainer
+@inject IPasswordCryptologizer PasswordCryptologizer
+
+<h1>Gurps Companion</h1>
+<label class="col-form-label">Gamemaster Login:</label>
+<input class="form-control col-md-2" @bind="PasswordInput" type="password" />
+<button class="btn btn-primary col-md-1" @onclick="SetPassword">Login</button>
+@code{
+    public string PasswordInput { get; set; } = "";
+    public void SetPassword()
+    {
+        var salt = Guid.NewGuid().ToString();
+        StateContainer.PasswordModel = new GlobalPasswordHashModel()
+        {
+            Hash = PasswordCryptologizer.EncryptString(PasswordCryptologizer.EncryptString(PasswordInput) + salt),
+            Salt = salt
+        };
+        PasswordInput = "";
+    }
+}
