@@ -28,8 +28,14 @@
                 }
                 else if (SelectedTab == PlayerViewTabsEnum.Items)
                 {
-                    <PlayerItemsTable SelectedCharacter="CharacterInformation.CharacterModel" Items="CharacterInformation.Items"></PlayerItemsTable>
-                    <PlayerItems SelectedCharacterModel="CharacterInformation.CharacterModel"></PlayerItems>
+                    <div class="col-md-12 row">
+                        <div class="col-md-6">
+                            <PlayerItemsTable SelectedCharacter="CharacterInformation.CharacterModel" Items="CharacterInformation.Items"></PlayerItemsTable>
+                        </div>
+                        <div class="col-md-6">
+                            <PlayerItems SelectedCharacterModel="CharacterInformation.CharacterModel"></PlayerItems>
+                        </div>
+                    </div>
                 }
                 else if (SelectedTab == PlayerViewTabsEnum.Skills)
                 {
@@ -40,10 +46,10 @@
                 {
                     <div class="col-md-12 row">
                         <div class="col-md-6">
-                    <PlayerGlossaryTable></PlayerGlossaryTable>
+                            <PlayerGlossaryTable></PlayerGlossaryTable>
                         </div>
                         <div class="col-md-6">
-                    <PlayerGlossary></PlayerGlossary>
+                            <PlayerGlossary></PlayerGlossary>
                         </div>
                     </div>
                 }

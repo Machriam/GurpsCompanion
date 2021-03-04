@@ -12,14 +12,14 @@
     <label class="col-form-label-lg col-md-2"> Dodge: @Encumbrance.Dodge </label>
 </div>
 
-<table class="table-sm col-md-12" style="height:500px; overflow-y:scroll;display:block">
+<table class="table-sm col-md-12" style="height:600px; overflow-y:scroll;display:block">
     @foreach (var item in Items)
     {
         <tr class="col-md-12 @(SelectedRow==item?"table-active":"")" style="padding:0">
             <td><input type="checkbox" style="transform:scale(1.5)" checked="@item.Equipped" @onclick="()=>EquipItem(item)" /></td>
             <td><input type="number" style="width:100px" @bind-value="item.Count" @onblur="()=> ChangeCount(item,item.Count)" /></td>
             <td @onclick="()=>OnItemSelected(item)">
-                <b>@item.Name</b><br />@item.Price.ToString("C2") - @item.Weight.ToString() BL
+                <b>@item.Name</b><br />@item.Price.ToString("C2")<br /> @item.Weight.ToString() BL
             </td>
             <td @onclick="()=>OnItemSelected(item)"> @item.Description </td>
         </tr>

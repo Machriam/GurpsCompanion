@@ -24,6 +24,12 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
             base.OnInitialized();
         }
 
+        protected override void OnAfterRender(bool firstRender)
+        {
+            if (firstRender) _jsService.ImagePaster.RegisterImagePasteCanvas();
+            base.OnAfterRender(firstRender);
+        }
+
         [Parameter]
         public CharacterModel SelectedCharacterModel
         {
@@ -35,9 +41,12 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
             }
         }
 
-        public void SelectedItemChanged(ItemModel model)
+        public async void SelectedItemChanged(ItemModel model)
         {
             ItemEditModel = model;
+            model.Image = (await Http.GetFromJsonAsync<ItemModel>
+                  (string.Format(ApiAddressResources.GetItem, model.Name)).ConfigureAwait(false)).Image;
+            _ = _jsService.ImagePaster.SetImageDataToCanvas(model.Image);
             StateHasChanged();
         }
 
@@ -60,6 +69,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
             {
                 ItemEditModel = await Http.GetFromJsonAsync<ItemModel>
                     (string.Format(ApiAddressResources.GetItem, item.SelectedItem.GetText)).ConfigureAwait(false);
+                _ = _jsService.ImagePaster.SetImageDataToCanvas(ItemEditModel.Image);
             }
             else
             {
@@ -81,6 +91,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
                     break;
 
                 case CrudActions.Add:
+                    ItemEditModel.Image = await _jsService.ImagePaster.GetImageDataFromCanvas();
                     using (var result = await Http.PostAsJsonAsync(
                                string.Format(ApiAddressResources.Item_Post, SelectedCharacterModel.Id),
                                ItemEditModel
@@ -92,6 +103,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
                     break;
 
                 case CrudActions.Update:
+                    ItemEditModel.Image = await _jsService.ImagePaster.GetImageDataFromCanvas();
                     using (var result = await Http.PutAsJsonAsync(ApiAddressResources.Item_Put, ItemEditModel).ConfigureAwait(false))
                     {
                         if (!await _jsService.CheckHttpResponse(result).ConfigureAwait(false)) return;
@@ -103,6 +115,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
 
         public void Dispose()
         {
+            _jsService.ImagePaster.UnregisterImagePasteCanvas();
             _jsService?.Dispose();
             EventBus.OnItemSelected -= SelectedItemChanged;
         }

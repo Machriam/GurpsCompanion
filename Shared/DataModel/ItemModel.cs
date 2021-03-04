@@ -23,7 +23,6 @@ namespace GurpsCompanion.Shared.DataModel
             Description = model.Description;
             Price = model.Price;
             Id = model.Id;
-            Image = model.Image;
             Weight = model.Weight;
             Name = model.Name;
         }
@@ -45,7 +44,7 @@ namespace GurpsCompanion.Shared.DataModel
         public double Price { get; set; }
 
         public long Id { get; set; }
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
 
         [Required]
         [Range(0, long.MaxValue)]

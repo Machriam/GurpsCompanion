@@ -26,7 +26,11 @@ namespace GurpsCompanion.Server.Controllers
         [HttpGet("item")]
         public ItemModel GetItem(string name)
         {
-            return new ItemModel(_dataContext.Items.First(i => i.Name == name));
+            var dbItem = _dataContext.Items.First(i => i.Name == name);
+            return new ItemModel(dbItem)
+            {
+                Image = dbItem.Image
+            };
         }
 
         [HttpPut("equip")]
@@ -56,7 +60,11 @@ namespace GurpsCompanion.Server.Controllers
             _dataContext.CharacterItemAssociations.Add(characterItemAssociation);
             _dataContext.SaveChanges();
             transaction.Commit();
-            return new ItemModel(dbItem) { CharacterItemAssId = characterItemAssociation.Id, Count = characterItemAssociation.Count };
+            return new ItemModel(dbItem)
+            {
+                CharacterItemAssId = characterItemAssociation.Id,
+                Count = characterItemAssociation.Count,
+            };
         }
 
         private Item GetOrCreateItem(ItemModel model)
