@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.JSInterop;
 using GurpsCompanion.Shared.Features.Authentication;
+using Microsoft.JSInterop;
 
 namespace GurpsCompanion.Client.ExtensionMethods
 {

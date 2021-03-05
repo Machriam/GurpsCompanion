@@ -12,7 +12,7 @@
             <tr @onclick="()=> { SelectedRow = item;EventBus.InvokeSelectedGlossaryChanged(item.Clone()); }"
                 class="@(item==SelectedRow?"table-active":"")" style="padding:0">
                 <td> <b>@item.Name </b> </td>
-                <td> @item.Description </td>
+                <td> @item.Description.TruncateString(200) </td>
             </tr>
         }
     </table>

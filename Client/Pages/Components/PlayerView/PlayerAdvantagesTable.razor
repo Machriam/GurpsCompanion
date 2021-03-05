@@ -1,7 +1,7 @@
 ﻿@inject PlayerViewEventBus EventBus
 @using GurpsCompanion.Shared.DataModel
 <label class="col-form-label-lg">Advantages (@CpSumOfAdvantages CP)</label>
-<table class="table-sm" style="height:500px; overflow-y:scroll;display:block">
+<table class="table-sm" style="height:600px; overflow-y:scroll;display:block">
     @foreach (var item in Advantages)
     {
         <tr @onclick="()=> { SelectedRow = item; EventBus.InvokeSelectedAdvantageChanged(item.Clone()); }"
@@ -10,7 +10,7 @@
                 <b>@item.Name <br /> @(item.Skillable?item.Cost+" CP/Level":item.Cost+" CP")</b>
             </td>
             <td> @item.Level</td>
-            <td> @item.Description </td>
+            <td> @item.Description.TruncateString(200) </td>
         </tr>
     }
 </table>

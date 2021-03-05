@@ -9,31 +9,31 @@
     {
         <ValidationSummary></ValidationSummary>
         <DataList Items="AdvantageNames" InputHasChanged="SelectedAdvantageHasChanged" LabelText="Select Advantage"></DataList>
+        <div class="d-flex justify-content-between col-md-12">
+            <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Add" type="submit">Add new Advantage</button>
+            <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Update" type="submit">Update Advantage</button>
+            <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Delete" type="submit">Delete Advantage</button>
+        </div>
         <div class="row col-md-12">
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <label class="col-form-label">Name</label>
                 <InputText @bind-Value="@AdvantageEditModel.Name" class="form-control"></InputText>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-3">
                 <label class="col-form-label">Level</label>
                 <InputNumber @bind-Value="@AdvantageEditModel.Level" class="form-control"></InputNumber>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-3">
                 <label class="col-form-label">Base Cost</label>
                 <InputNumber @bind-Value="@AdvantageEditModel.Cost" class="form-control"></InputNumber>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-2">
                 <label class="col-form-label">Has Levels</label>
                 <InputCheckbox @bind-Value="@AdvantageEditModel.Skillable" class="form-control"></InputCheckbox>
             </div>
             <div class="col-md-12">
                 <label class="col-form-label">Description</label>
                 <SizingTextArea @bind-Value="@AdvantageEditModel.Description" class="form-control"></SizingTextArea>
-            </div>
-            <div class="d-flex justify-content-between col-md-12">
-                <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Add" type="submit">Add new Advantage</button>
-                <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Update" type="submit">Update Advantage</button>
-                <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Delete" type="submit">Delete Advantage</button>
             </div>
         </div>
     }

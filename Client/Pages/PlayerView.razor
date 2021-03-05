@@ -20,40 +20,52 @@
         }
         @if (SelectedCharacterModel != null && CharacterInformation != null)
         {
-            <div class="row col-md-12 d-flex text-center">
-                @if (SelectedTab == PlayerViewTabsEnum.Advantages)
-                {
-                    <PlayerAdvantagesTable Advantages="CharacterInformation.Advantages"></PlayerAdvantagesTable>
-                    <PlayerAdvantages SelectedCharacterModel="CharacterInformation.CharacterModel"></PlayerAdvantages>
-                }
-                else if (SelectedTab == PlayerViewTabsEnum.Items)
-                {
-                    <div class="col-md-12 row">
-                        <div class="col-md-6">
-                            <PlayerItemsTable SelectedCharacter="CharacterInformation.CharacterModel" Items="CharacterInformation.Items"></PlayerItemsTable>
-                        </div>
-                        <div class="col-md-6">
-                            <PlayerItems SelectedCharacterModel="CharacterInformation.CharacterModel"></PlayerItems>
-                        </div>
-                    </div>
-                }
-                else if (SelectedTab == PlayerViewTabsEnum.Skills)
-                {
-                    <PlayerSkillsTable Skills="CharacterInformation.Skills"></PlayerSkillsTable>
-                    <PlayerSkills SelectedCharacterModel="CharacterInformation.CharacterModel"></PlayerSkills>
-                }
-                else if (SelectedTab == PlayerViewTabsEnum.Glossary)
-                {
-                    <div class="col-md-12 row">
-                        <div class="col-md-6">
-                            <PlayerGlossaryTable></PlayerGlossaryTable>
-                        </div>
-                        <div class="col-md-6">
-                            <PlayerGlossary></PlayerGlossary>
-                        </div>
-                    </div>
-                }
+<div class="row col-md-12 d-flex text-center">
+    @if (SelectedTab == PlayerViewTabsEnum.Advantages)
+    {
+        <div class="col-md-12 row">
+            <div class="col-md-6">
+                <PlayerAdvantagesTable Advantages="CharacterInformation.Advantages"></PlayerAdvantagesTable>
             </div>
-        }
+            <div class="col-md-6">
+                <PlayerAdvantages SelectedCharacterModel="CharacterInformation.CharacterModel"></PlayerAdvantages>
+            </div>
+        </div>
+    }
+    else if (SelectedTab == PlayerViewTabsEnum.Items)
+    {
+        <div class="col-md-12 row">
+            <div class="col-md-6">
+                <PlayerItemsTable SelectedCharacter="CharacterInformation.CharacterModel" Items="CharacterInformation.Items"></PlayerItemsTable>
+            </div>
+            <div class="col-md-6">
+                <PlayerItems SelectedCharacterModel="CharacterInformation.CharacterModel"></PlayerItems>
+            </div>
+        </div>
+    }
+    else if (SelectedTab == PlayerViewTabsEnum.Skills)
+    {
+        <div class="col-md-12 row">
+            <div class="col-md-6">
+                <PlayerSkillsTable Skills="CharacterInformation.Skills"></PlayerSkillsTable>
+            </div>
+            <div class="col-md-6">
+                <PlayerSkills SelectedCharacterModel="CharacterInformation.CharacterModel"></PlayerSkills>
+            </div>
+        </div>
+    }
+    else if (SelectedTab == PlayerViewTabsEnum.Glossary)
+    {
+        <div class="col-md-12 row">
+            <div class="col-md-6">
+                <PlayerGlossaryTable></PlayerGlossaryTable>
+            </div>
+            <div class="col-md-6">
+                <PlayerGlossary></PlayerGlossary>
+            </div>
+        </div>
     }
 </div>
+            }
+    }
+    </div>
