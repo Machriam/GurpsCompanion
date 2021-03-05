@@ -10,35 +10,35 @@
     <DataAnnotationsValidator></DataAnnotationsValidator>
     @if (SelectedCharacterModel != null)
     {
-    <ValidationSummary></ValidationSummary>
-    <DataList Items="SkillNames" InputHasChanged="SelectedSkillHasChanged" LabelText="Select Skill"></DataList>
-    <div class="row col-md-12">
-        <div class="col-md-4">
-            <label class="col-form-label">Name</label>
-            <InputText @bind-Value="@SkillEditModel.Name" class="form-control"></InputText>
+        <ValidationSummary></ValidationSummary>
+        <DataList Items="SkillNames" InputHasChanged="SelectedSkillHasChanged" LabelText="Select Skill"></DataList>
+        <div class="row col-md-12">
+            <div class="col-md-4">
+                <label class="col-form-label">Name</label>
+                <InputText @bind-Value="@SkillEditModel.Name" class="form-control"></InputText>
+            </div>
+            <div class="col-md-1" style="align-self:center">
+                <EnumDropDown T="SkillDifficulties" @bind-SelectedItem="SkillEditModel.Difficulty"></EnumDropDown>
+                <div style="height:4px"></div>
+                <EnumDropDown T="SkillBaseAttributes" @bind-SelectedItem="SkillEditModel.BaseAttribute"></EnumDropDown>
+            </div>
+            <div class="col-md-1">
+                <label class="col-form-label">Level</label>
+                <InputNumber @bind-Value="@SkillEditModel.Value" class="form-control"></InputNumber>
+            </div>
+            <div class="col-md-6">
+                <label class="col-form-label">Defaults</label>
+                <SizingTextArea @bind-Value="@SkillEditModel.Defaults" class="form-control"></SizingTextArea>
+            </div>
+            <div class="col-md-12">
+                <label class="col-form-label">Description</label>
+                <SizingTextArea @bind-Value="@SkillEditModel.Description" class="form-control"></SizingTextArea>
+            </div>
+            <div class="d-flex justify-content-between col-md-12">
+                <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Add" type="submit">Add new Skill</button>
+                <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Update" type="submit">Update Skill</button>
+                <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Delete" type="submit">Delete Skill</button>
+            </div>
         </div>
-        <div class="col-md-1" style="align-self:center">
-            <EnumDropDown T="SkillDifficulties" @bind-SelectedItem="SkillEditModel.Difficulty"></EnumDropDown>
-            <div style="height:4px"></div>
-            <EnumDropDown T="SkillBaseAttributes" @bind-SelectedItem="SkillEditModel.BaseAttribute"></EnumDropDown>
-        </div>
-        <div class="col-md-1">
-            <label class="col-form-label">Level</label>
-            <InputNumber @bind-Value="@SkillEditModel.Value" class="form-control"></InputNumber>
-        </div>
-        <div class="col-md-6">
-            <label class="col-form-label">Defaults</label>
-            <InputTextArea @bind-Value="@SkillEditModel.Defaults" class="form-control"></InputTextArea>
-        </div>
-        <div class="col-md-12">
-            <label class="col-form-label">Description</label>
-            <InputTextArea @bind-Value="@SkillEditModel.Description" class="form-control"></InputTextArea>
-        </div>
-        <div class="d-flex justify-content-between col-md-12">
-            <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Add" type="submit">Add new Skill</button>
-            <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Update" type="submit">Update Skill</button>
-            <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Delete" type="submit">Delete Skill</button>
-        </div>
-    </div>
     }
 </EditForm>
