@@ -1,4 +1,6 @@
-﻿<InputTextArea rows="@Rows" @bind-Value="Value" @attributes="@UnmachtedParameters"></InputTextArea>
+﻿<InputTextArea onfocus="this.style.height = '';this.style.height = (this.scrollHeight+3) + 'px'"
+               oninput="this.style.height = '';this.style.height = (this.scrollHeight+3) + 'px'"
+               rows="@Rows" @bind-Value="Value" @attributes="@UnmachtedParameters"></InputTextArea>
 
 @code {
     private string _value;
