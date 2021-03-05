@@ -1,0 +1,22 @@
+﻿<InputTextArea rows="@Rows" @bind-Value="Value" @attributes="@UnmachtedParameters"></InputTextArea>
+
+@code {
+    private string _value;
+    [Parameter]
+    public string Value
+    {
+        get => _value; set
+        {
+            if (_value == value) return;
+            _value = value;
+            ValueChanged.InvokeAsync(_value);
+        }
+    }
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> UnmachtedParameters { get; set; }
+    public string OnInput { get; set; }
+    public int Rows => _value?.Count(v => v == '\n') + 2 ?? 2;
+}

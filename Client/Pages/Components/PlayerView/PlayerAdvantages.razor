@@ -28,7 +28,7 @@
             </div>
             <div class="col-md-12">
                 <label class="col-form-label">Description</label>
-                <InputTextArea @bind-Value="@AdvantageEditModel.Description" class="form-control"></InputTextArea>
+                <SizingTextArea @bind-Value="@AdvantageEditModel.Description" class="form-control"></SizingTextArea>
             </div>
             <div class="d-flex justify-content-between col-md-12">
                 <button class="btn btn-primary m-2" @onclick="()=>SubmitAction=Core.CrudActions.Add" type="submit">Add new Advantage</button>
