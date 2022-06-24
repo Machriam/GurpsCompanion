@@ -22,6 +22,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
 
         private IJsFunctionCallerService _jsService;
         private CharacterModel _selectedCharacterModel;
+        private bool _playerAdvantageSelected;
 
         [Parameter]
         public CharacterModel SelectedCharacterModel
@@ -40,6 +41,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
 
         public async void SelectedAdvantageHasChanged(DataListEntry item)
         {
+            _playerAdvantageSelected = false;
             if (item.SelectedItem != null)
             {
                 AdvantageEditModel = await Http.GetFromJsonAsync<AdvantageModel>
@@ -54,6 +56,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
 
         public void OnAdvantageSelected(AdvantageModel model)
         {
+            _playerAdvantageSelected = true;
             AdvantageEditModel = model;
             StateHasChanged();
         }
@@ -91,13 +94,14 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
 
                 case CrudActions.Update:
                     using (var result = await Http.PutAsJsonAsync(
-                        string.Format(ApiAddressResources.Advantage_Put, SelectedCharacterModel.Id),
+                        string.Format(ApiAddressResources.Advantage_Put, _playerAdvantageSelected ? SelectedCharacterModel.Id : -1),
                         AdvantageEditModel).ConfigureAwait(false))
                     {
                         if (!await _jsService.CheckHttpResponse(result).ConfigureAwait(false)) return;
                     }
                     break;
             }
+            _playerAdvantageSelected = false;
             EventBus.InvokeAdvantageChanged();
         }
 

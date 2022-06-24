@@ -15,6 +15,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
     public partial class PlayerSkills : ComponentBase, IDisposable
     {
         private IJsFunctionCallerService _jsService;
+        private bool _playerSkillSelected;
 
         protected override void OnInitialized()
         {
@@ -46,6 +47,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
 
         public void SelectedSkillChanged(SkillModel model)
         {
+            _playerSkillSelected = true;
             SkillEditModel = model;
             StateHasChanged();
         }
@@ -54,6 +56,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
 
         public async void SelectedSkillHasChanged(DataListEntry item)
         {
+            _playerSkillSelected = false;
             if (item.SelectedItem != null)
             {
                 SkillEditModel = await Http.GetFromJsonAsync<SkillModel>
@@ -98,13 +101,14 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
 
                 case CrudActions.Update:
                     using (var result = await Http.PutAsJsonAsync(
-                        string.Format(ApiAddressResources.Skill_Put, SelectedCharacterModel.Id),
+                        string.Format(ApiAddressResources.Skill_Put, _playerSkillSelected ? SelectedCharacterModel.Id : -1),
                         SkillEditModel).ConfigureAwait(false))
                     {
                         if (!await _jsService.CheckHttpResponse(result).ConfigureAwait(false)) return;
                     }
                     break;
             }
+            _playerSkillSelected = false;
             EventBus.InvokeSkillChanged();
         }
 

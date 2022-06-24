@@ -68,9 +68,9 @@ namespace GurpsCompanion.Server.Controllers
             var item = _dataContext.Advantages.First(item => item.Id == model.Id);
             var dbItem = new Advantage(model) { Id = model.Id };
             _dataContext.Entry(item).CurrentValues.SetValues(dbItem);
-            _dataContext.CharacterAdvantageAssociations
-                .First(caa => caa.AdvantageFk == model.Id && caa.CharacterFk == characterId)
-                .Level = model.Level;
+            var association = _dataContext.CharacterAdvantageAssociations
+                .FirstOrDefault(caa => caa.AdvantageFk == model.Id && caa.CharacterFk == characterId);
+            if (association != null) association.Level = model.Level;
             _dataContext.SaveChanges();
             return new AdvantageModel(item);
         }

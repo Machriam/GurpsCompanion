@@ -64,14 +64,14 @@ namespace GurpsCompanion.Server.Controllers
         [HttpPut]
         public SkillModel Put([FromBody] SkillModel model, long characterId)
         {
-            var item = _dataContext.Skills.First(item => item.Id == model.Id);
+            var skill = _dataContext.Skills.First(item => item.Id == model.Id);
             var dbItem = new Skill(model) { Id = model.Id };
-            _dataContext.Entry(item).CurrentValues.SetValues(dbItem);
-            _dataContext.CharacterSkillAssociations
-                .First(csa => csa.SkillFk == model.Id && csa.CharacterFk == characterId)
-                .Value = model.Value;
+            _dataContext.Entry(skill).CurrentValues.SetValues(dbItem);
+            var association = _dataContext.CharacterSkillAssociations
+                .FirstOrDefault(csa => csa.SkillFk == model.Id && csa.CharacterFk == characterId);
+            if (association != null) association.Value = model.Value;
             _dataContext.SaveChanges();
-            return new SkillModel(item);
+            return new SkillModel(skill);
         }
 
         [HttpDelete]
