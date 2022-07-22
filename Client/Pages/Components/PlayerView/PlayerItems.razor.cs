@@ -110,6 +110,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
                     }
                     break;
             }
+            ItemEditModel = new();
             EventBus.InvokeItemChanged();
         }
 

@@ -102,6 +102,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
                     break;
             }
             _playerAdvantageSelected = false;
+            AdvantageEditModel = new();
             EventBus.InvokeAdvantageChanged();
         }
 

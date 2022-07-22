@@ -109,6 +109,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
                     break;
             }
             _playerSkillSelected = false;
+            SkillEditModel = new();
             EventBus.InvokeSkillChanged();
         }
 
