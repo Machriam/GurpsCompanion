@@ -9,6 +9,7 @@ using GurpsCompanion.Client.UiComponents;
 using GurpsCompanion.Shared;
 using GurpsCompanion.Shared.Core;
 using GurpsCompanion.Shared.DataModel;
+using System.Text.Encodings.Web;
 
 namespace GurpsCompanion.Client.Pages.Components.PlayerView
 {
@@ -60,7 +61,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
             if (item.SelectedItem != null)
             {
                 SkillEditModel = await Http.GetFromJsonAsync<SkillModel>
-                    (string.Format(ApiAddressResources.Skill_Get, item.SelectedItem.GetText)).ConfigureAwait(false);
+                    (string.Format(ApiAddressResources.Skill_Get, UrlEncoder.Default.Encode(item.SelectedItem.GetText))).ConfigureAwait(false);
             }
             else
             {

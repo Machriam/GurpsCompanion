@@ -8,6 +8,7 @@ using GurpsCompanion.Client.JsInterop;
 using GurpsCompanion.Client.UiComponents;
 using GurpsCompanion.Shared;
 using GurpsCompanion.Shared.DataModel;
+using System.Text.Encodings.Web;
 
 namespace GurpsCompanion.Client.Pages.Components.PlayerView
 {
@@ -45,7 +46,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
             if (item.SelectedItem != null)
             {
                 AdvantageEditModel = await Http.GetFromJsonAsync<AdvantageModel>
-                    (string.Format(ApiAddressResources.Advantage_GetAdvantage, item.SelectedItem.GetText)).ConfigureAwait(false);
+                    (string.Format(ApiAddressResources.Advantage_GetAdvantage, UrlEncoder.Default.Encode(item.SelectedItem.GetText))).ConfigureAwait(false);
             }
             else
             {
