@@ -62,7 +62,8 @@ namespace GurpsCompanion.Client.Pages
             newFighter.NextFightingTime = newFighter.BasicSpeed + ElapsedFightingTime;
             if (fightersOfSameType.Any())
             {
-                if (fightersOfSameType.Count() == 1) fightersOfSameType.First().FightingName += " 1";
+                if (fightersOfSameType.Count() == 1 && fightersOfSameType.First().Name == fightersOfSameType.First().FightingName)
+                    fightersOfSameType.First().FightingName += " 1";
                 newFighter.FightingName +=
                     $" {fightersOfSameType.Max(f => int.Parse(f.FightingName.Remove(0, f.Name.Length + 1))) + 1}";
             }
