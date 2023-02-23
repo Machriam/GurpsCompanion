@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
 using GurpsCompanion.Shared.DataModel;
 using GurpsCompanion.Shared.DataModel.DataContext;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GurpsCompanion.Server.Controllers
 {
@@ -56,7 +56,7 @@ namespace GurpsCompanion.Server.Controllers
         {
             using var transaction = _dataContext.Database.BeginTransaction();
             var dbItem = GetOrCreateItem(model);
-            var characterItemAssociation = new CharacterItemAssociation() { CharacterFk = characterId, ItemFk = dbItem.Id, Count = 1 };
+            var characterItemAssociation = new CharacterItemAssociation() { CharacterFk = characterId, ItemFk = dbItem.Id, Count = 1, Equipped = 1 };
             _dataContext.CharacterItemAssociations.Add(characterItemAssociation);
             _dataContext.SaveChanges();
             transaction.Commit();
