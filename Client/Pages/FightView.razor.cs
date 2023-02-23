@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using GurpsCompanion.Shared;
 using GurpsCompanion.Shared.DataModel;
+using GurpsCompanion.Shared.Features.PlayerView;
 
 namespace GurpsCompanion.Client.Pages
 {
     public partial class FightView : ComponentBase
     {
+        [Inject] private IEncumbranceCalculator EncumbranceCalculator { get; set; } = default!;
         public double ElapsedFightingTime { get; set; }
         public CharacterModel CurrentlyFightingFighter { get; set; }
         public List<CharacterModel> Characters { get; set; }

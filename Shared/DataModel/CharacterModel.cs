@@ -108,14 +108,29 @@ namespace GurpsCompanion.Shared.DataModel
 
         [JsonIgnore]
         [Display]
-        public double BasicSpeed => 1d / ((Dexterity + BasicSpeedMod + Health) / 4d);
+        public double BasicSpeed => 1d / ((Dexterity + BasicSpeedMod + Health + FightBasicSpeedMod + FightDexterityMod + FightHealthMod) / 4d);
 
         [JsonIgnore]
         [Display]
-        public double Dodge => 1d / (BasicSpeed) + 3;
+        public double Dodge => (1d / BasicSpeed) + 3;
 
         [JsonIgnore]
         public double NextFightingTime { get; set; }
+
+        [JsonIgnore]
+        public double FightStrengthMod { get; set; }
+
+        [JsonIgnore]
+        public double FightBasicSpeedMod { get; set; }
+
+        [JsonIgnore]
+        public double FightDexterityMod { get; set; }
+
+        [JsonIgnore]
+        public double FightHealthMod { get; set; }
+
+        [JsonIgnore]
+        public double FightingWeight { get; set; }
 
         [JsonIgnore]
         [Display]
@@ -151,7 +166,14 @@ namespace GurpsCompanion.Shared.DataModel
 
         [JsonIgnore]
         [Display]
-        public double BasicLift => Strength > 7 ? Math.Round(Strength * Strength / 5d, 0) : Strength * Strength / 5;
+        public double BasicLift
+        {
+            get
+            {
+                var strength = Strength + FightStrengthMod;
+                return strength > 7 ? Math.Round(strength * strength / 5d, 0) : strength * strength / 5;
+            }
+        }
 
         [JsonIgnore]
         [Display]
