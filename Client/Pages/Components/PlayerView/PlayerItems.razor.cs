@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Json;
-using Microsoft.AspNetCore.Components;
 using GurpsCompanion.Client.Core;
 using GurpsCompanion.Client.JsInterop;
 using GurpsCompanion.Client.UiComponents;
 using GurpsCompanion.Shared;
 using GurpsCompanion.Shared.Core;
 using GurpsCompanion.Shared.DataModel;
+using Microsoft.AspNetCore.Components;
 
 namespace GurpsCompanion.Client.Pages.Components.PlayerView
 {
@@ -45,7 +45,7 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
         {
             ItemEditModel = model;
             model.Image = (await Http.GetFromJsonAsync<ItemModel>
-                  (string.Format(ApiAddressResources.GetItem, model.Name)).ConfigureAwait(false)).Image;
+                  (string.Format(ApiAddressResources.GetItem, model.Id)).ConfigureAwait(false)).Image;
             _ = _jsService.ImagePaster.SetImageDataToCanvas(model.Image);
             StateHasChanged();
         }
@@ -58,8 +58,8 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
 
         public async void GetPlayerItemNames()
         {
-            var names = await Http.GetFromJsonAsync<List<string>>(ApiAddressResources.GetItemNames).ConfigureAwait(false);
-            ItemNames = names.Select(n => (IDataListItem)(new ItemModel() { Name = n }));
+            var names = await Http.GetFromJsonAsync<List<ItemModel>>(ApiAddressResources.GetItemNames).ConfigureAwait(false);
+            ItemNames = names.Cast<IDataListItem>();
             StateHasChanged();
         }
 
@@ -67,8 +67,9 @@ namespace GurpsCompanion.Client.Pages.Components.PlayerView
         {
             if (item.SelectedItem != null)
             {
+                var itemModel = (ItemModel)item.SelectedItem;
                 ItemEditModel = await Http.GetFromJsonAsync<ItemModel>
-                    (string.Format(ApiAddressResources.GetItem, item.SelectedItem.GetText)).ConfigureAwait(false);
+                    (string.Format(ApiAddressResources.GetItem, itemModel.Id)).ConfigureAwait(false);
                 _ = _jsService.ImagePaster.SetImageDataToCanvas(ItemEditModel.Image);
             }
             else

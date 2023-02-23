@@ -140,8 +140,8 @@
     <comment>long id</comment>
   </data>
   <data name="GetItem" xml:space="preserve">
-    <value>/api/item/item?name={0}</value>
-    <comment>string name</comment>
+    <value>/api/item/item?id={0}</value>
+    <comment>long id</comment>
   </data>
   <data name="GetItemNames" xml:space="preserve">
     <value>/api/item/itemnames</value>

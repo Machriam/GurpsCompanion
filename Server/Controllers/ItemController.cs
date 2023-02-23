@@ -18,15 +18,19 @@ namespace GurpsCompanion.Server.Controllers
         }
 
         [HttpGet("itemnames")]
-        public IEnumerable<string> Get()
+        public IEnumerable<ItemModel> Get()
         {
-            return _dataContext.Items.Select(c => c.Name);
+            return _dataContext.Items.Select(c => new ItemModel()
+            {
+                Name = c.Name,
+                Id = c.Id,
+            });
         }
 
         [HttpGet("item")]
-        public ItemModel GetItem(string name)
+        public ItemModel GetItem(long id)
         {
-            var dbItem = _dataContext.Items.First(i => i.Name == name);
+            var dbItem = _dataContext.Items.First(i => i.Id == id);
             return new ItemModel(dbItem)
             {
                 Image = dbItem.Image
