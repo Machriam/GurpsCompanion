@@ -32,7 +32,7 @@
                                         <div class="col-md-9 row">
                                             <div class="col-md-2">
                                                 <label>Weight</label>
-                                                <label>@fighter.FightingWeight.ToString("0.0 lb")</label>
+                                                <label>@fighter.FightingWeight.ToString("0 lb")</label>
                                             </div>
                                             <div class="col-md-2">
                                                 <label>DX</label>
@@ -45,6 +45,10 @@
                                             <div class="col-md-2">
                                                 <label>Speed</label>
                                                 <input class="form-control" @bind-value="@fighter.FightBasicSpeedMod" />
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label>BM</label>
+                                                <input class="form-control" @bind-value="@fighter.FightBasicMoveMod" />
                                             </div>
                                             <div class="col-md-2">
                                                 <label>ST</label>

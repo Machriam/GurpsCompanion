@@ -122,6 +122,8 @@ namespace GurpsCompanion.Shared.DataModel
 
         [JsonIgnore]
         public double FightBasicSpeedMod { get; set; }
+        [JsonIgnore]
+        public double FightBasicMoveMod { get; set; }
 
         [JsonIgnore]
         public double FightDexterityMod { get; set; }
@@ -146,7 +148,7 @@ namespace GurpsCompanion.Shared.DataModel
 
         [JsonIgnore]
         [Display]
-        public double BasicMove => Math.Floor((1 / BasicSpeed) + (BasicMoveMod / 4));
+        public double BasicMove => Math.Floor((1 / BasicSpeed) + (BasicMoveMod / 4) + FightBasicMoveMod);
 
         [JsonIgnore]
         [Display]
