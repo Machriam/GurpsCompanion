@@ -115,6 +115,15 @@ namespace GurpsCompanion.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to /api/character/weightofcharacters.
+        /// </summary>
+        public static string Character_Weights_Get {
+            get {
+                return ResourceManager.GetString("Character_Weights_Get", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to /api/character/characterinformation?id={0}.
         /// </summary>
         public static string GetCharacterInformation {

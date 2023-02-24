@@ -6,6 +6,7 @@ using GurpsCompanion.Shared.DataModel.DataContext;
 using GurpsCompanion.Shared.FeatureModels;
 using GurpsCompanion.Shared.Features.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GurpsCompanion.Server.Controllers
 {
@@ -34,6 +35,19 @@ namespace GurpsCompanion.Server.Controllers
             {
                 return _dataContext.Characters.Where(c => c.IsPlayer != 0).Select(c => new CharacterModel(c));
             }
+        }
+
+        [HttpGet("weightofcharacters")]
+        public IEnumerable<FighterWeightModel> FighterWeightModels()
+        {
+            return _dataContext.Characters
+                        .Include(ass => ass.CharacterItemAssociations)
+                        .ThenInclude(ass => ass.ItemFkNavigation)
+                        .Select(c => new FighterWeightModel()
+                        {
+                            CharacterId = c.Id,
+                            Weight = c.CharacterItemAssociations.Sum(ass => ass.ItemFkNavigation.Weight * ass.Count * ass.Equipped)
+                        });
         }
 
         [HttpGet("characterinformation")]

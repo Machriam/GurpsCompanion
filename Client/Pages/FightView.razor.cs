@@ -44,11 +44,14 @@ namespace GurpsCompanion.Client.Pages
             await _hubConnection.StartAsync();
             Characters = await Http.GetFromJsonAsync<List<CharacterModel>>(string.Format(ApiAddressResources.Character_Base,
                 StateContainer.PasswordModel.Hash, StateContainer.PasswordModel.Salt)).ConfigureAwait(false);
+            var weights = (await Http.GetFromJsonAsync<List<FighterWeightModel>>(ApiAddressResources.Character_Weights_Get)).ToDictionary(w => w.CharacterId);
+            foreach (var character in Characters) character.FightingWeight = weights[character.Id].Weight;
         }
 
         private void ReceiveFighterWeightChanged(long characterId, double newWeight)
         {
             foreach (var fighter in Fighters.Where(f => f.Id == characterId)) fighter.FightingWeight = newWeight;
+            foreach (var character in Characters.Where(c => c.Id == characterId)) character.FightingWeight = newWeight;
             StateHasChanged();
         }
 

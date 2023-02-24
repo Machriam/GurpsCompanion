@@ -135,6 +135,9 @@
   <data name="Character_Base" xml:space="preserve">
     <value>/api/character?hash={0}&amp;salt={1}</value>
   </data>
+  <data name="Character_Weights_Get" xml:space="preserve">
+    <value>/api/character/weightofcharacters</value>
+  </data>
   <data name="GetCharacterInformation" xml:space="preserve">
     <value>/api/character/characterinformation?id={0}</value>
     <comment>long id</comment>
