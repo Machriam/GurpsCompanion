@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using GurpsCompanion.Shared.Core;
 using GurpsCompanion.Shared.DataModel;
 using GurpsCompanion.Shared.DataModel.DataContext;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 
 namespace GurpsCompanion.Server.Controllers
 {
@@ -10,11 +13,13 @@ namespace GurpsCompanion.Server.Controllers
     [Route("api/[controller]")]
     public class ItemController : ControllerBase
     {
+        private readonly IHubContext<FighterHub, IFighterWeightNotificationClient> _fighterHubContext;
         private readonly DataContext _dataContext;
 
-        public ItemController(DataContext dataContext)
+        public ItemController(DataContext dataContext, IHubContext<FighterHub, IFighterWeightNotificationClient> fighterHubContext)
         {
             _dataContext = dataContext;
+            _fighterHubContext = fighterHubContext;
         }
 
         [HttpGet("itemnames")]
@@ -44,6 +49,11 @@ namespace GurpsCompanion.Server.Controllers
                 .FirstOrDefault(cia => cia.Id == model.CharacterItemAssId);
             existingAssociation.Equipped = model.Equipped ? 1 : 0;
             _dataContext.SaveChanges();
+            var weight = _dataContext.CharacterItemAssociations
+                .Include(ass => ass.ItemFkNavigation)
+                .Where(ass => ass.CharacterFk == existingAssociation.CharacterFk)
+                .Sum(ass => ass.ItemFkNavigation.Weight * ass.Count * ass.Equipped);
+            _fighterHubContext.Clients.All.ReceiveFighterWeigthChanged(existingAssociation.CharacterFk, weight);
         }
 
         [HttpPut("changeCount")]

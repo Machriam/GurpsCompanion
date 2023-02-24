@@ -1,12 +1,14 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using GurpsCompanion.Server.Controllers;
+using GurpsCompanion.Server.Core;
+using GurpsCompanion.Shared.Core;
+using GurpsCompanion.Shared.DataModel.DataContext;
+using GurpsCompanion.Shared.Features.Authentication;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using GurpsCompanion.Server.Core;
-using GurpsCompanion.Shared.DataModel.DataContext;
-using GurpsCompanion.Shared.Features.Authentication;
 
 namespace GurpsCompanion.Server
 {
@@ -28,6 +30,7 @@ namespace GurpsCompanion.Server
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddSignalR();
             services.AddEntityFrameworkSqlite();
             var options = Configuration.GetSection(ConfigurationOptions.Configuration).Get<ConfigurationOptions>();
             var configuration = _environment.IsDevelopment()
@@ -64,6 +67,7 @@ namespace GurpsCompanion.Server
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
+                endpoints.MapHub<FighterHub>(IFighterWeightNotificationClient.HubConnection);
                 endpoints.MapFallbackToFile("index.html");
             });
         }

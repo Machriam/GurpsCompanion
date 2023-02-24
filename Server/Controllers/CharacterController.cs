@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
 using GurpsCompanion.Server.Core;
 using GurpsCompanion.Shared.DataModel;
 using GurpsCompanion.Shared.DataModel.DataContext;
 using GurpsCompanion.Shared.FeatureModels;
 using GurpsCompanion.Shared.Features.Authentication;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GurpsCompanion.Server.Controllers
 {
